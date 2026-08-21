@@ -1,0 +1,104 @@
+---
+import Mark from './Mark.astro';
+import { SITE, NAV, LEGAL } from '../data/site.js';
+
+/* The year is stamped at build time, not read in the browser. A static site rebuilt once a
+   year is a footer that says 2026 in 2027 — which is why the deploy workflow is worth
+   running on a schedule, not why this needs a script. */
+const year = new Date().getFullYear();
+---
+<footer class="site-foot">
+  <div class="wrap grid">
+    <div class="col about">
+      <a class="brand" href="/">
+        <Mark size={30} />
+        <span>Tiff <b>Software Solutions</b></span>
+      </a>
+      <p>{SITE.description}</p>
+    </div>
+
+    <nav class="col" aria-label="Footer">
+      <h2>Site</h2>
+      <ul>
+        {NAV.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div class="col">
+      <h2>Contact</h2>
+      <ul>
+        <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+        <li class="plain">{SITE.city}, {SITE.country}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="wrap rule">
+    <p>&copy; {year} {SITE.name} &middot; {SITE.person}</p>
+    <nav class="legal" aria-label="Legal">
+      {LEGAL.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-foot {
+    margin-top: 96px;
+    padding-top: 56px;
+    background: var(--surface-2);
+    border-top: 1px solid var(--line);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 44px;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    text-decoration: none;
+    color: var(--ink);
+    font-family: var(--display);
+    font-size: 13.5px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .brand b { font-weight: 700; color: var(--forest); }
+
+  .about p { margin: 0; color: var(--muted); font-size: 15.5px; max-width: 44ch; }
+
+  h2 {
+    font-family: var(--display);
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 14px;
+  }
+  .col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+  .col a { text-decoration: none; font-size: 15.5px; color: var(--ink); }
+  .col a:hover { color: var(--forest); text-decoration: underline; }
+  .plain { color: var(--muted); font-size: 15.5px; }
+
+  .rule {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--line);
+    padding-block: 20px 26px;
+  }
+  .rule p { margin: 0; font-size: 14px; color: var(--muted); }
+  .legal { display: flex; gap: 20px; }
+  .legal a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  .legal a:hover { color: var(--forest); text-decoration: underline; }
+
+  @media (max-width: 760px) {
+    .grid { grid-template-columns: 1fr; gap: 34px; }
+    .site-foot { margin-top: 72px; }
+  }
+</style>

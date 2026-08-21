@@ -1,0 +1,315 @@
+---
+import Page from '../layouts/Page.astro';
+import { SITE, OTHER_WORK } from '../data/site.js';
+
+/**
+ * The case study.
+ *
+ * One project, told properly, rather than six thumbnails. A studio of one has a portfolio
+ * of one shape: depth. Six screenshots with a sentence each would say less about whether
+ * I can be trusted with a business’s records than this page does.
+ *
+ * Everything here happened. Where a thing is not yet finished it says so — the go-live is
+ * the obvious example, and a case study that pretends a project ended the day the work got
+ * interesting is a case study nobody in the trade believes.
+ */
+
+const decisions = [
+  {
+    title: 'The money never leaves the building',
+    body:
+      'Purchase price, parts, labour, margin and the negotiated sale price stay in an ' +
+      'encrypted database on the dealership’s own machine. What goes to the website is ' +
+      'built from a list of allowed fields — so a column added next year cannot leak by ' +
+      'being forgotten. It is enforced in three places and the build fails if the test ' +
+      'that proves it does.',
+  },
+  {
+    title: 'The office is the source of truth',
+    body:
+      'A car is marked sold on the lot, and the record is written and committed before ' +
+      'anything is sent anywhere. If the website is unreachable, the sale still happened ' +
+      'and the push is retried later. A dealership’s till must not wait on somebody ' +
+      'else’s server.',
+  },
+  {
+    title: 'Roles are data, not decoration',
+    body:
+      'The sales manager sees every car and no cost. That is not a hidden column in the ' +
+      'interface — the rows he receives have never contained the figures, so there is ' +
+      'nothing on his screen to reveal.',
+  },
+  {
+    title: 'A dead end is a defect',
+    body:
+      'Every failure says which link broke and what to do about it: the site did not ' +
+      'answer, the certificate is not trusted, the password was refused, this account may ' +
+      'not publish. “Connection failed” is not usable by anybody standing on a lot in ' +
+      'Anchorage.',
+  },
+];
+
+const desktop = [
+  'Intake with the VIN decoded live, and the specification filled in from it',
+  'Costs entered as they happen, with profit and margin recalculating as you type',
+  'Photographs taken on a phone, or imported from the camera roll in a batch',
+  'Bill of Sale, federal odometer disclosure and FTC Buyers Guide, numbered and reprintable',
+  'Money still owed after a part payment, with a reminder before the date',
+  'A calendar of what happened and what is due, and reports on where the profit came from',
+  'Encrypted backups, verified by reopening the copy rather than by trusting the write',
+];
+
+const web = [
+  'Inventory with search and filters built from the cars actually on the lot',
+  'Vehicle pages with a photo gallery that swipes on a phone with no JavaScript at all',
+  'Financing enquiries that never ask for a social security number, and say so',
+  'Leads stored in the database before any email is attempted',
+  'Which vehicles get looked at, counted without a cookie and without counting staff',
+];
+---
+<Page
+  title={`Work — ${SITE.name}`}
+  description="Tiff Cardealer: a Windows application and a website for a used-car dealership, and the decisions that shaped both."
+>
+  <section class="head">
+    <div class="wrap">
+      <p class="eyebrow">Case study</p>
+      <h1>Tiff Cardealer</h1>
+      <p class="lede">
+        A used-car dealership in Anchorage, Alaska buys damaged cars, repairs them and
+        sells them. This is the system it runs on — and the product it became.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap layout">
+      <div class="prose">
+        <h2>The problem</h2>
+        <p>
+          The dealership had a website full of vehicles and a set of spreadsheets full of
+          money, and no connection between them. Every car was typed twice: once into the
+          office record with what it cost to buy and repair, and once into the website with
+          what it was being sold for. A car that sold on Tuesday was still on the website
+          on Friday.
+        </p>
+        <p>
+          The obvious fix — put everything in one online system — was the wrong one, for a
+          reason that decided the whole architecture. The office record holds what each car
+          cost, what was spent fixing it, and what the margin is. Some of that must never
+          be visible to the staff selling the cars, and none of it should sit on a shared
+          server because it was convenient.
+        </p>
+        <h2>What was built</h2>
+        <p>
+          Two halves that meet at exactly one point. A Windows application on the office
+          machine holds everything. A website shows only what a customer should see. The
+          seam between them is a one-way push of a fixed list of public fields.
+        </p>
+      </div>
+
+      <aside class="side" aria-label="At a glance">
+        <dl>
+          <div><dt>Role</dt><dd>Everything — architecture, code, design, hosting</dd></div>
+          <div><dt>Desktop</dt><dd>Electron, React, encrypted SQLite</dd></div>
+          <div><dt>Web</dt><dd>WordPress theme written from scratch</dd></div>
+          <div><dt>Documents</dt><dd>Generated PDFs, drawn to the real forms</dd></div>
+          <div><dt>Now</dt><dd>In daily use, and sold to other dealerships</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">The decisions</p>
+      <h2>Four that shaped everything after them.</h2>
+      <div class="cols dec">
+        {decisions.map((d) => (
+          <article class="card">
+            <h3>{d.title}</h3>
+            <p>{d.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap two">
+      <div>
+        <p class="eyebrow">In the office</p>
+        <h2>The application</h2>
+        <ul class="ticks">{desktop.map((f) => <li>{f}</li>)}</ul>
+      </div>
+      <div>
+        <p class="eyebrow">On the lot&rsquo;s website</p>
+        <h2>The theme</h2>
+        <ul class="ticks">{web.map((f) => <li>{f}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="prose">
+        <h2>Where it stands</h2>
+        <p>
+          The application is in daily use. Vehicles publish and unpublish by themselves,
+          the documents print from the record, and the whole thing opens on a morning when
+          the internet does not.
+        </p>
+        <p>
+          The website is finished and waiting on one thing that is not code: the day the
+          domain is pointed at it. That is a decision for the owner, taken on a quiet day
+          with a backup in hand — not something to slip in beside a release.
+        </p>
+        <p class="quiet">
+          The system started as one dealership&rsquo;s office tool and is now a product.
+          Nothing about that dealership — no name, no address, no logo — exists anywhere in
+          the code; it all lives in a profile the owner fills in on first run. That is what
+          lets the same application run for the next dealership without a line being
+          changed.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {OTHER_WORK.length > 0 && (
+    <section class="section">
+      <div class="wrap">
+        <p class="eyebrow">Also built</p>
+        <h2>Other work, in one line each.</h2>
+        <ul class="others">
+          {OTHER_WORK.map((o) => (
+            <li>
+              <strong>{o.href ? <a href={o.href}>{o.name}</a> : o.name}</strong>
+              <span>{o.line}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="band">
+        <div>
+          <h2>Something in your business works like this.</h2>
+          <p class="lede">
+            Typed twice, or held in a spreadsheet nobody else can open. Tell me what it is.
+          </p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="/contact/">Get in touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Page>
+
+<style>
+  .head {
+    padding-block: clamp(48px, 8vw, 88px) clamp(20px, 3vw, 30px);
+    background:
+      radial-gradient(110% 80% at 8% -10%,
+        color-mix(in srgb, var(--forest) 9%, transparent), transparent 60%),
+      var(--paper);
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 44px;
+    align-items: start;
+  }
+  .layout h2:not(:first-child) { margin-top: 34px; }
+
+  .side {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 24px 26px;
+    position: sticky;
+    top: 88px;
+  }
+  .side dl { margin: 0; display: grid; gap: 17px; }
+  .side dt {
+    font-family: var(--display);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .side dd { margin: 0; font-size: 15.5px; color: var(--ink); }
+
+  /* Four decisions, explicit tracks — `auto-fit` leaves the fourth card alone on a row
+     of its own, which reads as a broken block rather than as a grid. */
+  .dec { margin-top: 30px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  @media (max-width: 1040px) { .dec { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px)  { .dec { grid-template-columns: 1fr; } }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
+  .ticks { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 12px; }
+  .ticks li {
+    position: relative;
+    padding-left: 26px;
+    font-size: 16.5px;
+    color: var(--ink);
+    text-wrap: pretty;
+  }
+  .ticks li::before {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 9px;
+    width: 9px;
+    height: 9px;
+    border-radius: 2px;
+    background: var(--gold);
+  }
+
+  .others {
+    list-style: none;
+    margin: 30px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 2px;
+  }
+  .others li {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 26px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .others li:last-child { border-bottom: 1px solid var(--line); }
+  .others strong { font-family: var(--display); font-weight: 600; font-size: 17px; }
+  .others span { color: var(--muted); font-size: 16px; text-wrap: pretty; }
+  @media (max-width: 760px) {
+    .others li { grid-template-columns: 1fr; gap: 6px; }
+  }
+
+  .band {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: clamp(28px, 4vw, 44px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  .band h2 { margin-bottom: 10px; }
+
+  @media (max-width: 900px) {
+    .layout, .two { grid-template-columns: 1fr; gap: 30px; }
+    /* Sticky is a desktop affordance. In one column it would pin a card above the text it
+       belongs to and put its own bottom out of reach. */
+    .side { position: static; }
+  }
+</style>

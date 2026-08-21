@@ -34,6 +34,8 @@ there.**
 | **English only** | For now | Gianni sells to Alaska. Built so German can be added later without a rewrite. |
 | **No contact form in v1** | `mailto:` and a phone number | A form needs a backend, which means somebody's personal data on a server, a privacy notice covering it, and spam. Add one when the mailto is demonstrably losing enquiries — not before. |
 | **No prices** | "Talk to us" | What Tiff Cardealer Manager costs per month is still open (DAS-Manager §5). A number invented for a web page is a number you have to honour. |
+| **The typefaces are served from this site** | `@fontsource/*`, imported in `Base.astro` | A `<link>` to fonts.googleapis.com sends every visitor's IP to Google before a word is on screen. On a site whose argument is that a business's data stays where it belongs — selling into Switzerland, where that transfer is a live legal question — borrowing a font that way contradicts the page it is setting. It is also faster: **a page load makes no request to any third party at all**, which is what lets `/privacy/` say so plainly. |
+| **Nothing is invented** | No logos, no testimonials, no numbers | A small studio's credibility does not survive padding. Where a fact is not known the section renders nothing rather than a guess — see `OTHER_WORK` and `SITE.address` in `src/data/site.js`. |
 
 ---
 
@@ -128,9 +130,29 @@ evidence. **The evidence already exists:**
 - Ride2Balkan, the Frigemo *Post ist da* app, the Hijama app, Handwerk — named, one line
   each, no case study needed yet.
 
-Pages planned: home, services, work, about, contact, and **Impressum + privacy**. The last
-is not optional decoration: Gianni is in Switzerland, and in the DACH region a business
-site without an Impressum is the first thing a Swiss or German client notices.
+**All eight pages are built, 21 August 2026:** home, services, work, about, contact,
+imprint, privacy, and a 404. Rendered in Chromium at 1280 light, 1280 dark and 412 phone —
+24 combinations, zero console errors and zero horizontal overflow on every one.
+
+- **`/work/` is the one case study, told at length.** The dealership is **described, not
+  named** — "a used-car dealership in Anchorage, Alaska". Naming a customer on a public page
+  is their permission to give; one line in `work.astro` and `index.astro` the day Tif says
+  yes.
+- **`/services/` says when each service is the wrong answer.** Unusual on a page meant to
+  sell, and deliberate: a studio that tells you not to buy something is the one you believe
+  when it says you should.
+- **`/contact/` has no form and no promised response time.** The form is §2's decision. The
+  response time is missing because one that gets broken on a busy week is worse than none —
+  Gianni adds it the day he wants to stand behind it.
+- **`/imprint/` states on its face that it is unfinished** while `SITE.address` is null,
+  rather than rendering a tidy gap. Same reasoning as a missing translation key rendering
+  the key: a blank space hides the mistake, and this is the one page where a gap is a legal
+  problem rather than a cosmetic one.
+- **`/privacy/` is short because the site genuinely does very little** — no cookies, no
+  analytics, no form, no third-party request. **Every claim on it is checkable against the
+  built output, and that is a maintenance obligation:** the day somebody adds a map embed,
+  a video player or a Google Fonts link, that page becomes a false statement. Keep it in the
+  same commit.
 
 ---
 
@@ -145,12 +167,52 @@ site without an Impressum is the first thing a Swiss or German client notices.
 - **`site:` in `astro.config.mjs` is a placeholder** until the domain is registered. A wrong
   value there makes every canonical URL point at the wrong host and nothing complains.
 
+### The space that disappeared — 21 August 2026
+
+A built page read *"…is on the<a href=\"/privacy/\">privacy page</a>"*, so it said
+**"theprivacy page"** on screen. The newline between the word and the link had been eaten
+somewhere between the source and the output. **The source was correct**, which is exactly
+why it survived being read.
+
+**The cause was never established, and that is written down rather than guessed at.** The
+first diagnosis was Astro's HTML compressor; a clean A/B rebuild does not reproduce it with
+`compressHTML` either on or off, so blaming the compressor would have put a wrong
+explanation into a config file — which costs the next session more than no explanation.
+It is off anyway, because collapsing whitespace can only lose information on a site this
+size and gzip removes what it saves.
+
+**`scripts/check-spacing.mjs` is the part that actually protects the site.** It reads the
+**built** HTML after every build and fails on a word pressed against an inline tag, in
+either direction. Whatever eats the space, the guard sees the result.
+
+**It was proved against a deliberately broken copy of the built site**, not only against a
+clean one — a check that has never seen the thing it checks for is a check nobody should
+trust. That is the same lesson the DAS repo records for its React-hooks parser.
+
+A single character between tags is ignored, because `<b>s</b>` pluralising a bolded term is
+legitimate and a rule that flagged it would be a rule somebody switches off.
+
 ---
 
 ## 8. Open
 
-- **The domain.** `tiffsoftware.com` is taken. Not yet chosen — see the chat of 21 August.
-- **Which email address** the site publishes. Currently `info@hoponeurope.com`, which
-  changes when the domain lands.
-- **Netcup: SSH or SFTP**, and the document root for the new vhost.
-- **Tif's permission** for the Downtown Auto Sales case study.
+**The repo does not exist on GitHub yet.** The GitHub App cannot create one — it answers
+`403 Resource not accessible by integration` — so Gianni opens it empty as
+`GianniTGT/tiff-software`, private, no README, and the local commits push straight into it.
+
+Waiting on a person, none of it code:
+
+| | What is needed | Where it goes |
+|---|---|---|
+| **The domain** | `tiffsoftware.com` is taken. Not chosen yet. | `site:` in `astro.config.mjs`, and this file |
+| **The postal address** | for the imprint — the page says it is unfinished until then | `SITE.address` in `src/data/site.js` |
+| **The email address** | `info@hoponeurope.com` today; moves when the domain has a mailbox | `SITE.email`, one line |
+| **Four one-line descriptions** | Ride2Balkan, Frigemo *Post ist da*, Hijama, Handwerk. **I will not describe projects I have not seen** — a line written from a name is a guess on a public page. The Work page renders that section only when the list is non-empty. | `OTHER_WORK` in `src/data/site.js` |
+| **Tif's permission** | to name Downtown Auto Sales in the case study | `work.astro`, `index.astro` |
+| **A response time** | for `/contact/`, if he wants to promise one | `contact.astro` |
+| **Netcup** | SSH or SFTP, and the document root for the new vhost | the four Action secrets, §5 |
+| **Swiss UID** | `CHE-…`, if the business is registered | `SITE.uid` — the imprint section appears by itself |
+
+**At go-live, in this order:** fill the address, set `site:`, remove the two `Disallow`
+lines from `public/robots.txt`, then point the domain. Forgetting the last two is how a
+finished site ends up asking Google to ignore it.

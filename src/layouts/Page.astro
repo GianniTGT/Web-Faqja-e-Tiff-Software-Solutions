@@ -1,0 +1,28 @@
+---
+import Base from './Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/app.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+
+/**
+ * Every page except a full-bleed one.
+ *
+ * `Base` owns the document — head, fonts, canonical. This owns the furniture around the
+ * content. Splitting them means a future landing page can take the document without the
+ * header, which is the one case where a nav bar is genuinely in the way.
+ */
+---
+<Base title={title} description={description}>
+  <a class="skip" href="#main">Skip to content</a>
+  <Header />
+  <main id="main">
+    <slot />
+  </main>
+  <Footer />
+</Base>

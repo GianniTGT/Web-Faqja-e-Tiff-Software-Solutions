@@ -1,0 +1,198 @@
+---
+import Page from '../layouts/Page.astro';
+import { SITE } from '../data/site.js';
+
+/**
+ * About.
+ *
+ * Deliberately short on biography and long on how the work is done, because a one-person
+ * studio is bought on judgement rather than on a CV.
+ *
+ * **Two things here are Gianni's to confirm rather than mine to assert**, and they are the
+ * only two on the site: the languages listed below, and the founding year. They are
+ * written as plainly as possible so a correction is a one-word edit — see CLAUDE.md §8.
+ */
+const languages = ['English', 'German', 'Albanian'];
+
+const beliefs = [
+  {
+    title: 'Working software beats a demo',
+    body:
+      'A screen that passes a test and a screen a person can use are two different ' +
+      'claims. I do not tell you something works until I have opened it and done the ' +
+      'thing you would do.',
+  },
+  {
+    title: 'Write down why, not what',
+    body:
+      'Every project I hand over comes with the reasoning behind its decisions, not just ' +
+      'the code that resulted. The next person — including me in six months — needs to ' +
+      'know which trade-offs were made on purpose.',
+  },
+  {
+    title: 'Small, and staying that way',
+    body:
+      'I take on few clients so that the person who wrote your system is the person who ' +
+      'answers when you write. Growing past that would change the only thing that makes ' +
+      'this worth hiring.',
+  },
+];
+---
+<Page
+  title={`About — ${SITE.name}`}
+  description={`${SITE.name} is ${SITE.person}, a software developer in ${SITE.city}, ${SITE.country}, building desktop applications, websites and the systems that join them.`}
+>
+  <section class="head">
+    <div class="wrap">
+      <p class="eyebrow">About</p>
+      <h1>One developer, in Bern.</h1>
+      <p class="lede">
+        {SITE.name} is {SITE.person}. I design, build, host and look after software for
+        small businesses — usually all four, because handing those between people is where
+        most of it goes wrong.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap layout">
+      <div class="prose">
+        <h2>What I do, plainly</h2>
+        <p>
+          I build the system a business runs on, and the website in front of it. Most of my
+          work is one of two shapes: an application that holds records a business cannot
+          afford to lose, or a site that has to be fast, findable and easy for the owner to
+          change.
+        </p>
+        <p>
+          The projects I like most are the ones where those two meet — where a thing typed
+          into the office in the morning should appear in public by itself, and where
+          exactly which parts of it appear is a decision somebody has to make carefully.
+        </p>
+
+        <h2>How I got here</h2>
+        <p>
+          I have spent years on the unglamorous side of small business technology: domains,
+          hosting, email that actually arrives, sites that were built by somebody else and
+          then abandoned. It is a good education. You learn quickly which decisions cost
+          someone money three years later, and you stop making them.
+        </p>
+        <p>
+          My own product, Tiff Cardealer, came out of exactly that. A family dealership
+          needed a system nobody sold; the useful version of it turned out to be one that
+          keeps their figures on their own machine and publishes only what a customer
+          should see. It is now sold to other dealerships.
+        </p>
+
+        <h2>How I charge</h2>
+        <p>
+          A fixed price for a defined piece of work, agreed before anything starts, so you
+          are never surprised by an invoice. Longer arrangements — hosting, maintenance,
+          the ongoing care of something I built — are a flat monthly fee you can end at any
+          time.
+        </p>
+        <p class="quiet">
+          You own the accounts, the domains and the code. Nothing I set up should be hard
+          to take somewhere else, and if it ever is, that is a fault rather than a
+          business model.
+        </p>
+      </div>
+
+      <aside class="side" aria-label="Details">
+        <dl>
+          <div><dt>Based in</dt><dd>{SITE.city}, {SITE.country}</dd></div>
+          <div><dt>Working in</dt><dd>{languages.join(', ')}</dd></div>
+          <div><dt>Clients in</dt><dd>Switzerland, and the United States</dd></div>
+          <div><dt>Email</dt><dd><a href={`mailto:${SITE.email}`}>{SITE.email}</a></dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">How I work</p>
+      <h2>Three things that do not change.</h2>
+      <div class="cols" style="margin-top:30px">
+        {beliefs.map((b) => (
+          <article class="card">
+            <h3>{b.title}</h3>
+            <p>{b.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="band">
+        <div>
+          <h2>Worth a conversation?</h2>
+          <p class="lede">
+            The first one costs nothing and is usually the most useful part of the project.
+          </p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="/contact/">Get in touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Page>
+
+<style>
+  .head {
+    padding-block: clamp(48px, 8vw, 88px) clamp(20px, 3vw, 30px);
+    background:
+      radial-gradient(110% 80% at 8% -10%,
+        color-mix(in srgb, var(--forest) 9%, transparent), transparent 60%),
+      var(--paper);
+  }
+  .head h1 { max-width: 13ch; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 44px;
+    align-items: start;
+  }
+  .layout h2:not(:first-child) { margin-top: 36px; }
+
+  .side {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 24px 26px;
+    position: sticky;
+    top: 88px;
+  }
+  .side dl { margin: 0; display: grid; gap: 17px; }
+  .side dt {
+    font-family: var(--display);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .side dd { margin: 0; font-size: 15.5px; color: var(--ink); word-break: break-word; }
+
+  .band {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: clamp(28px, 4vw, 44px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  .band h2 { margin-bottom: 10px; }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; gap: 30px; }
+    .side { position: static; }
+  }
+</style>

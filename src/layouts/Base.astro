@@ -1,4 +1,33 @@
 ---
+/**
+ * The typefaces are **served from this site, not from Google**, and that is a decision
+ * rather than a preference.
+ *
+ * A `<link>` to fonts.googleapis.com sends every visitor's IP address to Google before a
+ * word is on the screen. On a site whose whole argument is that a business's data stays
+ * where it belongs — and one selling into Switzerland, where that transfer is a live legal
+ * question — borrowing a font that way would contradict the page it is setting.
+ *
+ * It is also faster. No DNS lookup, no TLS handshake to a third party, no render-blocking
+ * request that can be slow on a bad connection; the woff2 files are hashed and cached with
+ * everything else. The `latin-ext` subsets are here for the accents German and Albanian
+ * need — `unicode-range` means a browser fetches them only if the page actually uses one.
+ *
+ * Only the weights the design uses are imported. Pulling a whole family for two weights is
+ * how a page ends up shipping half a megabyte of type nobody reads.
+ */
+import '@fontsource/poppins/latin-600.css';
+import '@fontsource/poppins/latin-700.css';
+import '@fontsource/poppins/latin-ext-600.css';
+import '@fontsource/poppins/latin-ext-700.css';
+import '@fontsource/ibm-plex-sans/latin-400.css';
+import '@fontsource/ibm-plex-sans/latin-500.css';
+import '@fontsource/ibm-plex-sans/latin-600.css';
+import '@fontsource/ibm-plex-sans/latin-ext-400.css';
+import '@fontsource/ibm-plex-sans/latin-ext-500.css';
+import '@fontsource/ibm-plex-sans/latin-ext-600.css';
+import '@fontsource/ibm-plex-mono/latin-500.css';
+
 import '../styles/tokens.css';
 
 interface Props {
@@ -28,12 +57,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
-    />
   </head>
   <body>
     <slot />

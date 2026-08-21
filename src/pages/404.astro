@@ -1,0 +1,43 @@
+---
+import Page from '../layouts/Page.astro';
+import { SITE, NAV } from '../data/site.js';
+
+/**
+ * Not found.
+ *
+ * It offers the way out rather than only stating the problem — the same rule the DAS
+ * inventory follows when a filter matches nothing: a dead end with nothing to click is the
+ * defect, not the missing page.
+ */
+---
+<Page title={`Page not found — ${SITE.name}`} description="That page does not exist.">
+  <section class="wrap oops">
+    <p class="eyebrow">404</p>
+    <h1>That page isn&rsquo;t here.</h1>
+    <p class="lede">
+      Either it moved or the link was wrong. Everything on the site is one of these:
+    </p>
+    <nav class="links" aria-label="All pages">
+      <a href="/">Home</a>
+      {NAV.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+  </section>
+</Page>
+
+<style>
+  .oops { padding-block: clamp(64px, 12vw, 130px) clamp(40px, 6vw, 80px); }
+  .oops h1 { max-width: 14ch; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+  .links a {
+    font-family: var(--display);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 9px 18px;
+  }
+  .links a:hover { border-color: var(--forest); color: var(--forest); }
+</style>

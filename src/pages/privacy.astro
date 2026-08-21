@@ -1,0 +1,124 @@
+---
+import Page from '../layouts/Page.astro';
+import { SITE } from '../data/site.js';
+
+/**
+ * Privacy.
+ *
+ * **This page is short because the site genuinely does very little**, and every claim on
+ * it is checkable against the built output:
+ *
+ *   - no analytics, no tag manager, no pixel
+ *   - no cookies and nothing in local storage — so no consent banner is owed
+ *   - no contact form, so no form data
+ *   - the typefaces are served from this domain, so a visit makes **no request to any
+ *     third party at all**
+ *
+ * That last one is the reason `Base.astro` self-hosts the fonts. Keep this page and that
+ * decision together: the day somebody adds a Google Fonts link, a map embed or a video
+ * player, the sentence below stops being true and this page becomes a false statement.
+ */
+const claims = [
+  {
+    q: 'Does this site use cookies?',
+    a: 'No. It sets no cookies and stores nothing in your browser. That is also why there ' +
+       'is no cookie banner — there is nothing to ask you about.',
+  },
+  {
+    q: 'Is there analytics or tracking?',
+    a: 'No. No analytics, no tag manager, no advertising pixel, no session recording. ' +
+       'I do not know which pages you looked at.',
+  },
+  {
+    q: 'Does anything load from another company?',
+    a: 'No. The typefaces are served from this domain rather than from Google, so opening ' +
+       'a page here does not send your address to anybody else. There are no embedded ' +
+       'maps, fonts, videos or scripts from third parties.',
+  },
+  {
+    q: 'What about the server?',
+    a: 'The hosting provider keeps ordinary web-server logs — your IP address, the page ' +
+       'requested, the time, your browser — for a short period, for security and to keep ' +
+       'the server running. That is technically necessary and it is not used to build a ' +
+       'profile of you.',
+  },
+];
+---
+<Page
+  title={`Privacy — ${SITE.name}`}
+  description="No cookies, no analytics, no third-party requests. What this site collects, which is almost nothing."
+>
+  <section class="wrap page">
+    <p class="eyebrow">Privacy</p>
+    <h1>Almost nothing, and here is exactly what.</h1>
+    <p class="lede">
+      A short page, because this is a short answer. Every line below is a statement about
+      how the site is built, not a promise about how it is used.
+    </p>
+
+    <div class="qa">
+      {claims.map((c) => (
+        <div class="row">
+          <h2>{c.q}</h2>
+          <p>{c.a}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="prose block">
+      <h2>If you email me</h2>
+      <p>
+        Your message and your address sit in my mailbox, and I use them to answer you and to
+        carry on the conversation if there is one. They are not added to a mailing list, not
+        passed to anybody, and not sold. Ask me to delete the correspondence and I will.
+      </p>
+
+      <h2>Your rights</h2>
+      <p>
+        You can ask what I hold about you, ask for it to be corrected, or ask for it to be
+        deleted. Write to <a href={`mailto:${SITE.email}`}>{SITE.email}</a> and you will get
+        an answer from a person. There is no form and no ticket number.
+      </p>
+
+      <h2>If this changes</h2>
+      <p class="quiet">
+        The day this site gains analytics, a contact form or anything embedded from another
+        company, this page changes in the same commit. It is part of the site, not a
+        document filed away from it.
+      </p>
+
+      <h2>Who is responsible</h2>
+      <p class="quiet">
+        {SITE.person}, {SITE.city}, {SITE.country} — the full details are on the
+        <a href="/imprint/">imprint</a>.
+      </p>
+    </div>
+  </section>
+</Page>
+
+<style>
+  .page { padding-block: clamp(48px, 8vw, 88px) 0; }
+
+  .qa { margin-top: 40px; display: grid; gap: 2px; }
+  /* Rules rather than cards: four short answers in four boxes would look like a pricing
+     table, and this is a page somebody reads straight down. */
+  .row {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 30px;
+    padding: 22px 0;
+    border-top: 1px solid var(--line);
+  }
+  .row:last-child { border-bottom: 1px solid var(--line); }
+  .row h2 { font-size: 18px; margin: 0; }
+  .row p { margin: 0; color: var(--muted); font-size: 16.5px; text-wrap: pretty; }
+
+  .block { margin-top: 44px; }
+  .block h2 { font-size: 20px; margin: 32px 0 10px; }
+  .block h2:first-child { margin-top: 0; }
+  .quiet { color: var(--muted); }
+
+  @media (max-width: 760px) {
+    .row { grid-template-columns: 1fr; gap: 8px; }
+  }
+</style>

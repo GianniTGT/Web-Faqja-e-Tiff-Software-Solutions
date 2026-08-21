@@ -3,14 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "The Tiff Software Solutions website — static, built from this repo.",
+  "description": "The Tiff Software Solutions website \u2014 static, built from this repo.",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/check-spacing.mjs",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "node scripts/check-spacing.mjs"
   },
   "devDependencies": {
     "astro": "^7.2.4"
+  },
+  "dependencies": {
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/ibm-plex-sans": "^5.3.0",
+    "@fontsource/poppins": "^5.3.0"
   }
 }

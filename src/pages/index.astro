@@ -1,98 +1,356 @@
 ---
-import Base from '../layouts/Base.astro';
-import Mark from '../components/Mark.astro';
+import Page from '../layouts/Page.astro';
+import { SITE } from '../data/site.js';
 
 /**
- * The holding page.
+ * The home page.
  *
- * This exists to prove the pipeline, not to sell anything — phase 2 of the plan is a
- * single page deployed to a throwaway subdomain so the deploy path is known good before
- * the real domain points anywhere. It is written to be presentable rather than to say
- * "coming soon", because a holding page sometimes stays up longer than anybody intended.
+ * **Nothing on this page is invented.** No client logos, no testimonials, no numbers
+ * nobody measured — the same rule the DAS website carries for its Google reviews. A small
+ * studio's credibility is the one thing that does not survive being padded, and the real
+ * work is strong enough on its own.
  *
- * The real home page replaces this in phase 3.
+ * The dealership is described rather than named. It is Gianni's own family business and
+ * naming it would probably be welcome, but putting a customer's name on a public page is
+ * their decision to give, not ours to assume. One line here and in `work.astro` the day
+ * he says yes.
  */
-const email = 'info@hoponeurope.com';
+
+const services = [
+  {
+    title: 'Desktop software',
+    body:
+      'Windows applications that hold a business’s real records — encrypted, on its ' +
+      'own machine, working whether or not the internet is.',
+  },
+  {
+    title: 'Websites',
+    body:
+      'Fast, hand-built sites and WordPress themes. No page builder, no plugin stack, ' +
+      'nothing that stops working when a subscription lapses.',
+  },
+  {
+    title: 'The join between them',
+    body:
+      'The part most projects skip: getting the office system and the public website to ' +
+      'agree, automatically, without anybody typing the same car twice.',
+  },
+];
+
+const method = [
+  {
+    n: '01',
+    title: 'One business at a time',
+    body:
+      'I take on few projects and stay on them. You get the person who wrote it, not a ' +
+      'ticket queue.',
+  },
+  {
+    n: '02',
+    title: 'Your data stays yours',
+    body:
+      'Where it belongs on your machine, it stays on your machine. What has to be public ' +
+      'is chosen deliberately, field by field — never by default.',
+  },
+  {
+    n: '03',
+    title: 'Built to be run by staff',
+    body:
+      'The people using it are selling cars, not administering software. Anything that ' +
+      'needs a manual is something I have not finished.',
+  },
+  {
+    n: '04',
+    title: 'Nothing ships unverified',
+    body:
+      'A passing test is not somebody opening the screen. Both happen before I tell you ' +
+      'it works.',
+  },
+];
 ---
-<Base
-  title="Tiff Software Solutions"
-  description="Software for small businesses — desktop applications, websites and the systems that join them. Bern, Switzerland."
->
-  <main class="hero">
-    <div class="wrap inner">
-      <div class="brand">
-        <Mark size={40} />
-        <span>Tiff Software Solutions</span>
+<Page title={`${SITE.name} — ${SITE.tagline}`} description={SITE.description}>
+  <!-- ── Hero ─────────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">{SITE.city}, {SITE.country}</p>
+        <h1>Software small businesses can&nbsp;actually run.</h1>
+        <p class="lede">
+          Desktop applications, websites, and the systems that join them. Built for one
+          business at a time — and built to keep working on a bad day, not only a good one.
+        </p>
+        <div class="btn-row hero-cta">
+          <a class="btn btn-primary" href="/contact/">Start a project</a>
+          <a class="btn btn-ghost" href="/work/">See the work</a>
+        </div>
       </div>
 
-      <h1>Software small businesses can actually run.</h1>
-
-      <p class="lead">
-        Desktop applications, websites, and the systems that join them — built for one
-        business at a time, in Bern.
-      </p>
-
-      <p class="contact">
-        <a href={`mailto:${email}`}>{email}</a>
-      </p>
-
-      <p class="note">This site is being built. The work is not.</p>
+      {/*
+        The right half used to be empty, and a dead band beside a headline reads as an
+        unfinished page — the same thing that had to be fixed on the dealership's own
+        homepage. What fills it is deliberately not decoration: it is the shipped work,
+        which is the question a visitor has next.
+      */}
+      <aside class="hero-proof" aria-label="Shipped work">
+        <p class="proof-head">Shipped and in use</p>
+        <ul>
+          <li>
+            <strong>Tiff Cardealer Manager</strong>
+            <span>A Windows application holding every vehicle, cost and document for a
+              used-car dealership. Encrypted, local, and open on a morning the internet
+              is not.</span>
+          </li>
+          <li>
+            <strong>Tiff Cardealer</strong>
+            <span>The website in front of it — inventory, search and financing enquiries,
+              fed by the office and never the other way round.</span>
+          </li>
+        </ul>
+        <a class="proof-link" href="/work/">How the two halves meet &rarr;</a>
+      </aside>
     </div>
-  </main>
-</Base>
+  </section>
+
+  <!-- ── What I build ─────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">What I build</p>
+      <h2>Three things, and the seam between them.</h2>
+      <div class="cols svc">
+        {services.map((s) => (
+          <article class="card">
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+          </article>
+        ))}
+      </div>
+      <p class="after">
+        <a href="/services/">How each of those actually works &rarr;</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ── The work ─────────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="wrap feature">
+      <div class="feature-copy">
+        <p class="eyebrow">Selected work</p>
+        <h2>Tiff Cardealer</h2>
+        <p class="lede">
+          A complete system for a used-car dealership: a Windows application that holds
+          every vehicle, cost and document, and a website that publishes only what a
+          customer should see.
+        </p>
+        <ul class="facts">
+          <li>An encrypted database on the dealership&rsquo;s own machine — purchase price,
+            parts, labour and margin never leave it.</li>
+          <li>A car marked <em>Ready</em> appears on the website by itself. Marked{' '}
+            <em>Sold</em>, it comes down — keeping its page, its photos and its history.</li>
+          <li>Bill of Sale, federal odometer disclosure and FTC Buyers Guide, generated
+            from the record rather than typed again.</li>
+          <li>VINs read from a photograph of the door frame instead of seventeen
+            characters typed by hand.</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn btn-ghost" href="/work/">Read the full case study</a>
+        </div>
+      </div>
+
+      <aside class="feature-side" aria-label="At a glance">
+        <dl>
+          <div><dt>Built for</dt><dd>A used-car dealership in Anchorage, Alaska</dd></div>
+          <div><dt>Desktop</dt><dd>Electron, React, encrypted SQLite</dd></div>
+          <div><dt>Web</dt><dd>A WordPress theme written from scratch</dd></div>
+          <div><dt>Status</dt><dd>In daily use; sold as a product to other dealerships</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ── How I work ───────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">How I work</p>
+      <h2>Four things I will not trade away.</h2>
+      <div class="cols method">
+        {method.map((m) => (
+          <article class="card">
+            <span class="num">{m.n}</span>
+            <h3>{m.title}</h3>
+            <p>{m.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Close ────────────────────────────────────────────────────────── -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="band">
+        <div>
+          <h2>Tell me what the business actually does.</h2>
+          <p class="lede">
+            Not the software you think you need — the job it has to get done. That
+            conversation is free, and it is usually where the real answer is.
+          </p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn-primary" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Page>
 
 <style>
   .hero {
-    min-height: 100svh;
-    display: grid;
-    align-items: center;
-    /* One quiet gradient rather than a flourish: the page has three things on it and any
-       more decoration would be louder than the content. */
+    padding-block: clamp(56px, 10vw, 118px) clamp(40px, 6vw, 72px);
+    /* One quiet wash rather than a flourish. The page's job is to be read. */
     background:
-      radial-gradient(120% 90% at 12% 0%, color-mix(in srgb, var(--forest) 9%, transparent), transparent 60%),
+      radial-gradient(112% 84% at 10% -10%,
+        color-mix(in srgb, var(--forest) 10%, transparent), transparent 62%),
       var(--paper);
   }
-  .inner { padding-block: 88px; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.08fr 0.92fr;
+    gap: 52px;
+    /* Top-aligned, not centred: the copy column is taller, and centring would float the
+       panel in the middle of its own white space instead of starting with the headline. */
+    align-items: start;
+  }
+  .hero h1 { max-width: 15ch; }
+  .hero-cta { margin-top: 34px; }
 
-  .brand { display: flex; align-items: center; gap: 13px; margin-bottom: 40px; }
-  .brand span {
+  .hero-proof {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 26px 28px;
+    margin-top: 8px;
+  }
+  .proof-head {
     font-family: var(--display);
-    font-weight: 700;
-    font-size: 14.5px;
-    letter-spacing: 0.16em;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--forest);
-  }
-
-  h1 {
-    font-family: var(--display);
-    font-weight: 700;
-    font-size: clamp(34px, 6.4vw, 62px);
-    line-height: 1.06;
-    letter-spacing: -0.022em;
-    margin: 0 0 22px;
-    max-width: 16ch;
-    text-wrap: balance;
-  }
-
-  .lead {
-    font-size: clamp(18px, 2.1vw, 21px);
     color: var(--muted);
-    max-width: 52ch;
-    margin: 0 0 40px;
+    margin: 0 0 18px;
+  }
+  .hero-proof ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
+  .hero-proof li {
+    display: grid;
+    gap: 5px;
+    padding-left: 15px;
+    border-left: 3px solid var(--gold);
+  }
+  .hero-proof strong {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .hero-proof span { font-size: 15px; color: var(--muted); text-wrap: pretty; }
+  .proof-link {
+    display: inline-block;
+    margin-top: 22px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .proof-link:hover { text-decoration: underline; }
+
+  .svc, .method { margin-top: 34px; }
+
+  /* Four cards, and `auto-fit` put three on one row and left the fourth alone — the same
+     broken-block look `auto-fit` produced for the dealership's two-item feature group.
+     Explicit tracks instead: four, then two, then one. Never three. */
+  .method { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  @media (max-width: 1040px) { .method { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px)  { .method { grid-template-columns: 1fr; } }
+  .after { margin: 22px 0 0; font-size: 16px; }
+  .after a { font-weight: 500; text-decoration: none; }
+  .after a:hover { text-decoration: underline; }
+
+  .num {
+    display: block;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .feature {
+    display: grid;
+    grid-template-columns: 1.35fr 0.65fr;
+    gap: 44px;
+    align-items: start;
+  }
+  .feature h2 { margin-bottom: 14px; }
+  .facts {
+    list-style: none;
+    margin: 26px 0 30px;
+    padding: 0;
+    display: grid;
+    gap: 13px;
+    max-width: 58ch;
+  }
+  .facts li {
+    position: relative;
+    padding-left: 26px;
+    color: var(--ink);
+    font-size: 16.5px;
     text-wrap: pretty;
   }
-
-  .contact { margin: 0 0 14px; }
-  .contact a {
-    font-family: var(--mono);
-    font-size: 16px;
-    font-weight: 500;
-    border-bottom: 2px solid var(--gold);
-    text-decoration: none;
-    padding-bottom: 2px;
+  .facts li::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 11px;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--gold);
   }
-  .contact a:hover { border-bottom-color: var(--forest); }
+  .facts em { font-style: normal; font-weight: 600; }
 
-  .note { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .feature-side {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 24px 26px;
+  }
+  .feature-side dl { margin: 0; display: grid; gap: 18px; }
+  .feature-side dt {
+    font-family: var(--display);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+  .feature-side dd { margin: 0; font-size: 16px; color: var(--ink); }
+
+  .band {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: clamp(28px, 4vw, 44px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  .band h2 { margin-bottom: 10px; }
+
+  @media (max-width: 980px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+  }
+  @media (max-width: 900px) {
+    .feature { grid-template-columns: 1fr; gap: 30px; }
+  }
 </style>
