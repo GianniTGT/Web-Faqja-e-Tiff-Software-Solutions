@@ -1,0 +1,6 @@
+# Until the real domain is live and the site says something, nothing should be indexed.
+# Remove these two lines at go-live — forgetting them leaves a finished site that asks
+# Google to ignore it, which is exactly the trap the DAS project recorded for its own
+# staging guards.
+User-agent: *
+Disallow: /

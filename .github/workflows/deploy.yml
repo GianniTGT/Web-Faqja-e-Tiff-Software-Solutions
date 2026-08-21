@@ -1,0 +1,110 @@
+name: Build and deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Two deploys interleaving over the same directory is a half-copied website. One at a
+# time, and never cancel one that is already writing to the server.
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      # A build that produced nothing would otherwise be rsynced happily over a working
+      # site, replacing it with an empty directory. Check before going near the server.
+      - name: The build produced a site
+        run: |
+          test -f dist/index.html || { echo "::error::dist/index.html is missing — refusing to deploy"; exit 1; }
+          echo "dist holds $(find dist -type f | wc -l) files"
+
+      # Everything below needs the server. A pull request or a fork has no secrets, and a
+      # deploy step that silently does nothing is worse than one that says why.
+      - name: Deploy secrets are present
+        id: secrets
+        env:
+          HOST: ${{ secrets.NETCUP_HOST }}
+          USER: ${{ secrets.NETCUP_USER }}
+          KEY:  ${{ secrets.NETCUP_SSH_KEY }}
+          PATH_: ${{ secrets.NETCUP_PATH }}
+        run: |
+          missing=""
+          [ -n "$HOST" ]  || missing="$missing NETCUP_HOST"
+          [ -n "$USER" ]  || missing="$missing NETCUP_USER"
+          [ -n "$KEY" ]   || missing="$missing NETCUP_SSH_KEY"
+          [ -n "$PATH_" ] || missing="$missing NETCUP_PATH"
+          if [ -n "$missing" ]; then
+            echo "::notice::Not deploying — these secrets are not set:$missing"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # The netcup account is shared with hoponeurope.com and ride2balkan.com. A deploy
+      # path that is wrong by one directory, combined with --delete, deletes somebody
+      # else's website. These two guards are what stands between a typo and that.
+      #
+      # 1. The path must look like a document root and not like a home directory or /.
+      # 2. The remote directory must already contain a marker file that only this site's
+      #    docroot has. If it is not there, the path is wrong — or this is the first
+      #    deploy, which is done by hand once, deliberately, with the marker created then.
+      - name: The target looks like this site's document root
+        if: steps.secrets.outputs.ready == 'true'
+        env:
+          HOST: ${{ secrets.NETCUP_HOST }}
+          USER: ${{ secrets.NETCUP_USER }}
+          KEY:  ${{ secrets.NETCUP_SSH_KEY }}
+          TARGET: ${{ secrets.NETCUP_PATH }}
+        run: |
+          case "$TARGET" in
+            ""|"/"|"~"|"~/"|"/home"|"/home/") echo "::error::NETCUP_PATH is not a document root: '$TARGET'"; exit 1 ;;
+          esac
+          # At least three path segments, so /home/user alone cannot be a target.
+          depth=$(printf '%s' "${TARGET#/}" | tr -cd '/' | wc -c)
+          [ "$depth" -ge 2 ] || { echo "::error::NETCUP_PATH is too shallow to be a docroot: '$TARGET'"; exit 1; }
+
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/deploy && chmod 600 ~/.ssh/deploy
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+          if ! ssh -i ~/.ssh/deploy -o BatchMode=yes "$USER@$HOST" "test -f '$TARGET/.tiff-deploy-target'"; then
+            echo "::error::'$TARGET/.tiff-deploy-target' is not there."
+            echo "::error::Either the path is wrong, or this is the first deploy. See CLAUDE.md — the marker is created by hand, once, on purpose."
+            exit 1
+          fi
+
+      - name: Copy the site up
+        if: steps.secrets.outputs.ready == 'true'
+        env:
+          HOST: ${{ secrets.NETCUP_HOST }}
+          USER: ${{ secrets.NETCUP_USER }}
+          TARGET: ${{ secrets.NETCUP_PATH }}
+        run: |
+          # --delete so a page removed from the repo goes from the server too; the marker
+          # check above is what makes that safe. The marker itself is excluded, or the
+          # first --delete would remove the very thing the next deploy checks for.
+          rsync -az --delete \
+            --exclude '.tiff-deploy-target' \
+            -e "ssh -i ~/.ssh/deploy -o BatchMode=yes" \
+            dist/ "$USER@$HOST:$TARGET/"
+
+      - name: What is live now
+        if: steps.secrets.outputs.ready == 'true'
+        run: echo "Deployed ${GITHUB_SHA} at $(date -u '+%Y-%m-%d %H:%M UTC')"

@@ -1,0 +1,87 @@
+/*
+ * The Tiff palette, in one place.
+ *
+ * These are not chosen here. They come from the brand package Gianni generated in August
+ * 2026 — forest green, gold, and a neutral that is not pure black. The same values are
+ * recorded in the DAS-Manager handover (§5), and the desktop application's installer icon
+ * is drawn from them, so a change here is a change to the family and not to a web page.
+ *
+ * Deliberately NOT the DAS navy #08318B. That is the dealership's colour and it stays on
+ * the dealership's documents.
+ */
+:root {
+  --forest:      #16653C;
+  --forest-deep: #0F4B2C;
+  --forest-lift: #1E8250;
+  --gold:        #C9A053;
+  --ink:         #1C1C1E;
+
+  /* Neutrals biased green rather than pure grey, so the page reads as one family. */
+  --paper:     #F7FAF8;
+  --surface:   #FFFFFF;
+  --surface-2: #EFF4F1;
+  --line:      #DCE6E0;
+  --muted:     #5B6862;
+
+  --display: 'Poppins', 'Segoe UI', system-ui, sans-serif;
+  --body:    'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --wrap: 1100px;
+  --r:    12px;
+}
+
+/* The viewer's own preference. Three states, not two: an explicit choice stamps the root,
+   and the default "system" setting stamps nothing at all — so the media query has to do
+   the work on its own, guarded so an explicit light choice still beats a dark OS. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --forest:      #4FA97A;
+    --forest-deep: #3E9C6C;
+    --forest-lift: #6ABF91;
+    --gold:        #D9B876;
+    --ink:         #E9EFEB;
+    --paper:       #111614;
+    --surface:     #171E1A;
+    --surface-2:   #1E2722;
+    --line:        #2A342E;
+    --muted:       #9AAAA1;
+  }
+}
+:root[data-theme="dark"] {
+  --forest:      #4FA97A;
+  --forest-deep: #3E9C6C;
+  --forest-lift: #6ABF91;
+  --gold:        #D9B876;
+  --ink:         #E9EFEB;
+  --paper:       #111614;
+  --surface:     #171E1A;
+  --surface-2:   #1E2722;
+  --line:        #2A342E;
+  --muted:       #9AAAA1;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  /* An explicit background, always: the page is composited over a ground somebody else
+     paints, and a transparent body silently borrows whatever theme that host is in. */
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
+
+a { color: var(--forest); text-underline-offset: 3px; }
+a:focus-visible { outline: 2.5px solid var(--gold); outline-offset: 3px; border-radius: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

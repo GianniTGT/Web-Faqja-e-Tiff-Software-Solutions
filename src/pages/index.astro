@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import Mark from '../components/Mark.astro';
+
+/**
+ * The holding page.
+ *
+ * This exists to prove the pipeline, not to sell anything — phase 2 of the plan is a
+ * single page deployed to a throwaway subdomain so the deploy path is known good before
+ * the real domain points anywhere. It is written to be presentable rather than to say
+ * "coming soon", because a holding page sometimes stays up longer than anybody intended.
+ *
+ * The real home page replaces this in phase 3.
+ */
+const email = 'info@hoponeurope.com';
+---
+<Base
+  title="Tiff Software Solutions"
+  description="Software for small businesses — desktop applications, websites and the systems that join them. Bern, Switzerland."
+>
+  <main class="hero">
+    <div class="wrap inner">
+      <div class="brand">
+        <Mark size={40} />
+        <span>Tiff Software Solutions</span>
+      </div>
+
+      <h1>Software small businesses can actually run.</h1>
+
+      <p class="lead">
+        Desktop applications, websites, and the systems that join them — built for one
+        business at a time, in Bern.
+      </p>
+
+      <p class="contact">
+        <a href={`mailto:${email}`}>{email}</a>
+      </p>
+
+      <p class="note">This site is being built. The work is not.</p>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .hero {
+    min-height: 100svh;
+    display: grid;
+    align-items: center;
+    /* One quiet gradient rather than a flourish: the page has three things on it and any
+       more decoration would be louder than the content. */
+    background:
+      radial-gradient(120% 90% at 12% 0%, color-mix(in srgb, var(--forest) 9%, transparent), transparent 60%),
+      var(--paper);
+  }
+  .inner { padding-block: 88px; }
+
+  .brand { display: flex; align-items: center; gap: 13px; margin-bottom: 40px; }
+  .brand span {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 14.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--forest);
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(34px, 6.4vw, 62px);
+    line-height: 1.06;
+    letter-spacing: -0.022em;
+    margin: 0 0 22px;
+    max-width: 16ch;
+    text-wrap: balance;
+  }
+
+  .lead {
+    font-size: clamp(18px, 2.1vw, 21px);
+    color: var(--muted);
+    max-width: 52ch;
+    margin: 0 0 40px;
+    text-wrap: pretty;
+  }
+
+  .contact { margin: 0 0 14px; }
+  .contact a {
+    font-family: var(--mono);
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 2px solid var(--gold);
+    text-decoration: none;
+    padding-bottom: 2px;
+  }
+  .contact a:hover { border-bottom-color: var(--forest); }
+
+  .note { margin: 0; font-size: 14.5px; color: var(--muted); }
+</style>
