@@ -13,8 +13,13 @@ export const SITE = {
   city: 'Bern',
   country: 'Switzerland',
 
-  /** Temporary. Moves to the new domain the day it has a mailbox — one line, here. */
-  email: 'info@hoponeurope.com',
+  /**
+   * A real mailbox on the company's own domain since 22 August 2026.
+   *
+   * It read `info@hoponeurope.com` until then — the hosting domain rather than the
+   * company's, which is exactly the impression this site exists to correct.
+   */
+  email: 'info@tiff-software-solutions.com',
 
   /**
    * The registered postal address, for the imprint.

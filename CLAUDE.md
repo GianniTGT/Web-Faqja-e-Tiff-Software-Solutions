@@ -14,8 +14,10 @@ is forgotten.
 The website for **Tiff Software Solutions** — Gianni's own firm. Not a product, not a
 customer's site: the place a small business decides whether to trust him.
 
-Until this exists, the designer credit in the Downtown Auto Sales footer points at
-`hoponeurope.com`, which is a hosting domain rather than a company.
+The designer credit in the Downtown Auto Sales footer used to point at
+`hoponeurope.com` — a hosting domain rather than a company, which is the impression this
+site exists to correct. It points here now, and the contact address moved with it:
+`info@tiff-software-solutions.com`, a real mailbox since 22 August 2026.
 
 **Sister repo:** `GianniTGT/DAS-Manager` — the desktop application and the WordPress theme
 for the first customer. Its `CLAUDE.md` is where the brand package, the licensing decision
@@ -218,7 +220,6 @@ Waiting on a person, none of it code:
 | | What is needed | Where it goes |
 |---|---|---|
 | **The postal address** | for the imprint — the page says it is unfinished until then | `SITE.address` in `src/data/site.js` |
-| **The email address** | `info@hoponeurope.com` today. The domain exists now, so this moves as soon as there is a mailbox at `info@tiff-software-solutions.com` | `SITE.email`, one line |
 | **Four one-line descriptions** | Ride2Balkan, Frigemo *Post ist da*, Hijama, Handwerk. **I will not describe projects I have not seen** — a line written from a name is a guess on a public page. The Work page renders that section only when the list is non-empty. | `OTHER_WORK` in `src/data/site.js` |
 | **Tif's permission** | to name Downtown Auto Sales in the case study | `work.astro`, `index.astro` |
 | **A response time** | for `/contact/`, if he wants to promise one | `contact.astro` |
