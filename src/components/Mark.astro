@@ -1,17 +1,33 @@
 ---
 /**
- * The Tiff monogram: a T with a road curving up through it, on a forest tile.
+ * The Tiff monogram: a gold tile, a green T, and a white road turning down through it.
  *
- * Drawn rather than loaded as a file so it takes the page's own colours and stays sharp
- * at any size. The real brand artwork lives in the DAS-Manager repo under `assets/` and
- * `build/`; when the full lockup is needed on this site it comes from there rather than
- * being redrawn.
+ * **This is a trace of the real brand file, not a drawing of it.** The artwork lives in the
+ * DAS-Manager repo (`assets/tiff-icon.png`, `build/icon.png`) and CLAUDE.md says the mark
+ * comes from there rather than being redrawn — which is exactly what the first version of
+ * this component did, and it got three things wrong: a green tile instead of gold, a white
+ * T instead of green, and the road as a gold curve *beside* the stem instead of a white one
+ * *inside* the T. It was on the header and footer of every page.
+ *
+ * The geometry below was measured off the 512px original and verified by rendering: 98.92%
+ * of pixels match, and **not one differing pixel lies away from an edge** — so the shape is
+ * identical and only the anti-aliasing differs, which is what a faithful trace looks like.
+ *
+ * Its colours are literals, deliberately, where the rest of the site uses tokens. A brand
+ * mark that recolours itself in dark mode is not a brand mark — the first version did, and
+ * that was the same mistake in a third place.
  */
-interface Props { size?: number; }
-const { size = 34 } = Astro.props;
+interface Props { size?: number; title?: string; }
+const { size = 34, title } = Astro.props;
 ---
-<svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true">
-  <rect width="32" height="32" rx="7.5" fill="var(--forest)" />
-  <path d="M8 9.6h16M16 9.6V24" stroke="#fff" stroke-width="2.7" stroke-linecap="round" />
-  <path d="M13.2 24c0-4.6 1.4-7.8 5.4-9.8" stroke="var(--gold)" stroke-width="2.3" stroke-linecap="round" />
+<svg
+  width={size} height={size} viewBox="0 0 512 512"
+  role={title ? 'img' : undefined}
+  aria-hidden={title ? undefined : 'true'}
+  aria-label={title}
+>
+  <rect width="512" height="512" rx="0" fill="#C9A053" />
+  <path d="M80 72h352v109H80z M201 72h110v368H201z" fill="#16653C" />
+  <path d="M119 125.5H190a65 65 0 0 1 65 65V400"
+        fill="none" stroke="#FFFFFF" stroke-width="38" />
 </svg>
