@@ -17,9 +17,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # **The version comes from `.nvmrc`, never from a number typed here.**
+      # The first run of this workflow failed on exactly that: it said `node-version: '20'`
+      # while Astro 7 requires >= 22.12, so the build worked locally and died on the
+      # runner. A version in two places is a version that disagrees with itself, and this
+      # is the copy nobody looks at until it breaks.
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version-file: '.nvmrc'
           cache: npm
 
       - name: Install

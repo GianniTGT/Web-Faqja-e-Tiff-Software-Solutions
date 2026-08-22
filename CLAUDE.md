@@ -86,6 +86,19 @@ website. Two guards stand between a typo and that:
 2. **The remote directory must already contain `.tiff-deploy-target`.** If the marker is
    not there, the path is wrong and the deploy stops before rsync runs.
 
+### The Node version lives in `.nvmrc` — 22 August 2026
+
+**The very first run of this workflow failed**, and on nothing to do with Netcup: the
+workflow said `node-version: '20'` while Astro 7 requires `>= 22.12`. It built here and
+died on the runner, which is the worst shape a version mismatch takes — the machine that
+would have caught it is the one that never runs the build.
+
+`setup-node` now reads **`.nvmrc`**, and `package.json` declares
+`engines.node: ">=22.12.0"`. One number, in a file whose whole job is to hold it, and a
+declaration that makes a wrong local Node fail at install rather than at build.
+
+The number typed into a workflow is the copy nobody looks at until it breaks.
+
 ### The first deploy is done by hand, once, on purpose
 
 The marker cannot create itself — a deploy that made its own marker would defeat the check
