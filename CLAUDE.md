@@ -204,15 +204,19 @@ Waiting on a person, none of it code:
 
 | | What is needed | Where it goes |
 |---|---|---|
-| **The domain** | `tiffsoftware.com` is taken. Not chosen yet. | `site:` in `astro.config.mjs`, and this file |
 | **The postal address** | for the imprint — the page says it is unfinished until then | `SITE.address` in `src/data/site.js` |
-| **The email address** | `info@hoponeurope.com` today; moves when the domain has a mailbox | `SITE.email`, one line |
+| **The email address** | `info@hoponeurope.com` today. The domain exists now, so this moves as soon as there is a mailbox at `info@tiff-software-solutions.com` | `SITE.email`, one line |
 | **Four one-line descriptions** | Ride2Balkan, Frigemo *Post ist da*, Hijama, Handwerk. **I will not describe projects I have not seen** — a line written from a name is a guess on a public page. The Work page renders that section only when the list is non-empty. | `OTHER_WORK` in `src/data/site.js` |
 | **Tif's permission** | to name Downtown Auto Sales in the case study | `work.astro`, `index.astro` |
 | **A response time** | for `/contact/`, if he wants to promise one | `contact.astro` |
 | **Netcup** | SSH or SFTP, and the document root for the new vhost | the four Action secrets, §5 |
 | **Swiss UID** | `CHE-…`, if the business is registered | `SITE.uid` — the imprint section appears by itself |
 
-**At go-live, in this order:** fill the address, set `site:`, remove the two `Disallow`
-lines from `public/robots.txt`, then point the domain. Forgetting the last two is how a
-finished site ends up asking Google to ignore it.
+**The domain is bought: `tiff-software-solutions.com`, at Netcup, 22 August 2026.**
+`tiffsoftware.com` was taken, and the full name is the better answer anyway — it is what
+the footer, the invoices and the email address all say, so nothing has to be abbreviated
+to match it. `site:` in `astro.config.mjs` points at it.
+
+**At go-live, in this order:** fill the postal address, remove the two `Disallow` lines
+from `public/robots.txt`, then point the domain at the Netcup document root. Forgetting
+the `robots.txt` line is how a finished site ends up asking Google to ignore it.
