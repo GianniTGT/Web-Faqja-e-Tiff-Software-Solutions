@@ -33,13 +33,51 @@ there.**
 | **Static, not WordPress** | Astro, output `static` | The firm sells fast, carefully made software. A WordPress install with plugins argues the opposite. Eight pages that change a few times a year do not need a database. |
 | **The repo is the source of truth** | Every change is a commit | The DAS site works the other way round — site first, repo second — and that is exactly the arrangement that produced its 18 August outage. Nothing here is edited on the server. |
 | **No MCP connection** | Novamira is a WordPress plugin | With a static site a Claude Code session already has more than a connector gives: it writes the pages, renders them in a real browser, and the Action deploys. Reviewable before it ships, revertible after. |
-| **English only** | For now | Gianni sells to Alaska. Built so German can be added later without a rewrite. |
+| **English and German** | English at `/`, German at `/de/` | Gianni sells to Alaska *and* to Bern. A Berner SME buys in German; an English-only site is not in that race at all. English stays the default because it is the wider net and the language the one shipped product is written in — flipping that is a routing change, not a rewrite. |
 | **No contact form in v1** | `mailto:` and a phone number | A form needs a backend, which means somebody's personal data on a server, a privacy notice covering it, and spam. Add one when the mailto is demonstrably losing enquiries — not before. |
 | **No prices** | "Talk to us" | What Tiff Cardealer Manager costs per month is still open (DAS-Manager §5). A number invented for a web page is a number you have to honour. |
 | **The typefaces are served from this site** | `@fontsource/*`, imported in `Base.astro` | A `<link>` to fonts.googleapis.com sends every visitor's IP to Google before a word is on screen. On a site whose argument is that a business's data stays where it belongs — selling into Switzerland, where that transfer is a live legal question — borrowing a font that way contradicts the page it is setting. It is also faster: **a page load makes no request to any third party at all**, which is what lets `/privacy/` say so plainly. |
 | **Nothing is invented** | No logos, no testimonials, no numbers | A small studio's credibility does not survive padding. Where a fact is not known the section renders nothing rather than a guess — see `OTHER_WORK` and `SITE.address` in `src/data/site.js`. |
 
 ---
+
+## 2a. The two languages — 22 August 2026
+
+Added after putting the site beside **pbits.ch**, an agency in the same city. Their page
+says nothing specific and hides its navigation behind a hamburger on a 1500px screen; ours
+is better made. **But theirs carries PostFinance and TWINT in a logo wall and a named
+testimonial from a CIO, and it is in German.** Craft was not the gap. Proof and language
+were, and only one of the two is ours to fix today.
+
+**Every page is one bilingual component.** `src/components/pages/*.astro` holds both
+languages' copy side by side and takes a `lang` prop; `src/pages/x.astro` and
+`src/pages/de/x.astro` are three lines each. Two separate page trees would duplicate every
+style block — a spacing fix would then need making twice, and the day somebody makes it
+once is the day the two languages stop looking like one site.
+
+**The German is written, not translated.** A word-for-word conversion of English marketing
+copy reads like a word-for-word conversion. Sie-Form throughout; Du would read as a startup
+addressing a garage owner.
+
+**There is no `ß` anywhere and there must not be.** Switzerland dropped it — `Grösse`, not
+`Größe`. A German keyboard produces one without thinking and a Swiss reader spots it
+instantly, at which point the page reads as written by somebody from Germany, which for a
+firm whose whole pitch is being local is the wrong first impression.
+
+`scripts/check-german.mjs` runs after every build and fails on either an eszett in a German
+page or a page that exists in one language and not the other — a language switch that lands
+on a 404 is the one control that proves the German half is real. **Proved against both
+faults deliberately introduced**, not only against a clean build.
+
+**`src/i18n/ui.js` holds the navigation, the chrome strings and `localise()`.** One list,
+two languages: a page added there appears in both or in neither. `Base.astro` emits
+`hreflang` for both plus `x-default`, and `<html lang>` is `de-CH` rather than `de`.
+
+**One layout defect the German found.** `.hero h1` was capped at `15ch`, tuned for English,
+and the German headline wrapped to five lines. The cap is `16ch` and the headline was
+shortened — *Betriebe* is what a Swiss tradesman calls his own business and is four letters
+shorter than *Unternehmen*. Both languages now wrap to four lines. Longer words are a real
+layout input, not a translation detail.
 
 ## 3. The brand is not chosen here
 

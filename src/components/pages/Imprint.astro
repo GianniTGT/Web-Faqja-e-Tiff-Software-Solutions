@@ -1,0 +1,166 @@
+---
+import Page from '../../layouts/Page.astro';
+import { SITE } from '../../data/site.js';
+import { localise } from '../../i18n/ui.js';
+
+/**
+ * Imprint / Impressum, in both languages.
+ *
+ * Not decoration. A business site in Switzerland is expected to identify who is behind it,
+ * and in the DACH region its absence is the first thing a prospective client notices — the
+ * German page is the one that will actually be read for this.
+ *
+ * **The page states when it is incomplete rather than hiding it.** With no address in
+ * `site.js` it renders a visible notice instead of a tidy gap — the same reasoning as a
+ * missing translation key rendering the key: a blank space hides the mistake, and this is
+ * the one page where a gap is a legal problem rather than a cosmetic one.
+ */
+interface Props { lang: 'en' | 'de'; }
+const { lang } = Astro.props;
+const a = SITE.address;
+
+const COPY = {
+  en: {
+    meta: { title: `Imprint — ${SITE.name}`,
+            description: `Who is behind ${SITE.name}: ${SITE.person}, ${SITE.city}, ${SITE.country}.` },
+    eyebrow: 'Imprint',
+    h1: 'Who is behind this site.',
+    unfinishedStrong: 'This page is not finished.',
+    unfinished: 'The registered postal address is missing. It must be filled in before this ' +
+                'site goes live — one entry in',
+    responsibleH: 'Responsible for the content',
+    addressTodo: '— address to be added —',
+    contactH: 'Contact',
+    emailLabel: 'Email:',
+    contactQuiet: 'Written enquiries are answered by email. There is no telephone number ' +
+                  'published here yet.',
+    registerH: 'Commercial register',
+    liabilityContentH: 'Liability for content',
+    liabilityContent: 'The content of this site is prepared with care, but no guarantee is ' +
+      'given for its accuracy, completeness or timeliness. Descriptions of past work are ' +
+      'accounts of what was built, not promises of what any future project will contain.',
+    liabilityLinksH: 'Liability for links',
+    liabilityLinks: 'This site links to a small number of external pages. Their content is ' +
+      'the responsibility of their operators, and it was not unlawful at the time the link ' +
+      'was made. Links are removed if that changes and it is brought to my attention.',
+    copyrightH: 'Copyright',
+    copyright: `The text, design and code of this site are the work of ${SITE.person}. Reuse ` +
+      'beyond what copyright permits needs written agreement — which is usually given for the asking.',
+    dataH: 'Your data',
+    dataBefore: 'What this site collects, and what it does not, is on the',
+    dataLink: 'privacy page',
+    dataAfter: '. It is short, because the answer is mostly \u201Cnothing\u201D.',
+  },
+
+  de: {
+    meta: { title: 'Impressum — Tiff Software Solutions',
+            description: 'Wer hinter Tiff Software Solutions steht: Kani Tifeki, Bern, Schweiz.' },
+    eyebrow: 'Impressum',
+    h1: 'Wer hinter dieser Website steht.',
+    unfinishedStrong: 'Diese Seite ist noch nicht vollständig.',
+    unfinished: 'Die Postadresse fehlt. Sie muss eingetragen sein, bevor diese Website live ' +
+                'geht — ein Eintrag in',
+    responsibleH: 'Verantwortlich für den Inhalt',
+    addressTodo: '— Adresse folgt —',
+    contactH: 'Kontakt',
+    emailLabel: 'E-Mail:',
+    contactQuiet: 'Schriftliche Anfragen werden per E-Mail beantwortet. Eine Telefonnummer ' +
+                  'ist hier noch nicht veröffentlicht.',
+    registerH: 'Handelsregister',
+    liabilityContentH: 'Haftung für Inhalte',
+    liabilityContent: 'Die Inhalte dieser Website werden mit Sorgfalt erstellt; für ' +
+      'Richtigkeit, Vollständigkeit und Aktualität wird keine Gewähr übernommen. ' +
+      'Beschreibungen früherer Arbeiten schildern, was gebaut wurde, und sind keine Zusage ' +
+      'für den Umfang künftiger Projekte.',
+    liabilityLinksH: 'Haftung für Links',
+    liabilityLinks: 'Diese Website verlinkt auf wenige externe Seiten. Für deren Inhalte sind ' +
+      'die jeweiligen Betreiber verantwortlich; zum Zeitpunkt der Verlinkung waren sie nicht ' +
+      'rechtswidrig. Links werden entfernt, sobald sich das ändert und ich davon erfahre.',
+    copyrightH: 'Urheberrecht',
+    copyright: 'Text, Gestaltung und Code dieser Website stammen von Kani Tifeki. Eine ' +
+      'Nutzung über das urheberrechtlich Zulässige hinaus bedarf einer schriftlichen ' +
+      'Vereinbarung — die es auf Anfrage in der Regel gibt.',
+    dataH: 'Ihre Daten',
+    dataBefore: 'Was diese Website erhebt und was nicht, steht auf der',
+    dataLink: 'Datenschutzseite',
+    dataAfter: '. Sie ist kurz, weil die Antwort meistens \u201Enichts\u201C lautet.',
+  },
+};
+
+const c = COPY[lang];
+---
+<Page title={c.meta.title} description={c.meta.description}>
+  <section class="wrap page">
+    <p class="eyebrow">{c.eyebrow}</p>
+    <h1>{c.h1}</h1>
+
+    {!a && (
+      <p class="unfinished">
+        <strong>{c.unfinishedStrong}</strong> {c.unfinished} <code>src/data/site.js</code>.
+      </p>
+    )}
+
+    <div class="prose block">
+      <h2>{c.responsibleH}</h2>
+      <p>
+        {SITE.name}<br />
+        {SITE.person}<br />
+        {a && <>{a.street}<br />{a.postcode} {a.town}<br />{a.country}</>}
+        {!a && <em class="todo">{c.addressTodo}</em>}
+      </p>
+
+      <h2>{c.contactH}</h2>
+      <p>
+        {c.emailLabel} <a href={`mailto:${SITE.email}`}>{SITE.email}</a><br />
+        <span class="quiet">{c.contactQuiet}</span>
+      </p>
+
+      {SITE.uid && (<><h2>{c.registerH}</h2><p>{SITE.uid}</p></>)}
+
+      <h2>{c.liabilityContentH}</h2>
+      <p>{c.liabilityContent}</p>
+
+      <h2>{c.liabilityLinksH}</h2>
+      <p>{c.liabilityLinks}</p>
+
+      <h2>{c.copyrightH}</h2>
+      <p>{c.copyright}</p>
+
+      <h2>{c.dataH}</h2>
+      <p class="quiet">
+        {c.dataBefore} <a href={localise('/privacy/', lang)}>{c.dataLink}</a>{c.dataAfter}
+      </p>
+    </div>
+  </section>
+</Page>
+
+<style>
+  .page { padding-block: clamp(48px, 8vw, 88px) 0; }
+  .block { margin-top: 34px; }
+  .block h2 { font-size: 20px; margin: 34px 0 10px; }
+  .block h2:first-child { margin-top: 0; }
+  .quiet { color: var(--muted); }
+  .todo { color: var(--muted); font-style: italic; }
+  code {
+    font-family: var(--mono);
+    font-size: 0.92em;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    padding: 1px 6px;
+  }
+
+  /* Loud on purpose. This is a reminder that has to survive somebody skim-reading. */
+  .unfinished {
+    margin: 28px 0 0;
+    max-width: 68ch;
+    padding: 16px 20px;
+    border-radius: var(--r);
+    border: 1px solid var(--gold);
+    background: color-mix(in srgb, var(--gold) 12%, var(--surface));
+    color: var(--ink);
+    font-size: 16px;
+  }
+  .unfinished strong { font-weight: 600; }
+  .unfinished code { background: color-mix(in srgb, var(--gold) 8%, var(--surface)); }
+</style>

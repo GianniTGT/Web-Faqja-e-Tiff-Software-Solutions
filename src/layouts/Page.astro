@@ -2,7 +2,10 @@
 import Base from './Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { UI, localeFromPath } from '../i18n/ui.js';
 import '../styles/app.css';
+
+const t = UI[localeFromPath(Astro.url.pathname)];
 
 interface Props {
   title: string;
@@ -19,7 +22,7 @@ const { title, description } = Astro.props;
  */
 ---
 <Base title={title} description={description}>
-  <a class="skip" href="#main">Skip to content</a>
+  <a class="skip" href="#main">{t.skip}</a>
   <Header />
   <main id="main">
     <slot />

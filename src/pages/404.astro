@@ -1,6 +1,9 @@
 ---
 import Page from '../layouts/Page.astro';
-import { SITE, NAV } from '../data/site.js';
+import { SITE } from '../data/site.js';
+import { NAV, localise, localeFromPath } from '../i18n/ui.js';
+
+const lang = localeFromPath(Astro.url.pathname);
 
 /**
  * Not found.
@@ -18,8 +21,8 @@ import { SITE, NAV } from '../data/site.js';
       Either it moved or the link was wrong. Everything on the site is one of these:
     </p>
     <nav class="links" aria-label="All pages">
-      <a href="/">Home</a>
-      {NAV.map((item) => <a href={item.href}>{item.label}</a>)}
+      <a href={localise('/', lang)}>{lang === 'de' ? 'Startseite' : 'Home'}</a>
+      {NAV.map((item) => <a href={localise(item.href, lang)}>{item[lang]}</a>)}
     </nav>
   </section>
 </Page>

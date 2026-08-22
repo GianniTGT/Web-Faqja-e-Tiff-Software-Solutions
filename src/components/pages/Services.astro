@@ -1,0 +1,340 @@
+---
+import Page from '../../layouts/Page.astro';
+import { SITE } from '../../data/site.js';
+import { localise } from '../../i18n/ui.js';
+
+/**
+ * Services, in both languages.
+ *
+ * **Every entry says when it is the wrong answer**, which is unusual on a page whose job
+ * is to sell. It is here on purpose: a studio that tells you not to buy something is the
+ * one you believe when it says you should. It also filters the enquiries — the ones that
+ * arrive already know what they are asking for.
+ *
+ * German is Sie-Form and carries no `ß`; see `src/i18n/ui.js`.
+ */
+interface Props { lang: 'en' | 'de'; }
+const { lang } = Astro.props;
+
+const COPY = {
+  en: {
+    meta: {
+      title: `Services — ${SITE.name}`,
+      description: 'Desktop software, websites, product work and the hosting around them. ' +
+                   'What each one is, what you get, and when it is the wrong answer.',
+    },
+    eyebrow: 'Services',
+    h1: 'Four kinds of work.',
+    lede: 'Each of these says what you get and when it is the wrong answer. Both halves are ' +
+          'useful before you spend anything.',
+    getsLabel: 'What you get',
+    notLabel: 'When it is not the answer.',
+    closeTitle: 'Not sure which of those it is?',
+    closeLede: 'That is normal, and working it out is part of the job rather than something ' +
+               'to settle before you get in touch.',
+    closeCta: 'Get in touch',
+    services: [
+      {
+        id: 'desktop',
+        eyebrow: 'Desktop software',
+        title: 'The system the business actually runs on.',
+        body: [
+          'A Windows application that holds your real records: stock, costs, customers, documents. It lives on your machine, its database is encrypted, and it opens whether or not the internet does.',
+          'That last part is not a technical detail. A business whose till stops when the line drops is a business that has bought somebody else\u2019s uptime.',
+        ],
+        gets: [
+          'An installer, and an application that updates from one link',
+          'An encrypted local database, with backups you can verify',
+          'Roles — who may see cost and profit, enforced in the data, not hidden in the screen',
+          'The documents you print, generated from the record instead of retyped',
+        ],
+        not: 'If two or three people need the same live view from different buildings, a web application is the right shape and I will say so.',
+      },
+      {
+        id: 'web',
+        eyebrow: 'Websites',
+        title: 'Hand-built, fast, and yours.',
+        body: [
+          'Marketing sites, catalogues and WordPress themes written from scratch — not a page builder, not a stack of plugins that each want a subscription.',
+          'The result is a site that loads quickly on a phone on a bad connection, that works with JavaScript switched off, and that nobody can break by updating a plugin you have never heard of.',
+        ],
+        gets: [
+          'A design made for your business, not a template with your logo dropped in',
+          'Search, filters and forms that are real links — every result can be sent to somebody',
+          'Enquiries stored before any email is attempted, so a mail problem never loses a customer',
+          'Written so your own people can edit the words without calling me',
+        ],
+        not: 'If you need a shop with a hundred products, stock levels and payments, that is a different job with a different budget. Worth saying before we start, not after.',
+      },
+      {
+        id: 'product',
+        eyebrow: 'Products & SaaS',
+        title: 'Software built once, sold many times.',
+        body: [
+          'Some systems are worth turning into a product. Tiff Cardealer began as one dealership\u2019s office system and is now sold to others — the same application, with nothing about the first customer written into it.',
+          'That takes a particular discipline from day one: no name, no address, no logo anywhere in the code. If you think what you are building might one day be sold to the business down the road, this is the conversation to have at the start.',
+        ],
+        gets: [
+          'An architecture that separates the product from the customer using it',
+          'Per-customer branding, settings and documents with no code change',
+          'A build pipeline that produces a signed, downloadable release on every merge',
+          'Licensing that does not make your uptime your customer\u2019s problem',
+        ],
+        not: 'Most business software should stay one business\u2019s tool. Productising early costs real money and buys nothing until there is a second customer.',
+      },
+      {
+        id: 'care',
+        eyebrow: 'Everything around it',
+        title: 'Domains, hosting, email — and someone who answers.',
+        body: [
+          'The unglamorous half. Domains and DNS, hosting that suits where your customers actually are, TLS certificates that renew themselves, business email, backups that live somewhere other than the server they are protecting.',
+          'None of it is interesting until it fails, which is the argument for having it set up by the person who will pick up the phone when it does.',
+        ],
+        gets: [
+          'Migrations done on a quiet day, with a backup taken first and kept off the server',
+          'Certificates that renew on their own, and a check that they did',
+          'Analytics and a privacy policy that match what the site actually collects',
+          'A written record of every decision, so the next person is not guessing',
+        ],
+        not: 'I do not resell hosting. You own the accounts, you hold the invoices, and you can take them anywhere at any time.',
+      },
+    ],
+  },
+
+  de: {
+    meta: {
+      title: 'Leistungen — Tiff Software Solutions',
+      description: 'Desktop-Software, Websites, Produktentwicklung und das Hosting drumherum. ' +
+                   'Was jede Leistung ist, was Sie bekommen — und wann sie die falsche Antwort ist.',
+    },
+    eyebrow: 'Leistungen',
+    h1: 'Vier Arten von Arbeit.',
+    lede: 'Bei jeder steht, was Sie bekommen und wann sie die falsche Antwort ist. Beides ist ' +
+          'nützlich, bevor Sie etwas ausgeben.',
+    getsLabel: 'Was Sie bekommen',
+    notLabel: 'Wann es nicht die Antwort ist.',
+    closeTitle: 'Nicht sicher, welche davon es ist?',
+    closeLede: 'Das ist normal. Das herauszufinden gehört zur Arbeit — es ist nichts, das Sie ' +
+               'vor der ersten Nachricht klären müssten.',
+    closeCta: 'Kontakt aufnehmen',
+    services: [
+      {
+        id: 'desktop',
+        eyebrow: 'Desktop-Software',
+        title: 'Das System, mit dem der Betrieb wirklich läuft.',
+        body: [
+          'Eine Windows-Anwendung, die Ihre echten Daten hält: Bestand, Kosten, Kunden, Dokumente. Sie liegt auf Ihrem Rechner, ihre Datenbank ist verschlüsselt, und sie öffnet sich, ob das Internet läuft oder nicht.',
+          'Der letzte Punkt ist kein technisches Detail. Ein Betrieb, dessen Kasse stillsteht, wenn die Leitung ausfällt, hat die Verfügbarkeit von jemand anderem gekauft.',
+        ],
+        gets: [
+          'Ein Installationsprogramm und eine Anwendung, die sich über einen Link aktualisiert',
+          'Eine verschlüsselte lokale Datenbank mit überprüfbaren Sicherungen',
+          'Rollen — wer Kosten und Marge sehen darf, durchgesetzt in den Daten, nicht im Bildschirm versteckt',
+          'Die Dokumente, die Sie drucken, erzeugt aus dem Datensatz statt erneut getippt',
+        ],
+        not: 'Wenn zwei oder drei Personen dieselbe Live-Ansicht aus verschiedenen Gebäuden brauchen, ist eine Webanwendung die richtige Form — und ich sage Ihnen das.',
+      },
+      {
+        id: 'web',
+        eyebrow: 'Websites',
+        title: 'Von Hand gebaut, schnell, und Ihre.',
+        body: [
+          'Firmenwebsites, Kataloge und WordPress-Themes, von Grund auf geschrieben — kein Baukasten, kein Stapel Plugins, die jedes ein eigenes Abo wollen.',
+          'Das Ergebnis ist eine Website, die auf dem Handy bei schlechter Verbindung schnell lädt, die auch ohne JavaScript funktioniert, und die niemand kaputt macht, indem er ein Plugin aktualisiert, von dem Sie nie gehört haben.',
+        ],
+        gets: [
+          'Ein Entwurf für Ihren Betrieb, keine Vorlage mit Ihrem Logo darauf',
+          'Suche, Filter und Formulare als echte Links — jedes Ergebnis lässt sich weiterschicken',
+          'Anfragen werden gespeichert, bevor eine E-Mail versucht wird; ein Mailproblem verliert nie einen Kunden',
+          'So geschrieben, dass Ihre eigenen Leute die Texte ändern können, ohne mich anzurufen',
+        ],
+        not: 'Wenn Sie einen Shop mit hundert Artikeln, Lagerbestand und Zahlungen brauchen, ist das eine andere Arbeit mit einem anderen Budget. Das sagt man besser vorher als nachher.',
+      },
+      {
+        id: 'product',
+        eyebrow: 'Produkte & SaaS',
+        title: 'Einmal gebaut, mehrfach verkauft.',
+        body: [
+          'Manche Systeme lohnt es sich, zu einem Produkt zu machen. Tiff Cardealer begann als das Bürosystem eines einzigen Händlers und wird heute an weitere verkauft — dieselbe Anwendung, ohne dass irgendetwas über den ersten Kunden im Code steht.',
+          'Das verlangt vom ersten Tag an eine bestimmte Disziplin: kein Name, keine Adresse, kein Logo im Code. Wenn das, was Sie bauen, eines Tages an den Betrieb nebenan verkauft werden könnte, ist das ein Gespräch für den Anfang, nicht für später.',
+        ],
+        gets: [
+          'Eine Architektur, die das Produkt vom Kunden trennt, der es nutzt',
+          'Branding, Einstellungen und Dokumente je Kunde, ohne Codeänderung',
+          'Eine Build-Kette, die bei jedem Merge eine herunterladbare Version erzeugt',
+          'Lizenzierung, die Ihre Verfügbarkeit nicht zum Problem Ihres Kunden macht',
+        ],
+        not: 'Die meiste Betriebssoftware sollte das Werkzeug eines einzigen Betriebs bleiben. Früh zu produktisieren kostet echtes Geld und bringt nichts, solange es keinen zweiten Kunden gibt.',
+      },
+      {
+        id: 'care',
+        eyebrow: 'Alles drumherum',
+        title: 'Domains, Hosting, E-Mail — und jemand, der abnimmt.',
+        body: [
+          'Die unglamouröse Hälfte. Domains und DNS, Hosting dort, wo Ihre Kunden wirklich sind, TLS-Zertifikate, die sich selbst erneuern, Geschäfts-E-Mail, Sicherungen, die woanders liegen als auf dem Server, den sie schützen.',
+          'Nichts davon ist interessant, bis es ausfällt — und genau das ist das Argument dafür, es von der Person einrichten zu lassen, die dann ans Telefon geht.',
+        ],
+        gets: [
+          'Migrationen an einem ruhigen Tag, mit vorher gezogener Sicherung ausserhalb des Servers',
+          'Zertifikate, die sich selbst erneuern — und eine Kontrolle, dass sie es getan haben',
+          'Statistik und Datenschutzerklärung, die zu dem passen, was die Website wirklich erhebt',
+          'Eine schriftliche Aufzeichnung jeder Entscheidung, damit der Nächste nicht raten muss',
+        ],
+        not: 'Ich verkaufe kein Hosting weiter. Die Konten gehören Ihnen, die Rechnungen laufen auf Sie, und Sie können jederzeit alles mitnehmen.',
+      },
+    ],
+  },
+};
+
+const c = COPY[lang];
+const href = (p) => localise(p, lang);
+---
+<Page title={c.meta.title} description={c.meta.description}>
+  <section class="head">
+    <div class="wrap">
+      <p class="eyebrow">{c.eyebrow}</p>
+      <h1>{c.h1}</h1>
+      <p class="lede">{c.lede}</p>
+    </div>
+  </section>
+
+  <div class="wrap toc-wrap">
+    <nav class="toc" aria-label={c.eyebrow}>
+      {c.services.map((s) => <a href={`#${s.id}`}>{s.eyebrow}</a>)}
+    </nav>
+  </div>
+
+  {c.services.map((s, i) => (
+    <section class="section svc" id={s.id}>
+      <div class="wrap layout">
+        <div class="copy">
+          <p class="eyebrow">{s.eyebrow}</p>
+          <h2>{s.title}</h2>
+          <div class="prose">
+            {s.body.map((para) => <p>{para}</p>)}
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="card">
+            <h3>{c.getsLabel}</h3>
+            <ul>{s.gets.map((g) => <li>{g}</li>)}</ul>
+          </div>
+          <p class="not"><strong>{c.notLabel}</strong> {s.not}</p>
+        </div>
+      </div>
+      {i < c.services.length - 1 && <div class="wrap"><hr /></div>}
+    </section>
+  ))}
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="band">
+        <div>
+          <h2>{c.closeTitle}</h2>
+          <p class="lede">{c.closeLede}</p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn-primary" href={href('/contact/')}>{c.closeCta}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Page>
+
+<style>
+  .head {
+    padding-block: clamp(48px, 8vw, 88px) clamp(24px, 3vw, 34px);
+    background:
+      radial-gradient(110% 80% at 8% -10%,
+        color-mix(in srgb, var(--forest) 9%, transparent), transparent 60%),
+      var(--paper);
+  }
+  .head h1 { max-width: 14ch; }
+
+  /* A jump list, not a sticky sidebar: four anchors do not earn a column of their own, and
+     a sticky column on a phone is a column in the way. */
+  .toc-wrap { padding-top: 20px; }
+  .toc { display: flex; flex-wrap: wrap; gap: 10px; }
+  .toc a {
+    font-family: var(--display);
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    border-radius: 999px;
+    padding: 7px 15px;
+  }
+  .toc a:hover { color: var(--forest); border-color: var(--forest); }
+
+  /* A sticky header would otherwise sit on top of the heading an anchor jumps to. */
+  .svc { scroll-margin-top: 84px; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 44px;
+    align-items: start;
+  }
+
+  .detail .card ul {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 11px;
+  }
+  .detail .card li {
+    position: relative;
+    padding-left: 24px;
+    font-size: 16px;
+    color: var(--ink);
+    text-wrap: pretty;
+  }
+  .detail .card li::before {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 10px;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--gold);
+  }
+
+  .not {
+    margin: 18px 0 0;
+    font-size: 15.5px;
+    color: var(--muted);
+    border-left: 3px solid var(--line);
+    padding-left: 16px;
+    text-wrap: pretty;
+  }
+  .not strong { color: var(--ink); font-weight: 600; }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--line);
+    margin: clamp(40px, 6vw, 72px) 0 0;
+  }
+
+  .band {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: clamp(28px, 4vw, 44px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  .band h2 { margin-bottom: 10px; }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; gap: 26px; }
+  }
+</style>

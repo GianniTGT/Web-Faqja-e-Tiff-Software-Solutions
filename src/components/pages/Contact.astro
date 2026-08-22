@@ -1,0 +1,222 @@
+---
+import Page from '../../layouts/Page.astro';
+import { SITE } from '../../data/site.js';
+
+/**
+ * Contact, in both languages.
+ *
+ * **There is no form, and that is a decision rather than an omission.** This site is
+ * static — there is no server here to receive a POST — so a form would mean handing the
+ * enquiries to a third-party service, which for a business whose whole argument is that
+ * your data stays yours would be an odd first impression. An email link goes straight to a
+ * mailbox nobody else reads.
+ *
+ * That decision is worth revisiting: a form on the page converts better than a mailto, and
+ * the privacy argument survives a small handler on the firm's own Netcup account. See
+ * CLAUDE.md §8.
+ *
+ * **No promised response time here.** One that gets broken on a busy week is worse than
+ * none at all; Gianni can add one the day he wants to stand behind it.
+ */
+interface Props { lang: 'en' | 'de'; }
+const { lang } = Astro.props;
+
+const COPY = {
+  en: {
+    meta: {
+      title: `Contact — ${SITE.name}`,
+      description: `Get in touch with ${SITE.name} in ${SITE.city}, ${SITE.country}. Email ${SITE.email}.`,
+    },
+    subject: 'Project enquiry',
+    eyebrow: 'Contact',
+    h1: 'Write to me.',
+    lede: 'No form, no sales sequence, nobody else reading it. Tell me what the business does ' +
+          'and what is getting in the way — that is enough to start with.',
+    mailLabel: 'Email',
+    beforeEyebrow: 'Before you write',
+    beforeTitle: 'What helps me answer properly.',
+    helps: [
+      'What the business does, and who is going to use the thing',
+      'What happens today — the spreadsheet, the paper, the double typing',
+      'Roughly when you would like it working',
+      'Anything already in place that has to keep working',
+    ],
+    small: 'None of it is required. A sentence and a phone number is a perfectly good first ' +
+           'email — I would rather hear from you with too little than not at all.',
+    nextTitle: 'What happens then',
+    next: [
+      'I read it and reply myself. Every one.',
+      'If it looks like a fit, we talk — a call, in whichever language suits you.',
+      'You get a written proposal: what gets built, what it costs, and by when.',
+      'Nothing starts, and nothing is charged, until you have agreed to that.',
+    ],
+    closeTitle: 'Already know what you need?',
+    closeLede: 'Say so in the first line and skip the rest. The proposal comes faster.',
+  },
+
+  de: {
+    meta: {
+      title: 'Kontakt — Tiff Software Solutions',
+      description: 'Kontakt zu Tiff Software Solutions in Bern. E-Mail info@tiff-software-solutions.com.',
+    },
+    subject: 'Projektanfrage',
+    eyebrow: 'Kontakt',
+    h1: 'Schreiben Sie mir.',
+    lede: 'Kein Formular, keine Verkaufsstrecke, niemand sonst liest mit. Erzählen Sie mir, ' +
+          'was Ihr Betrieb tut und was im Weg steht — das genügt für den Anfang.',
+    mailLabel: 'E-Mail',
+    beforeEyebrow: 'Bevor Sie schreiben',
+    beforeTitle: 'Was mir hilft, richtig zu antworten.',
+    helps: [
+      'Was der Betrieb tut, und wer damit arbeiten wird',
+      'Wie es heute läuft — die Tabelle, das Papier, das doppelte Erfassen',
+      'Ungefähr, wann es laufen soll',
+      'Alles, was bereits da ist und weiterlaufen muss',
+    ],
+    small: 'Nichts davon ist Pflicht. Ein Satz und eine Telefonnummer sind eine völlig gute ' +
+           'erste E-Mail — mir ist zu wenig lieber als gar nichts.',
+    nextTitle: 'Was dann passiert',
+    next: [
+      'Ich lese sie und antworte selbst. Jede einzelne.',
+      'Passt es, sprechen wir — ein Anruf, in der Sprache, die Ihnen passt.',
+      'Sie bekommen eine schriftliche Offerte: was gebaut wird, was es kostet, und bis wann.',
+      'Nichts beginnt und nichts wird verrechnet, bevor Sie zugestimmt haben.',
+    ],
+    closeTitle: 'Sie wissen schon, was Sie brauchen?',
+    closeLede: 'Schreiben Sie es in die erste Zeile und lassen Sie den Rest weg. Dann kommt ' +
+               'die Offerte schneller.',
+  },
+};
+
+const c = COPY[lang];
+const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent(c.subject)}`;
+---
+<Page title={c.meta.title} description={c.meta.description}>
+  <section class="head">
+    <div class="wrap">
+      <p class="eyebrow">{c.eyebrow}</p>
+      <h1>{c.h1}</h1>
+      <p class="lede">{c.lede}</p>
+
+      <a class="mail" href={mailto}>
+        <span class="mail-label">{c.mailLabel}</span>
+        <span class="mail-value">{SITE.email}</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap layout">
+      <div>
+        <p class="eyebrow">{c.beforeEyebrow}</p>
+        <h2>{c.beforeTitle}</h2>
+        <ul class="ticks">{c.helps.map((h) => <li>{h}</li>)}</ul>
+        <p class="quiet small">{c.small}</p>
+      </div>
+
+      <div class="card next">
+        <h3>{c.nextTitle}</h3>
+        <ol>{c.next.map((n) => <li>{n}</li>)}</ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="band">
+        <div>
+          <h2>{c.closeTitle}</h2>
+          <p class="lede">{c.closeLede}</p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn-primary" href={mailto}>{SITE.email}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Page>
+
+<style>
+  .head {
+    padding-block: clamp(48px, 8vw, 88px) clamp(28px, 4vw, 44px);
+    background:
+      radial-gradient(110% 80% at 8% -10%,
+        color-mix(in srgb, var(--forest) 9%, transparent), transparent 60%),
+      var(--paper);
+  }
+  .head h1 { max-width: 12ch; }
+
+  .mail {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 34px;
+    padding: 18px 26px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--gold);
+    border-radius: var(--r);
+    text-decoration: none;
+    max-width: 100%;
+  }
+  .mail:hover { border-color: var(--forest); border-left-color: var(--gold); }
+  .mail-label {
+    font-family: var(--display);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  /* A long address on a narrow phone must wrap rather than push the page sideways. */
+  .mail-value {
+    font-family: var(--mono);
+    font-size: clamp(16px, 4.4vw, 21px);
+    font-weight: 500;
+    color: var(--ink);
+    word-break: break-all;
+  }
+
+  .layout { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 44px; align-items: start; }
+
+  .ticks { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 12px; }
+  .ticks li {
+    position: relative;
+    padding-left: 26px;
+    font-size: 16.5px;
+    color: var(--ink);
+    text-wrap: pretty;
+  }
+  .ticks li::before {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 9px;
+    width: 9px;
+    height: 9px;
+    border-radius: 2px;
+    background: var(--gold);
+  }
+  .small { font-size: 15.5px; margin-top: 22px; max-width: 52ch; }
+  .quiet { color: var(--muted); text-wrap: pretty; }
+
+  .next ol { margin: 14px 0 0; padding-left: 20px; display: grid; gap: 11px; }
+  .next li { font-size: 16px; color: var(--ink); text-wrap: pretty; }
+  .next li::marker { color: var(--gold); font-weight: 600; }
+
+  .band {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: clamp(28px, 4vw, 44px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  .band h2 { margin-bottom: 10px; }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; gap: 30px; }
+  }
+</style>

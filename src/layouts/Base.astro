@@ -29,6 +29,7 @@ import '@fontsource/ibm-plex-sans/latin-ext-600.css';
 import '@fontsource/ibm-plex-mono/latin-500.css';
 
 import '../styles/tokens.css';
+import { UI, localeFromPath, otherLocaleHref } from '../i18n/ui.js';
 
 interface Props {
   title: string;
@@ -39,10 +40,24 @@ const { title, description } = Astro.props;
 /* The canonical URL is built from `site` in astro.config.mjs. If that is wrong, every
    canonical on the site is wrong and nothing warns — which is why the config carries a
    note saying to change it the day the domain is bought. */
-const canonical = new URL(Astro.url.pathname, Astro.site);
+const path = Astro.url.pathname;
+const canonical = new URL(path, Astro.site);
+const lang = localeFromPath(path);
+const t = UI[lang];
+
+/**
+ * `hreflang` tells a search engine these two URLs are the same page in two languages,
+ * rather than two pages competing with each other for the same query. Each page names
+ * both itself and its counterpart — the pair has to be symmetrical or Google ignores it —
+ * plus `x-default` for a reader whose language is neither.
+ */
+const alternates = [
+  ['en', new URL(lang === 'en' ? path : otherLocaleHref(path, lang), Astro.site).href],
+  ['de', new URL(lang === 'de' ? path : otherLocaleHref(path, lang), Astro.site).href],
+];
 ---
 <!doctype html>
-<html lang="en">
+<html lang={t.htmlLang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -50,10 +65,16 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
 
+    {alternates.map(([code, href]) => (
+      <link rel="alternate" hreflang={code} href={href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={alternates[0][1]} />
+
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={lang === 'de' ? 'de_CH' : 'en_US'} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 

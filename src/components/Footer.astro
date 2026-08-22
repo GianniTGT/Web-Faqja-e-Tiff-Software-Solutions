@@ -1,42 +1,45 @@
 ---
 import Mark from './Mark.astro';
-import { SITE, NAV, LEGAL } from '../data/site.js';
+import { SITE } from '../data/site.js';
+import { NAV, LEGAL, UI, TAGLINE, localise, localeFromPath } from '../i18n/ui.js';
 
 /* The year is stamped at build time, not read in the browser. A static site rebuilt once a
    year is a footer that says 2026 in 2027 — which is why the deploy workflow is worth
    running on a schedule, not why this needs a script. */
 const year = new Date().getFullYear();
+const lang = localeFromPath(Astro.url.pathname);
+const t = UI[lang];
 ---
 <footer class="site-foot">
   <div class="wrap grid">
     <div class="col about">
-      <a class="brand" href="/">
+      <a class="brand" href={localise('/', lang)}>
         <Mark size={30} />
         <span>Tiff <b>Software Solutions</b></span>
       </a>
-      <p>{SITE.description}</p>
+      <p>{TAGLINE[lang]}</p>
     </div>
 
-    <nav class="col" aria-label="Footer">
-      <h2>Site</h2>
+    <nav class="col" aria-label={t.footerNav}>
+      <h2>{t.site}</h2>
       <ul>
-        {NAV.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        {NAV.map((item) => <li><a href={localise(item.href, lang)}>{item[lang]}</a></li>)}
       </ul>
     </nav>
 
     <div class="col">
-      <h2>Contact</h2>
+      <h2>{t.contact}</h2>
       <ul>
         <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
-        <li class="plain">{SITE.city}, {SITE.country}</li>
+        <li class="plain">{SITE.city}, {lang === 'de' ? 'Schweiz' : SITE.country}</li>
       </ul>
     </div>
   </div>
 
   <div class="wrap rule">
     <p>&copy; {year} {SITE.name} &middot; {SITE.person}</p>
-    <nav class="legal" aria-label="Legal">
-      {LEGAL.map((item) => <a href={item.href}>{item.label}</a>)}
+    <nav class="legal" aria-label={t.legalNav}>
+      {LEGAL.map((item) => <a href={localise(item.href, lang)}>{item[lang]}</a>)}
     </nav>
   </div>
 </footer>

@@ -1,0 +1,440 @@
+---
+import Page from '../../layouts/Page.astro';
+import { SITE } from '../../data/site.js';
+import { localise } from '../../i18n/ui.js';
+
+/**
+ * The home page, in both languages.
+ *
+ * **The German is written, not translated.** A word-for-word conversion of English
+ * marketing copy reads like a word-for-word conversion, and this is the language the
+ * customer in Bern actually buys in. Sie-Form throughout, and **no `ß` anywhere** —
+ * Switzerland does not use it, and a Swiss reader spots one immediately.
+ *
+ * Both languages live in one file on purpose. Two files is how a sentence gets improved in
+ * English and left alone in German until the two pages are saying different things.
+ *
+ * **Nothing here is invented.** No client logos, no testimonials, no numbers nobody
+ * measured. The dealership is described rather than named, because putting a customer's
+ * name on a public page is their permission to give.
+ */
+interface Props { lang: 'en' | 'de'; }
+const { lang } = Astro.props;
+
+const COPY = {
+  en: {
+    meta: { title: `${SITE.name} — ${SITE.tagline}`, description: SITE.description },
+    eyebrow: `${SITE.city}, ${SITE.country}`,
+    h1: 'Software small businesses can\u00A0actually run.',
+    lede: 'Desktop applications, websites, and the systems that join them. Built for one ' +
+          'business at a time — and built to keep working on a bad day, not only a good one.',
+    ctaPrimary: 'Start a project',
+    ctaGhost: 'See the work',
+    proofLabel: 'Shipped work',
+    proofHead: 'Shipped and in use',
+    proof: [
+      { name: 'Tiff Cardealer Manager',
+        line: 'A Windows application holding every vehicle, cost and document for a ' +
+              'used-car dealership. Encrypted, local, and open on a morning the internet is not.' },
+      { name: 'Tiff Cardealer',
+        line: 'The website in front of it — inventory, search and financing enquiries, ' +
+              'fed by the office and never the other way round.' },
+    ],
+    proofLink: 'How the two halves meet',
+
+    buildEyebrow: 'What I build',
+    buildTitle: 'Three things, and the seam between them.',
+    services: [
+      { title: 'Desktop software',
+        body: 'Windows applications that hold a business\u2019s real records — encrypted, on its ' +
+              'own machine, working whether or not the internet is.' },
+      { title: 'Websites',
+        body: 'Fast, hand-built sites and WordPress themes. No page builder, no plugin stack, ' +
+              'nothing that stops working when a subscription lapses.' },
+      { title: 'The join between them',
+        body: 'The part most projects skip: getting the office system and the public website to ' +
+              'agree, automatically, without anybody typing the same car twice.' },
+    ],
+    servicesMore: 'How each of those actually works',
+
+    workEyebrow: 'Selected work',
+    workTitle: 'Tiff Cardealer',
+    workLede: 'A complete system for a used-car dealership: a Windows application that holds ' +
+              'every vehicle, cost and document, and a website that publishes only what a ' +
+              'customer should see.',
+    facts: [
+      'An encrypted database on the dealership\u2019s own machine — purchase price, parts, labour and margin never leave it.',
+      'A car marked Ready appears on the website by itself. Marked Sold, it comes down — keeping its page, its photos and its history.',
+      'Bill of Sale, federal odometer disclosure and FTC Buyers Guide, generated from the record rather than typed again.',
+      'VINs read from a photograph of the door frame instead of seventeen characters typed by hand.',
+    ],
+    workCta: 'Read the full case study',
+    glance: 'At a glance',
+    glanceRows: [
+      ['Built for', 'A used-car dealership in Anchorage, Alaska'],
+      ['Desktop', 'Electron, React, encrypted SQLite'],
+      ['Web', 'A WordPress theme written from scratch'],
+      ['Status', 'In daily use; sold as a product to other dealerships'],
+    ],
+
+    methodEyebrow: 'How I work',
+    methodTitle: 'Four things I will not trade away.',
+    method: [
+      { n: '01', title: 'One business at a time',
+        body: 'I take on few projects and stay on them. You get the person who wrote it, not a ticket queue.' },
+      { n: '02', title: 'Your data stays yours',
+        body: 'Where it belongs on your machine, it stays on your machine. What has to be public is chosen deliberately, field by field — never by default.' },
+      { n: '03', title: 'Built to be run by staff',
+        body: 'The people using it are selling cars, not administering software. Anything that needs a manual is something I have not finished.' },
+      { n: '04', title: 'Nothing ships unverified',
+        body: 'A passing test is not somebody opening the screen. Both happen before I tell you it works.' },
+    ],
+
+    closeTitle: 'Tell me what the business actually does.',
+    closeLede: 'Not the software you think you need — the job it has to get done. That ' +
+               'conversation is free, and it is usually where the real answer is.',
+  },
+
+  de: {
+    meta: {
+      title: 'Tiff Software Solutions — Software, mit der kleine Unternehmen wirklich arbeiten',
+      description: 'Desktop-Anwendungen, Websites und die Systeme dazwischen. Für ein ' +
+                   'Unternehmen nach dem anderen, aus Bern.',
+    },
+    eyebrow: 'Bern, Schweiz',
+    h1: 'Software, mit der kleine Betriebe wirklich\u00A0arbeiten.',
+    lede: 'Desktop-Anwendungen, Websites und die Systeme dazwischen. Für ein Unternehmen ' +
+          'nach dem anderen — und so gebaut, dass sie auch an einem schlechten Tag laufen, ' +
+          'nicht nur an einem guten.',
+    ctaPrimary: 'Projekt starten',
+    ctaGhost: 'Arbeiten ansehen',
+    proofLabel: 'Im Einsatz',
+    proofHead: 'Ausgeliefert und im Einsatz',
+    proof: [
+      { name: 'Tiff Cardealer Manager',
+        line: 'Eine Windows-Anwendung, die jedes Fahrzeug, jede Position und jedes Dokument ' +
+              'eines Autohändlers hält. Verschlüsselt, lokal — und morgens offen, auch wenn ' +
+              'das Internet es nicht ist.' },
+      { name: 'Tiff Cardealer',
+        line: 'Die Website davor — Bestand, Suche und Finanzierungsanfragen, gespeist aus dem ' +
+              'Büro und nie umgekehrt.' },
+    ],
+    proofLink: 'Wie die beiden Hälften zusammenkommen',
+
+    buildEyebrow: 'Was ich baue',
+    buildTitle: 'Drei Dinge — und die Naht dazwischen.',
+    services: [
+      { title: 'Desktop-Software',
+        body: 'Windows-Anwendungen, die die echten Daten eines Betriebs halten — verschlüsselt, ' +
+              'auf dem eigenen Rechner, und sie laufen, ob das Internet läuft oder nicht.' },
+      { title: 'Websites',
+        body: 'Schnelle, von Hand gebaute Websites und WordPress-Themes. Kein Baukasten, kein ' +
+              'Plugin-Stapel, nichts, das aufhört zu funktionieren, wenn ein Abo ausläuft.' },
+      { title: 'Die Naht dazwischen',
+        body: 'Der Teil, den die meisten Projekte auslassen: Bürosystem und öffentliche Website ' +
+              'automatisch in Übereinstimmung bringen, ohne dass jemand dasselbe Fahrzeug ' +
+              'zweimal tippt.' },
+    ],
+    servicesMore: 'Wie das jeweils funktioniert',
+
+    workEyebrow: 'Ausgewählte Arbeit',
+    workTitle: 'Tiff Cardealer',
+    workLede: 'Ein komplettes System für einen Gebrauchtwagenhändler: eine Windows-Anwendung, ' +
+              'die jedes Fahrzeug, jede Position und jedes Dokument hält, und eine Website, ' +
+              'die nur zeigt, was ein Kunde sehen soll.',
+    facts: [
+      'Eine verschlüsselte Datenbank auf dem Rechner des Händlers — Einkaufspreis, Teile, Arbeit und Marge verlassen ihn nie.',
+      'Ein Fahrzeug auf \u201EBereit\u201C erscheint von selbst auf der Website. Auf \u201EVerkauft\u201C gesetzt, verschwindet es wieder — Seite, Fotos und Historie bleiben erhalten.',
+      'Kaufvertrag, Kilometerstandserklärung und FTC Buyers Guide, erzeugt aus dem Datensatz statt erneut getippt.',
+      'Fahrgestellnummern aus einem Foto des Türrahmens statt siebzehn von Hand getippter Zeichen.',
+    ],
+    workCta: 'Die ganze Fallstudie lesen',
+    glance: 'Auf einen Blick',
+    glanceRows: [
+      ['Gebaut für', 'Einen Gebrauchtwagenhändler in Anchorage, Alaska'],
+      ['Desktop', 'Electron, React, verschlüsseltes SQLite'],
+      ['Web', 'Ein von Grund auf geschriebenes WordPress-Theme'],
+      ['Stand', 'Täglich im Einsatz; als Produkt an weitere Händler verkauft'],
+    ],
+
+    methodEyebrow: 'Wie ich arbeite',
+    methodTitle: 'Vier Dinge, die nicht verhandelbar sind.',
+    method: [
+      { n: '01', title: 'Ein Unternehmen nach dem anderen',
+        body: 'Ich nehme wenige Projekte an und bleibe dabei. Sie bekommen die Person, die es geschrieben hat, keine Ticket-Warteschlange.' },
+      { n: '02', title: 'Ihre Daten bleiben Ihre',
+        body: 'Was auf Ihren Rechner gehört, bleibt dort. Was öffentlich sein muss, wird bewusst gewählt, Feld für Feld — nie einfach so.' },
+      { n: '03', title: 'Vom Personal bedienbar',
+        body: 'Die Leute, die damit arbeiten, verkaufen Autos, sie verwalten keine Software. Was ein Handbuch braucht, habe ich nicht fertig gemacht.' },
+      { n: '04', title: 'Nichts geht ungeprüft raus',
+        body: 'Ein bestandener Test ist nicht dasselbe wie jemand, der den Bildschirm öffnet. Beides passiert, bevor ich Ihnen sage, dass es läuft.' },
+    ],
+
+    closeTitle: 'Erzählen Sie mir, was Ihr Betrieb wirklich tut.',
+    closeLede: 'Nicht die Software, die Sie zu brauchen glauben — die Aufgabe, die erledigt ' +
+               'werden muss. Dieses Gespräch kostet nichts, und meistens liegt dort die ' +
+               'eigentliche Antwort.',
+  },
+};
+
+const c = COPY[lang];
+const href = (p) => localise(p, lang);
+---
+<Page title={c.meta.title} description={c.meta.description}>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">{c.eyebrow}</p>
+        <h1 set:html={c.h1} />
+        <p class="lede">{c.lede}</p>
+        <div class="btn-row hero-cta">
+          <a class="btn btn-primary" href={href('/contact/')}>{c.ctaPrimary}</a>
+          <a class="btn btn-ghost" href={href('/work/')}>{c.ctaGhost}</a>
+        </div>
+      </div>
+
+      {/*
+        The right half used to be empty, and a dead band beside a headline reads as an
+        unfinished page — the same thing that had to be fixed on the dealership's own
+        homepage. What fills it is deliberately not decoration: it is the shipped work,
+        which is the question a visitor has next.
+      */}
+      <aside class="hero-proof" aria-label={c.proofLabel}>
+        <p class="proof-head">{c.proofHead}</p>
+        <ul>
+          {c.proof.map((item) => (
+            <li>
+              <strong>{item.name}</strong>
+              <span>{item.line}</span>
+            </li>
+          ))}
+        </ul>
+        <a class="proof-link" href={href('/work/')}>{c.proofLink} &rarr;</a>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">{c.buildEyebrow}</p>
+      <h2>{c.buildTitle}</h2>
+      <div class="cols svc">
+        {c.services.map((s) => (
+          <article class="card">
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+          </article>
+        ))}
+      </div>
+      <p class="after">
+        <a href={href('/services/')}>{c.servicesMore} &rarr;</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap feature">
+      <div class="feature-copy">
+        <p class="eyebrow">{c.workEyebrow}</p>
+        <h2>{c.workTitle}</h2>
+        <p class="lede">{c.workLede}</p>
+        <ul class="facts">
+          {c.facts.map((f) => <li>{f}</li>)}
+        </ul>
+        <div class="btn-row">
+          <a class="btn btn-ghost" href={href('/work/')}>{c.workCta}</a>
+        </div>
+      </div>
+
+      <aside class="feature-side" aria-label={c.glance}>
+        <dl>
+          {c.glanceRows.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">{c.methodEyebrow}</p>
+      <h2>{c.methodTitle}</h2>
+      <div class="cols method">
+        {c.method.map((m) => (
+          <article class="card">
+            <span class="num">{m.n}</span>
+            <h3>{m.title}</h3>
+            <p>{m.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="band">
+        <div>
+          <h2>{c.closeTitle}</h2>
+          <p class="lede">{c.closeLede}</p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn-primary" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Page>
+
+<style>
+  .hero {
+    padding-block: clamp(56px, 10vw, 118px) clamp(40px, 6vw, 72px);
+    /* One quiet wash rather than a flourish. The page's job is to be read. */
+    background:
+      radial-gradient(112% 84% at 10% -10%,
+        color-mix(in srgb, var(--forest) 10%, transparent), transparent 62%),
+      var(--paper);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.08fr 0.92fr;
+    gap: 52px;
+    /* Top-aligned, not centred: the copy column is taller, and centring would float the
+       panel in the middle of its own white space instead of starting with the headline. */
+    align-items: start;
+  }
+  /* 16ch, not 15: the German headline is the longer of the two and 15 wrapped it to five
+     lines. One character of slack fixes German and leaves English on four. */
+  .hero h1 { max-width: 16ch; }
+  .hero-cta { margin-top: 34px; }
+
+  .hero-proof {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 26px 28px;
+    margin-top: 8px;
+  }
+  .proof-head {
+    font-family: var(--display);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 18px;
+  }
+  .hero-proof ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
+  .hero-proof li {
+    display: grid;
+    gap: 5px;
+    padding-left: 15px;
+    border-left: 3px solid var(--gold);
+  }
+  .hero-proof strong {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .hero-proof span { font-size: 15px; color: var(--muted); text-wrap: pretty; }
+  .proof-link {
+    display: inline-block;
+    margin-top: 22px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .proof-link:hover { text-decoration: underline; }
+
+  .svc, .method { margin-top: 34px; }
+
+  /* Four cards, and `auto-fit` put three on one row and left the fourth alone — the same
+     broken-block look `auto-fit` produced for the dealership's two-item feature group.
+     Explicit tracks instead: four, then two, then one. Never three. */
+  .method { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  @media (max-width: 1040px) { .method { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px)  { .method { grid-template-columns: 1fr; } }
+  .after { margin: 22px 0 0; font-size: 16px; }
+  .after a { font-weight: 500; text-decoration: none; }
+  .after a:hover { text-decoration: underline; }
+
+  .num {
+    display: block;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .feature {
+    display: grid;
+    grid-template-columns: 1.35fr 0.65fr;
+    gap: 44px;
+    align-items: start;
+  }
+  .feature h2 { margin-bottom: 14px; }
+  .facts {
+    list-style: none;
+    margin: 26px 0 30px;
+    padding: 0;
+    display: grid;
+    gap: 13px;
+    max-width: 58ch;
+  }
+  .facts li {
+    position: relative;
+    padding-left: 26px;
+    color: var(--ink);
+    font-size: 16.5px;
+    text-wrap: pretty;
+  }
+  .facts li::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 11px;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--gold);
+  }
+  .facts em { font-style: normal; font-weight: 600; }
+
+  .feature-side {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 24px 26px;
+  }
+  .feature-side dl { margin: 0; display: grid; gap: 18px; }
+  .feature-side dt {
+    font-family: var(--display);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+  .feature-side dd { margin: 0; font-size: 16px; color: var(--ink); }
+
+  .band {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: clamp(28px, 4vw, 44px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  .band h2 { margin-bottom: 10px; }
+
+  @media (max-width: 980px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+  }
+  @media (max-width: 900px) {
+    .feature { grid-template-columns: 1fr; gap: 30px; }
+  }
+</style>

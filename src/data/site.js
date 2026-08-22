@@ -55,22 +55,9 @@ export const SITE = {
  */
 export const OTHER_WORK = [];
 
-/** The navigation, in one array so the header and the footer cannot drift apart. */
-export const NAV = [
-  { href: '/services/', label: 'Services' },
-  { href: '/work/',     label: 'Work' },
-  { href: '/about/',    label: 'About' },
-  { href: '/contact/',  label: 'Contact' },
-];
-
-/**
- * The legal pages, kept out of `NAV` on purpose.
- *
- * They belong in the footer, where somebody looks for them, and not in a five-item main
- * navigation where they would compete with the pages that sell the work. In the DACH
- * region their *absence* is what gets noticed, not their prominence.
+/*
+ * The navigation used to live here. It moved to `src/i18n/ui.js` when German was added,
+ * because every entry now needs a label per language and a path that gets its locale
+ * prefix from `localise()`. One list, two languages — a page added there appears in
+ * both or in neither.
  */
-export const LEGAL = [
-  { href: '/imprint/', label: 'Imprint' },
-  { href: '/privacy/', label: 'Privacy' },
-];

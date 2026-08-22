@@ -1,0 +1,234 @@
+---
+import Page from '../../layouts/Page.astro';
+import { SITE } from '../../data/site.js';
+import { localise } from '../../i18n/ui.js';
+
+/**
+ * About, in both languages.
+ *
+ * Short on biography and long on how the work is done, because a one-person studio is
+ * bought on judgement rather than on a CV.
+ *
+ * **Two things here are Gianni's to confirm rather than mine to assert:** the languages
+ * listed, and nothing else. They are written plainly so a correction is a one-word edit.
+ */
+interface Props { lang: 'en' | 'de'; }
+const { lang } = Astro.props;
+
+const LANGUAGES = { en: ['English', 'German', 'Albanian'], de: ['Deutsch', 'Englisch', 'Albanisch'] };
+
+const COPY = {
+  en: {
+    meta: {
+      title: `About — ${SITE.name}`,
+      description: `${SITE.name} is ${SITE.person}, a software developer in ${SITE.city}, ` +
+                   `${SITE.country}, building desktop applications, websites and the systems that join them.`,
+    },
+    eyebrow: 'About',
+    h1: 'One developer, in Bern.',
+    lede: `${SITE.name} is ${SITE.person}. I design, build, host and look after software for ` +
+          'small businesses — usually all four, because handing those between people is where ' +
+          'most of it goes wrong.',
+    sections: [
+      { h: 'What I do, plainly', p: [
+        'I build the system a business runs on, and the website in front of it. Most of my work is one of two shapes: an application that holds records a business cannot afford to lose, or a site that has to be fast, findable and easy for the owner to change.',
+        'The projects I like most are the ones where those two meet — where a thing typed into the office in the morning should appear in public by itself, and where exactly which parts of it appear is a decision somebody has to make carefully.',
+      ]},
+      { h: 'How I got here', p: [
+        'I have spent years on the unglamorous side of small business technology: domains, hosting, email that actually arrives, sites that were built by somebody else and then abandoned. It is a good education. You learn quickly which decisions cost someone money three years later, and you stop making them.',
+        'My own product, Tiff Cardealer, came out of exactly that. A family dealership needed a system nobody sold; the useful version of it turned out to be one that keeps their figures on their own machine and publishes only what a customer should see. It is now sold to other dealerships.',
+      ]},
+      { h: 'How I charge', p: [
+        'A fixed price for a defined piece of work, agreed before anything starts, so you are never surprised by an invoice. Longer arrangements — hosting, maintenance, the ongoing care of something I built — are a flat monthly fee you can end at any time.',
+      ], quiet:
+        'You own the accounts, the domains and the code. Nothing I set up should be hard to take somewhere else, and if it ever is, that is a fault rather than a business model.' },
+    ],
+    detailsLabel: 'Details',
+    rows: [['Based in', `${SITE.city}, ${SITE.country}`], ['Working in', null],
+           ['Clients in', 'Switzerland, and the United States'], ['Email', null]],
+    beliefEyebrow: 'How I work',
+    beliefTitle: 'Three things that do not change.',
+    beliefs: [
+      { title: 'Working software beats a demo',
+        body: 'A screen that passes a test and a screen a person can use are two different claims. I do not tell you something works until I have opened it and done the thing you would do.' },
+      { title: 'Write down why, not what',
+        body: 'Every project I hand over comes with the reasoning behind its decisions, not just the code that resulted. The next person — including me in six months — needs to know which trade-offs were made on purpose.' },
+      { title: 'Small, and staying that way',
+        body: 'I take on few clients so that the person who wrote your system is the person who answers when you write. Growing past that would change the only thing that makes this worth hiring.' },
+    ],
+    closeTitle: 'Worth a conversation?',
+    closeLede: 'The first one costs nothing and is usually the most useful part of the project.',
+    closeCta: 'Get in touch',
+  },
+
+  de: {
+    meta: {
+      title: 'Über uns — Tiff Software Solutions',
+      description: 'Tiff Software Solutions ist Kani Tifeki, Softwareentwickler in Bern. ' +
+                   'Desktop-Anwendungen, Websites und die Systeme dazwischen.',
+    },
+    eyebrow: 'Über uns',
+    h1: 'Ein Entwickler, in Bern.',
+    lede: 'Tiff Software Solutions ist Kani Tifeki. Ich entwerfe, baue, hoste und betreue ' +
+          'Software für kleine Unternehmen — meistens alles vier, weil die Übergaben ' +
+          'dazwischen genau die Stelle sind, an der das meiste schiefgeht.',
+    sections: [
+      { h: 'Was ich tue, schlicht gesagt', p: [
+        'Ich baue das System, mit dem ein Betrieb arbeitet, und die Website davor. Das meiste hat eine von zwei Formen: eine Anwendung, die Daten hält, deren Verlust sich ein Betrieb nicht leisten kann, oder eine Website, die schnell und auffindbar sein muss und die der Inhaber selbst ändern kann.',
+        'Am liebsten sind mir die Projekte, in denen sich beides trifft — wo etwas, das morgens im Büro erfasst wird, von selbst öffentlich erscheinen soll, und wo die Frage, welche Teile davon erscheinen, jemand sorgfältig entscheiden muss.',
+      ]},
+      { h: 'Wie ich hierher kam', p: [
+        'Ich habe Jahre auf der unglamourösen Seite der Technik kleiner Betriebe verbracht: Domains, Hosting, E-Mail, die tatsächlich ankommt, Websites, die jemand anderes gebaut und dann liegengelassen hat. Das ist eine gute Schule. Man lernt schnell, welche Entscheidungen drei Jahre später Geld kosten — und hört auf, sie zu treffen.',
+        'Mein eigenes Produkt, Tiff Cardealer, ist genau daraus entstanden. Ein Familienbetrieb brauchte ein System, das niemand verkaufte; die brauchbare Fassung war eine, die seine Zahlen auf dem eigenen Rechner behält und nur veröffentlicht, was ein Kunde sehen soll. Heute wird es an weitere Händler verkauft.',
+      ]},
+      { h: 'Wie ich abrechne', p: [
+        'Ein Festpreis für einen klar umrissenen Auftrag, vorher vereinbart, damit Sie keine Rechnung überrascht. Längerfristiges — Hosting, Wartung, die laufende Betreuung von etwas, das ich gebaut habe — ist eine feste monatliche Pauschale, die Sie jederzeit beenden können.',
+      ], quiet:
+        'Die Konten, die Domains und der Code gehören Ihnen. Nichts, was ich einrichte, sollte schwer mitzunehmen sein — und wenn es das je ist, ist das ein Fehler und kein Geschäftsmodell.' },
+    ],
+    detailsLabel: 'Angaben',
+    rows: [['Sitz', 'Bern, Schweiz'], ['Sprachen', null],
+           ['Kunden in', 'der Schweiz und den USA'], ['E-Mail', null]],
+    beliefEyebrow: 'Wie ich arbeite',
+    beliefTitle: 'Drei Dinge, die sich nicht ändern.',
+    beliefs: [
+      { title: 'Laufende Software schlägt eine Vorführung',
+        body: 'Ein Bildschirm, der einen Test besteht, und ein Bildschirm, den ein Mensch bedienen kann, sind zwei verschiedene Aussagen. Ich sage Ihnen nicht, dass etwas läuft, bevor ich es geöffnet und getan habe, was Sie tun würden.' },
+      { title: 'Aufschreiben, warum — nicht was',
+        body: 'Jedes Projekt, das ich übergebe, kommt mit den Gründen hinter seinen Entscheidungen, nicht nur mit dem Code, der dabei herauskam. Der Nächste — ich selbst in sechs Monaten eingeschlossen — muss wissen, welche Abwägungen mit Absicht getroffen wurden.' },
+      { title: 'Klein, und das bleibt so',
+        body: 'Ich nehme wenige Kunden an, damit die Person, die Ihr System geschrieben hat, auch die ist, die antwortet, wenn Sie schreiben. Grösser zu werden würde genau das ändern, was dieses Angebot überhaupt wert macht.' },
+    ],
+    closeTitle: 'Ein Gespräch wert?',
+    closeLede: 'Das erste kostet nichts und ist meistens der nützlichste Teil des Projekts.',
+    closeCta: 'Kontakt aufnehmen',
+  },
+};
+
+const c = COPY[lang];
+const href = (p) => localise(p, lang);
+const languages = LANGUAGES[lang];
+---
+<Page title={c.meta.title} description={c.meta.description}>
+  <section class="head">
+    <div class="wrap">
+      <p class="eyebrow">{c.eyebrow}</p>
+      <h1>{c.h1}</h1>
+      <p class="lede">{c.lede}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap layout">
+      <div class="prose">
+        {c.sections.map((s) => (
+          <>
+            <h2>{s.h}</h2>
+            {s.p.map((para) => <p>{para}</p>)}
+            {s.quiet && <p class="quiet">{s.quiet}</p>}
+          </>
+        ))}
+      </div>
+
+      <aside class="side" aria-label={c.detailsLabel}>
+        <dl>
+          {c.rows.map(([k, v], i) => (
+            <div>
+              <dt>{k}</dt>
+              <dd>
+                {i === 1 && languages.join(', ')}
+                {i === 3 && <a href={`mailto:${SITE.email}`}>{SITE.email}</a>}
+                {v}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">{c.beliefEyebrow}</p>
+      <h2>{c.beliefTitle}</h2>
+      <div class="cols" style="margin-top:30px">
+        {c.beliefs.map((b) => (
+          <article class="card">
+            <h3>{b.title}</h3>
+            <p>{b.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="band">
+        <div>
+          <h2>{c.closeTitle}</h2>
+          <p class="lede">{c.closeLede}</p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn-primary" href={href('/contact/')}>{c.closeCta}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Page>
+
+<style>
+  .head {
+    padding-block: clamp(48px, 8vw, 88px) clamp(20px, 3vw, 30px);
+    background:
+      radial-gradient(110% 80% at 8% -10%,
+        color-mix(in srgb, var(--forest) 9%, transparent), transparent 60%),
+      var(--paper);
+  }
+  .head h1 { max-width: 13ch; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 44px;
+    align-items: start;
+  }
+  .layout h2:not(:first-child) { margin-top: 36px; }
+
+  .side {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 24px 26px;
+    position: sticky;
+    top: 88px;
+  }
+  .side dl { margin: 0; display: grid; gap: 17px; }
+  .side dt {
+    font-family: var(--display);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .side dd { margin: 0; font-size: 15.5px; color: var(--ink); word-break: break-word; }
+
+  .band {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: clamp(28px, 4vw, 44px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  .band h2 { margin-bottom: 10px; }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; gap: 30px; }
+    .side { position: static; }
+  }
+</style>

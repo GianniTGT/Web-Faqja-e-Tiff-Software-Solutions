@@ -8,9 +8,9 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/check-spacing.mjs",
+    "build": "astro build && node scripts/check-spacing.mjs && node scripts/check-german.mjs",
     "preview": "astro preview",
-    "check": "node scripts/check-spacing.mjs"
+    "check": "node scripts/check-spacing.mjs && node scripts/check-german.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.3.0",

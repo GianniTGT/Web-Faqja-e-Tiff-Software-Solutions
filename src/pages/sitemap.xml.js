@@ -9,12 +9,18 @@
  * `robots.txt` disallows everything until go-live, so nothing reads this yet. It is here
  * so the go-live is one edit to one file rather than two things to remember.
  */
-import { NAV, LEGAL } from '../data/site.js';
+import { NAV, LEGAL, LOCALES, localise } from '../i18n/ui.js';
 
 const PATHS = ['/', ...NAV.map((n) => n.href), ...LEGAL.map((n) => n.href)];
 
+/**
+ * Every page in every language. A German page missing here is a German page a search
+ * engine finds only by accident, which defeats the reason for writing it.
+ */
+const ALL = LOCALES.flatMap((lang) => PATHS.map((path) => localise(path, lang)));
+
 export function GET({ site }) {
-  const urls = PATHS.map((p) => `  <url><loc>${new URL(p, site).href}</loc></url>`).join('\n');
+  const urls = ALL.map((p) => `  <url><loc>${new URL(p, site).href}</loc></url>`).join('\n');
   return new Response(
     `<?xml version="1.0" encoding="UTF-8"?>\n` +
       `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`,
