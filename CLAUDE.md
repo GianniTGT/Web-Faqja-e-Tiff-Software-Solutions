@@ -269,6 +269,66 @@ Waiting on a person, none of it code:
 the footer, the invoices and the email address all say, so nothing has to be abbreviated
 to match it. `site:` in `astro.config.mjs` points at it.
 
+### The domain is registered and the DNS has not moved — 23 August 2026
+
+Where this actually stands, because the paragraph above says the domain is bought and
+stops there.
+
+| | |
+|---|---|
+| Registered | Netcup, 22 August 2026 |
+| Assigned to | hosting *Hosting243104 - Webhosting 8000 NUE (af92d)* in the panel |
+| Files | uploaded to `/tiff-software-solutions.com/httpdocs` |
+| The panel says the site's IP is | `46.38.249.45` |
+| Public DNS still answers | `46.38.243.234` — **Netcup's parking IP** |
+
+So everything on Netcup's side is in place and **only the zone has not been rewritten
+yet.** Netcup's own registration email allows up to 48 hours, which expires around
+**22:00 UTC on 23 August**. If it has not moved by then it is a support ticket, not
+something to keep watching — the domain is assigned to the hosting in the panel and the
+files are there, so the zone serving a parking IP is theirs to fix.
+
+**Checking it needs the public resolvers over raw UDP.** `dig` is not installed in a
+Claude Code sandbox and DNS-over-HTTPS is blocked by the proxy, so use a small Python DNS
+client against `1.1.1.1`, `8.8.8.8` and `9.9.9.9` with the recursion-desired bit set.
+**Not `getent` or `socket.getaddrinfo`** — those read a local cache and will happily
+report a stale answer as fact.
+
+**Do not hammer Netcup's own authoritative nameservers.** On 22 August at 13:07 UTC all
+five returned SERVFAIL — including for `hoponeurope.com` and `ride2balkan.com`, which have
+worked for months. That was rate limiting, and for a few minutes it looked like a broken
+zone. Query them once at most and treat SERVFAIL as *unknown, try later*.
+
+### The certificate has to come before the first visit
+
+The hosting has **"301 redirect HTTP to HTTPS" switched on with no certificate selected.**
+So the moment DNS resolves, a browser is redirected to `https://` and meets a security
+warning — which looks exactly like a broken deployment and is not one.
+
+**Get the Let's Encrypt certificate in the Netcup panel first, then open the site.** Same
+shape as the `test-tiff` lesson in the DAS project: a certificate a browser will not trust
+makes a working site look dead, and the diagnosis costs more than the fix.
+
+### Deploying is a hand-uploaded ZIP until the Action's secrets exist
+
+§5 describes the GitHub Action, and it is right — but its four secrets
+(`NETCUP_HOST`, `NETCUP_USER`, `NETCUP_SSH_KEY`, `NETCUP_PATH`) are **not set**, so
+nothing deploys automatically yet. Until they are:
+
+```bash
+npm run build
+cd dist && zip -r ../site.zip . -x '.DS_Store'   # the CONTENTS of dist/, not the folder
+```
+
+**Zip the contents, not the directory** — uploading `dist/` itself puts every page one
+level too deep and every URL 404s. **Include `.tiff-deploy-target`**; it is the marker the
+Action checks for, and losing it means re-creating it by hand later (§5).
+
+Then it goes to Gianni through the chat and he uploads it in the panel's file manager.
+A Claude Code web session cannot carry it there itself — the network policy refuses the
+host, and relaying binary through a transcript does not survive (the same finding the DAS
+project recorded for the team photographs).
+
 **At go-live, in this order:** fill the postal address, remove the two `Disallow` lines
 from `public/robots.txt`, then point the domain at the Netcup document root. Forgetting
 the `robots.txt` line is how a finished site ends up asking Google to ignore it.
