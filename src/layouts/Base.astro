@@ -29,6 +29,7 @@ import '@fontsource/ibm-plex-sans/latin-ext-600.css';
 import '@fontsource/ibm-plex-mono/latin-500.css';
 
 import '../styles/tokens.css';
+import { SITE } from '../data/site.js';
 import { UI, localeFromPath, otherLocaleHref } from '../i18n/ui.js';
 
 interface Props {
@@ -55,6 +56,54 @@ const alternates = [
   ['en', new URL(lang === 'en' ? path : otherLocaleHref(path, lang), Astro.site).href],
   ['de', new URL(lang === 'de' ? path : otherLocaleHref(path, lang), Astro.site).href],
 ];
+
+/**
+ * The sharing card. One image for the whole site rather than one per page: it carries the
+ * mark, the wordmark and the domain, so it is true on every page and cannot go stale when
+ * a page's words change. Generated from the real logo and the real typefaces — see
+ * `scripts/make-og.mjs`, which is why it is a committed file rather than a build step.
+ *
+ * **It is served from this domain, like the fonts.** A card pulled from an image CDN would
+ * be a third-party request, and `/privacy/` says there are none.
+ */
+const ogImage = new URL('/og.png', Astro.site);
+
+/**
+ * Structured data: what a search engine is told, in machine-readable form, that the prose
+ * only implies. It is the difference between Google inferring "some website" and knowing
+ * "a software firm, at this street address in Bern, reachable at this email".
+ *
+ * **Every value is read from `site.js`.** Typing the address here as well would create a
+ * second copy to keep in step with the imprint, and the one that drifts is always the copy
+ * nobody looks at.
+ *
+ * **No `priceRange`.** Google likes it on a LocalBusiness, and §2 of CLAUDE.md says there
+ * are no prices on this site until Gianni decides what they are. A band invented to satisfy
+ * a validator would be a number he then has to honour.
+ */
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': new URL('/#organisation', Astro.site).href,
+  name: SITE.name,
+  url: new URL('/', Astro.site).href,
+  email: SITE.email,
+  image: ogImage.href,
+  description: SITE.description,
+  founder: { '@type': 'Person', name: SITE.person },
+  knowsLanguage: ['de-CH', 'en', 'sq'],
+  areaServed: { '@type': 'Place', name: 'Worldwide' },
+  ...(SITE.address && {
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: SITE.address.street,
+      postalCode: SITE.address.postcode,
+      addressLocality: SITE.address.town,
+      addressCountry: 'CH',
+    },
+  }),
+  ...(SITE.uid && { vatID: SITE.uid }),
+};
 ---
 <!doctype html>
 <html lang={t.htmlLang}>
@@ -75,9 +124,20 @@ const alternates = [
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={lang === 'de' ? 'de_CH' : 'en_US'} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${SITE.name} — ${SITE.city}, ${SITE.country}`} />
+
+    {/* Without this the link is shared as a small square thumbnail beside the text. The
+        card is 1200×630 either way; `summary_large_image` is what makes it the picture
+        rather than an icon. */}
+    <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
+    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} is:inline />
   </head>
   <body>
     <slot />
