@@ -1,6 +1,12 @@
 node_modules/
 dist/
 .astro/
+
+# The hand-upload archive from CLAUDE.md §8 — `cd dist && zip -r ../site.zip .`. It is a
+# repacked copy of `dist/`, which is itself ignored two lines up, so tracking it would put
+# a 400KB binary in the history on every deploy that carries no information the source does
+# not already carry. Regenerate it, never fetch it from a commit.
+site.zip
 .env
 .env.*
 !.env.example
