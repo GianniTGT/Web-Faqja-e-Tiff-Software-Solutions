@@ -1,0 +1,130 @@
+---
+/**
+ * The Tiff monogram, drawn rather than shown.
+ *
+ * **The geometry is `Mark.astro`'s, copied deliberately rather than imported.** That
+ * component's own comment records what it cost to get right — a gold tile, a green T, a
+ * white road *inside* the stem — and it is verified against the 512px brand original to
+ * 98.92% of pixels. Wrapping it here would mean animating parts this file cannot reach:
+ * the road has to be a stroke with a `pathLength` before it can draw itself, and the tile
+ * and the T have to move independently. Two copies of four path strings is the smaller
+ * problem; if the mark is ever redrawn, both change together.
+ *
+ * **The colours are literals, like Mark's, and for the same reason** — a brand mark that
+ * recolours itself in dark mode is not a brand mark.
+ *
+ * ── Why the static state is the default and the animation runs backwards from it ────────
+ * Every rule below paints the finished logo. The keyframes then define only the state to
+ * start *from*, with `animation-fill-mode: backwards`. So a browser that never runs the
+ * animation — reduced motion, a print stylesheet, an old engine — shows the correct mark
+ * instead of an invisible one. The opposite arrangement (hidden by default, revealed by
+ * the animation) is how a decorative flourish turns into a blank space on somebody's
+ * screen, and nothing here is worth that.
+ *
+ * **No JavaScript.** `/privacy/` says a page load makes no request to any third party and
+ * runs nothing; that claim is checkable against the built output and this file keeps it
+ * true. CSS only.
+ */
+interface Props { size?: number; title?: string; }
+const { size = 76, title } = Astro.props;
+
+/* The sheen gradient needs an id, and an id in an SVG is global to the document. One
+   instance per page today, but a second one would silently take the first one's gradient —
+   so the id is unique per render rather than per component. */
+const uid = `am-${Math.random().toString(36).slice(2, 9)}`;
+---
+<svg
+  class="mark"
+  width={size} height={size} viewBox="0 0 512 512"
+  style={`--mark-size:${size}px`}
+  role={title ? 'img' : undefined}
+  aria-hidden={title ? undefined : 'true'}
+  aria-label={title}
+>
+  <defs>
+    <linearGradient id={`${uid}-sheen`} x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0" />
+      <stop offset="50%"  stop-color="#FFFFFF" stop-opacity="0.55" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+    </linearGradient>
+    {/* The sheen is clipped to the tile, or it sweeps across the page beside the logo. */}
+    <clipPath id={`${uid}-tile`}>
+      <rect width="512" height="512" />
+    </clipPath>
+  </defs>
+
+  <rect class="tile" width="512" height="512" fill="#C9A053" />
+  <path class="tee" d="M80 72h352v109H80z M201 72h110v368H201z" fill="#16653C" />
+
+  {/*
+    `pathLength="100"` renormalises the path so the dash maths is 0–100 regardless of the
+    real length in user units. Measuring it by hand — 71 across, a 65-radius quarter turn,
+    145 down — gives about 318, and a number that close to right is exactly the kind that
+    survives review and then leaves a visible stub of undrawn road.
+  */}
+  <path class="road" pathLength="100"
+        d="M119 125.5H190a65 65 0 0 1 65 65V400"
+        fill="none" stroke="#FFFFFF" stroke-width="38" />
+
+  <g clip-path={`url(#${uid}-tile)`}>
+    <rect class="sheen" x="-512" y="-256" width="380" height="1024"
+          fill={`url(#${uid}-sheen)`} transform="rotate(18 256 256)" />
+  </g>
+</svg>
+
+<style>
+  .mark {
+    display: block;
+    /* The tile is a hard square with no radius, so a shadow is the only thing separating
+       gold from a pale background. Tuned to the mark's own size rather than a fixed px, or
+       it reads as a heavy drop shadow at 76px and as nothing at all at 200. */
+    filter: drop-shadow(0 calc(var(--mark-size) * 0.05) calc(var(--mark-size) * 0.09)
+                        color-mix(in srgb, #16653C 26%, transparent));
+  }
+
+  /* ── The finished state. Everything below is what a still browser shows. ── */
+  .tile { transform-box: fill-box; transform-origin: center; }
+  .tee  { transform-box: fill-box; transform-origin: top center; }
+  .road { stroke-dasharray: 100; stroke-dashoffset: 0; }
+  .sheen { opacity: 0; }
+
+  /* ── The state each part starts from, and the order they arrive in. ──
+     Overlapping on purpose: the T begins while the tile is still settling, and the road
+     starts before the T has finished. Strictly sequential steps read as a slideshow. */
+  .tile {
+    animation: tile-in 620ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+  .tee {
+    animation: tee-in 560ms cubic-bezier(0.22, 1, 0.36, 1) 260ms backwards;
+  }
+  .road {
+    animation: road-draw 1100ms cubic-bezier(0.65, 0, 0.35, 1) 540ms backwards;
+  }
+  /* The one flourish, once, after the mark is whole. It is the only part that is purely
+     decorative, which is why it is last and why it is the shortest. */
+  .sheen {
+    animation: sheen 900ms ease-in 1500ms 1 forwards;
+  }
+
+  @keyframes tile-in {
+    from { opacity: 0; transform: scale(0.84) rotate(-6deg); }
+  }
+  @keyframes tee-in {
+    from { opacity: 0; transform: scaleY(0.6); }
+  }
+  @keyframes road-draw {
+    from { stroke-dashoffset: 100; }
+  }
+  @keyframes sheen {
+    from { opacity: 1; transform: translateX(0); }
+    to   { opacity: 1; transform: translateX(1100px); }
+  }
+
+  /* A logo that assembles itself is a flourish, and a flourish is the first thing somebody
+     with vestibular trouble has asked their system to stop. They get the finished mark,
+     which is the whole of what it has to communicate. */
+  @media (prefers-reduced-motion: reduce) {
+    .tile, .tee, .road, .sheen { animation: none; }
+    .sheen { opacity: 0; }
+  }
+</style>

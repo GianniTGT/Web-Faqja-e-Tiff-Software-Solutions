@@ -1,5 +1,6 @@
 ---
 import Page from '../../layouts/Page.astro';
+import AnimatedMark from '../AnimatedMark.astro';
 import { SITE } from '../../data/site.js';
 import { localise } from '../../i18n/ui.js';
 
@@ -42,7 +43,7 @@ const COPY = {
     ],
     proofLink: 'How the two halves meet',
 
-    buildEyebrow: 'What I build',
+    buildEyebrow: 'What we build',
     buildTitle: 'Three things, and the seam between them.',
     services: [
       { title: 'Desktop software',
@@ -77,20 +78,20 @@ const COPY = {
       ['Status', 'In daily use; sold as a product to other dealerships'],
     ],
 
-    methodEyebrow: 'How I work',
-    methodTitle: 'Four things I will not trade away.',
+    methodEyebrow: 'How we work',
+    methodTitle: 'Four things we will not trade away.',
     method: [
       { n: '01', title: 'One business at a time',
-        body: 'I take on few projects and stay on them. You get the person who wrote it, not a ticket queue.' },
+        body: 'We take on few projects and stay on them. You get the people who wrote it, not a ticket queue.' },
       { n: '02', title: 'Your data stays yours',
         body: 'Where it belongs on your machine, it stays on your machine. What has to be public is chosen deliberately, field by field — never by default.' },
       { n: '03', title: 'Built to be run by staff',
-        body: 'The people using it are selling cars, not administering software. Anything that needs a manual is something I have not finished.' },
+        body: 'The people using it are selling cars, not administering software. Anything that needs a manual is something we have not finished.' },
       { n: '04', title: 'Nothing ships unverified',
-        body: 'A passing test is not somebody opening the screen. Both happen before I tell you it works.' },
+        body: 'A passing test is not somebody opening the screen. Both happen before we tell you it works.' },
     ],
 
-    closeTitle: 'Tell me what the business actually does.',
+    closeTitle: 'Tell us what the business actually does.',
     closeLede: 'Not the software you think you need — the job it has to get done. That ' +
                'conversation is free, and it is usually where the real answer is.',
   },
@@ -121,7 +122,7 @@ const COPY = {
     ],
     proofLink: 'Wie die beiden Hälften zusammenkommen',
 
-    buildEyebrow: 'Was ich baue',
+    buildEyebrow: 'Was wir bauen',
     buildTitle: 'Drei Dinge — und die Naht dazwischen.',
     services: [
       { title: 'Desktop-Software',
@@ -157,20 +158,20 @@ const COPY = {
       ['Stand', 'Täglich im Einsatz; als Produkt an weitere Händler verkauft'],
     ],
 
-    methodEyebrow: 'Wie ich arbeite',
+    methodEyebrow: 'Wie wir arbeiten',
     methodTitle: 'Vier Dinge, die nicht verhandelbar sind.',
     method: [
       { n: '01', title: 'Ein Unternehmen nach dem anderen',
-        body: 'Ich nehme wenige Projekte an und bleibe dabei. Sie bekommen die Person, die es geschrieben hat, keine Ticket-Warteschlange.' },
+        body: 'Wir nehmen wenige Projekte an und bleiben dabei. Sie bekommen die Leute, die es geschrieben haben, und keine Ticket-Warteschlange.' },
       { n: '02', title: 'Ihre Daten bleiben Ihre',
         body: 'Was auf Ihren Rechner gehört, bleibt dort. Was öffentlich sein muss, wird bewusst gewählt, Feld für Feld — nie einfach so.' },
       { n: '03', title: 'Vom Personal bedienbar',
-        body: 'Die Leute, die damit arbeiten, verkaufen Autos, sie verwalten keine Software. Was ein Handbuch braucht, habe ich nicht fertig gemacht.' },
+        body: 'Die Leute, die damit arbeiten, verkaufen Autos, sie verwalten keine Software. Was ein Handbuch braucht, haben wir nicht fertig gemacht.' },
       { n: '04', title: 'Nichts geht ungeprüft raus',
-        body: 'Ein bestandener Test ist nicht dasselbe wie jemand, der den Bildschirm öffnet. Beides passiert, bevor ich Ihnen sage, dass es läuft.' },
+        body: 'Ein bestandener Test ist nicht dasselbe wie jemand, der den Bildschirm öffnet. Beides passiert, bevor wir Ihnen sagen, dass es läuft.' },
     ],
 
-    closeTitle: 'Erzählen Sie mir, was Ihr Betrieb wirklich tut.',
+    closeTitle: 'Erzählen Sie uns, was Ihr Betrieb wirklich tut.',
     closeLede: 'Nicht die Software, die Sie zu brauchen glauben — die Aufgabe, die erledigt ' +
                'werden muss. Dieses Gespräch kostet nichts, und meistens liegt dort die ' +
                'eigentliche Antwort.',
@@ -184,6 +185,13 @@ const href = (p) => localise(p, lang);
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-copy">
+        {/*
+          The mark draws itself once, on the one page where a visitor arrives cold. It is
+          the firm's own logo rather than an ornament, so the thing being animated is the
+          thing being introduced — and it is CSS, so the page still runs no script and still
+          asks nothing of anybody else's server, which is what `/privacy/` promises.
+        */}
+        <div class="hero-mark"><AnimatedMark size={78} /></div>
         <p class="eyebrow">{c.eyebrow}</p>
         <h1 set:html={c.h1} />
         <p class="lede">{c.lede}</p>
@@ -302,6 +310,11 @@ const href = (p) => localise(p, lang);
        panel in the middle of its own white space instead of starting with the headline. */
     align-items: start;
   }
+  /* A wrapper, because a scoped style in this file cannot reach inside a child component —
+     `<AnimatedMark />` compiles to a component call, not to an element this file's scope
+     attribute lands on. The margin is the page's business anyway, not the mark's. */
+  .hero-mark { margin-bottom: 26px; }
+
   /* 16ch, not 15: the German headline is the longer of the two and 15 wrapped it to five
      lines. One character of slack fixes German and leaves English on four. */
   .hero h1 { max-width: 16ch; }

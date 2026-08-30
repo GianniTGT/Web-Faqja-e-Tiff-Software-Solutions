@@ -24,15 +24,14 @@ export const SITE = {
   /**
    * The registered postal address, for the imprint.
    *
-   * **Null until Gianni supplies it, and the imprint page says so on its face rather than
-   * quietly rendering a gap.** A Swiss or German visitor reads the imprint to decide
-   * whether this is a real business; an address invented to fill the layout would be a
-   * false statement in the one place the law asks for a true one.
+   * Supplied by Gianni on 30 August 2026. Until then this was `null` and `/imprint/`
+   * rendered a visible "this page is not finished" notice rather than a tidy gap — a Swiss
+   * or German visitor reads the imprint to decide whether this is a real business, and it
+   * is the one page where a blank is a legal problem rather than a cosmetic one.
    *
-   * Fill in `street`, `postcode` and `town` and the notice disappears by itself.
+   * The notice disappears by itself now that the three fields are here.
    */
-  address: null,
-  // address: { street: '…', postcode: '…', town: 'Bern', country: 'Switzerland' },
+  address: { street: 'Kasparstrasse 15', postcode: '3027', town: 'Bern', country: 'Switzerland' },
 
   /** Swiss commercial register number (CHE-…), if the business is registered. Optional. */
   uid: null,
@@ -46,14 +45,41 @@ export const SITE = {
 /**
  * Other work, one line each — no case study.
  *
- * **Empty on purpose, and the Work page renders nothing while it is.** The projects exist
- * — Ride2Balkan, the Frigemo *Post ist da* app, the Hijama app, Handwerk — but I have not
- * seen four of them and a description written from a name is a guess printed on a public
- * page over Gianni's own firm. One true line each and the section appears by itself.
+ * **Every line here is Gianni's own wording, not a description written from a name.** The
+ * list sat empty until 30 August 2026 for exactly that reason: a sentence invented around a
+ * project title is a guess printed on a public page over his own firm. What he supplied is
+ * short, so these stay short — a line that says only what is known beats one padded out to
+ * match the width of the column.
  *
- * Shape: { name, line, href? }
+ * **Both languages, because the Work page is bilingual.** A single `line` would print
+ * English on `/de/work/`, which is the one place a Berner SME is reading.
+ *
+ * Shape: { name, en, de, href? }
  */
-export const OTHER_WORK = [];
+export const OTHER_WORK = [
+  {
+    name: 'Ride2Balkan',
+    href: 'https://ride2balkan.com',
+    en: 'Website, SEO, and the Android app.',
+    de: 'Website, SEO und die Android-App.',
+  },
+  {
+    name: 'Post ist da',
+    en: 'An Android application. Client: Frigemo AG.',
+    de: 'Eine Android-Anwendung. Kunde: Frigemo AG.',
+  },
+  {
+    name: 'Adams Tuning',
+    en: 'Running on Tiff Cardealer Manager.',
+    de: 'Arbeitet mit Tiff Cardealer Manager.',
+  },
+  {
+    name: 'downtownautoak.com',
+    href: 'https://downtownautoak.com',
+    en: 'Tiff Rent a Car Manager, in Anchorage, Alaska.',
+    de: 'Tiff Rent a Car Manager, in Anchorage, Alaska.',
+  },
+];
 
 /*
  * The navigation used to live here. It moved to `src/i18n/ui.js` when German was added,

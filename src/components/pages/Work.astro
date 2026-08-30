@@ -6,8 +6,9 @@ import { localise } from '../../i18n/ui.js';
 /**
  * The case study, in both languages.
  *
- * One project told properly rather than six thumbnails. A studio of one has a portfolio of
- * one shape: depth. Everything here happened; where a thing is not finished it says so.
+ * One project told properly rather than six thumbnails. A small firm's portfolio has one
+ * shape worth showing: depth. Everything here happened; where a thing is not finished it
+ * says so.
  *
  * **The dealership is described, not named.** Putting a customer's name on a public page is
  * their permission to give — one line here and in `Home.astro` the day Tif says yes.
@@ -87,7 +88,7 @@ const COPY = {
     otherEyebrow: 'Also built',
     otherTitle: 'Other work, in one line each.',
     closeTitle: 'Something in your business works like this.',
-    closeLede: 'Typed twice, or held in a spreadsheet nobody else can open. Tell me what it is.',
+    closeLede: 'Typed twice, or held in a spreadsheet nobody else can open. Tell us what it is.',
     closeCta: 'Get in touch',
   },
 
@@ -165,7 +166,7 @@ const COPY = {
     otherTitle: 'Weitere Arbeiten, je eine Zeile.',
     closeTitle: 'Irgendetwas in Ihrem Betrieb läuft genauso.',
     closeLede: 'Zweimal getippt, oder in einer Tabelle, die sonst niemand öffnen kann. ' +
-               'Erzählen Sie mir, was es ist.',
+               'Erzählen Sie uns, was es ist.',
     closeCta: 'Kontakt aufnehmen',
   },
 };
@@ -248,7 +249,7 @@ const href = (p) => localise(p, lang);
           {OTHER_WORK.map((o) => (
             <li>
               <strong>{o.href ? <a href={o.href}>{o.name}</a> : o.name}</strong>
-              <span>{o.line}</span>
+              <span>{o[lang]}</span>
             </li>
           ))}
         </ul>

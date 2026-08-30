@@ -31,7 +31,19 @@ const t = UI[lang];
       <h2>{t.contact}</h2>
       <ul>
         <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
-        <li class="plain">{SITE.city}, {lang === 'de' ? 'Schweiz' : SITE.country}</li>
+        {/* The street appears here now that there is one to print. A footer that says only
+            "Bern, Switzerland" is what every anonymous template says; a postal address is
+            one of the few things on a page that a visitor cannot fake-check and therefore
+            reads as real. It is still `SITE.address` that decides — the day it is null
+            again, this falls back to the city rather than rendering an empty line. */}
+        {SITE.address ? (
+          <li class="plain">
+            {SITE.address.street}<br />
+            {SITE.address.postcode} {SITE.address.town}, {lang === 'de' ? 'Schweiz' : SITE.country}
+          </li>
+        ) : (
+          <li class="plain">{SITE.city}, {lang === 'de' ? 'Schweiz' : SITE.country}</li>
+        )}
       </ul>
     </div>
   </div>

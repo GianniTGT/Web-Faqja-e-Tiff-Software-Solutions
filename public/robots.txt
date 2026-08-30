@@ -1,6 +1,10 @@
-# Until the real domain is live and the site says something, nothing should be indexed.
-# Remove these two lines at go-live — forgetting them leaves a finished site that asks
-# Google to ignore it, which is exactly the trap the DAS project recorded for its own
-# staging guards.
+# The site is live and open to search engines as of 30 August 2026.
+#
+# This file used to hold `Disallow: /` while the domain still pointed at Netcup's parking
+# page. That block is what a finished site is left asking Google for if nobody remembers to
+# lift it, so it is gone rather than commented out — a commented-out Disallow is one careless
+# uncomment away from being live again.
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://tiff-software-solutions.com/sitemap.xml
