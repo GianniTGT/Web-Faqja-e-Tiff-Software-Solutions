@@ -454,6 +454,41 @@ five returned SERVFAIL — including for `hoponeurope.com` and `ride2balkan.com`
 worked for months. That was rate limiting, and for a few minutes it looked like a broken
 zone. Query them once at most and treat SERVFAIL as *unknown, try later*.
 
+### The site is live, and verified against the repo — 30 August 2026
+
+Uploaded by hand through the panel's File Manager and checked from outside afterwards.
+**All 43 files of `dist/` match the server byte for byte** — every page in both languages,
+the CSS, all twenty font files, `robots.txt`, `sitemap.xml`, `favicon.svg`.
+
+| Request | Result |
+|---|---|
+| `http://tiff-software-solutions.com/` | 301 → https, then **200** |
+| `https://tiff-software-solutions.com/` | **200**, certificate valid |
+| `https://tiff-software-solutions.com/de/work/` | **200** — "Referenzen — Tiff Software Solutions" |
+| `https://tiff-software-solutions.com/robots.txt` | **200** |
+| `https://www.tiff-software-solutions.com/` | **fails** — see below |
+
+**`www` is not on the certificate.** `SSL: no alternative certificate subject name matches
+target hostname`. This is the panel's "www-Domain nicht geschützt" warning, and it is real:
+anybody who types `www.` meets a browser security warning on a site that otherwise works.
+Fixed by reissuing the Let's Encrypt certificate in the netcup panel **with the www alias
+ticked** — it is a panel checkbox, not a code change.
+
+**Four strays sit in the docroot**, none referenced by any page, all safe to delete:
+`site.zip` and `tiffsoftwarewebsite20260822.zip` (both upload archives, both publicly
+downloadable now that `robots.txt` allows crawling), and `_astro/Page.dg68rrbr.css` plus
+`_astro/Page.D_UyVdrX.css`, orphaned stylesheets from earlier builds. Uploading a zip over
+a directory adds; it never removes, which is the whole argument for `rsync --delete` once
+§5's transport question is settled.
+
+### The upload failure was a stale panel session — 30 August 2026
+
+Worth one line so the next person does not go looking at the server. Plesk's File Manager
+answered **"No upload response — Einige Dateien wurden aufgrund eines Fehlers nicht
+hochgeladen"**. Nothing on the server was wrong: 3.6 TB free, `upload_max_filesize` 256M
+against a 392 KB file, docroot writable, and no partial file left behind. **The panel
+session had simply expired.** Logging in again and repeating the upload worked first time.
+
 ### The certificate has to come before the first visit
 
 The hosting has **"301 redirect HTTP to HTTPS" switched on with no certificate selected.**
