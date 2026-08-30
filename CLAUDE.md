@@ -474,12 +474,25 @@ anybody who types `www.` meets a browser security warning on a site that otherwi
 Fixed by reissuing the Let's Encrypt certificate in the netcup panel **with the www alias
 ticked** — it is a panel checkbox, not a code change.
 
-**Four strays sit in the docroot**, none referenced by any page, all safe to delete:
-`site.zip` and `tiffsoftwarewebsite20260822.zip` (both upload archives, both publicly
-downloadable now that `robots.txt` allows crawling), and `_astro/Page.dg68rrbr.css` plus
-`_astro/Page.D_UyVdrX.css`, orphaned stylesheets from earlier builds. Uploading a zip over
-a directory adds; it never removes, which is the whole argument for `rsync --delete` once
-§5's transport question is settled.
+**Four strays were deleted the same day**, on Gianni's go: `site.zip` and
+`tiffsoftwarewebsite20260822.zip` (upload archives, both publicly downloadable once
+`robots.txt` started allowing crawlers) and `_astro/Page.dg68rrbr.css` plus
+`_astro/Page.D_UyVdrX.css` (stylesheets orphaned by later builds). 801 KB in total, and
+`https://tiff-software-solutions.com/site.zip` answers 404 now.
+
+**Each was checked for references before it was removed, not merely eyeballed** — every
+served `.html`, `.xml`, `.txt`, `.css` and `.js` read and searched for the filename, with a
+stray citing itself not counting. All four came back at zero. The four paths were written
+out literally in the delete script; no glob, nothing that could widen on a typo, which is
+the same reasoning as §5's two rsync guards.
+
+**The docroot is now 45 files: the 43 of `dist/` plus the two in `.well-known/`**, which
+were deliberately left alone — that is Let's Encrypt's, and taking it is the renewal bug §5
+describes.
+
+Uploading a zip over a directory adds; it never removes. Cleaning up by hand worked once
+and does not scale, which is the whole argument for `rsync --delete` once §5's transport
+question is settled.
 
 ### The upload failure was a stale panel session — 30 August 2026
 
