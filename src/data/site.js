@@ -74,22 +74,31 @@ export const OTHER_WORK = [
     de: 'Arbeitet mit Tiff Cardealer Manager.',
   },
   /**
-   * **This is the same customer as the case study, and that is not a duplicate to tidy up.**
-   * `/work/` names Downtown Auto Sales and tells the Tiff Cardealer story; this line is the
-   * second product at the same address. Before 30 August the case study said only "a
-   * used-car dealership in Anchorage" and the pairing looked like an oversight — it is not,
-   * and deleting either half loses a real fact.
+   * **A different company from the case study's, sharing an owner.** Corrected 30 August
+   * 2026, after this file briefly claimed they were one customer with two products:
    *
-   * **What is still unreconciled:** Gianni's list puts *Rent a Car Manager* here and
-   * *Cardealer Manager* at Adams Tuning, while the case study is Cardealer for this
-   * dealership. Written as he gave it rather than smoothed over — if that is a slip it is
-   * his to correct, and a guess would be worse than the inconsistency.
+   * | | | |
+   * |---|---|---|
+   * | `downtownautosale.com` | Downtown Auto Sales — the dealer | Tiff Cardealer, `/work/` |
+   * | `downtownautoak.com` | the car rental company | Tiff Rent a Car Manager, this line |
+   *
+   * Two businesses, one owner, two products. So the pairing on the page is not a
+   * duplicate — and it is not one customer either. **Neither half is safe to delete on the
+   * assumption that it repeats the other.**
+   *
+   * **No `href`, deliberately.** On 30 August every variant of this domain — http and
+   * https, apex and www — answered **404**; the http ones redirect to https and 404 there.
+   * A portfolio linking to a dead page is worse than one that does not link at all, and the
+   * name alone still says who the work was for. Restore the link the day the site answers.
+   *
+   * (`downtownautosale.com` does serve — "Downtownautosale LLC" — but its TLS certificate
+   * has expired, so a browser meets a security warning first. That is why the case study
+   * names the dealership and links nothing. Both are worth telling the owner about.)
    */
   {
     name: 'downtownautoak.com',
-    href: 'https://downtownautoak.com',
-    en: 'Tiff Rent a Car Manager, in Anchorage, Alaska.',
-    de: 'Tiff Rent a Car Manager, in Anchorage, Alaska.',
+    en: 'Tiff Rent a Car Manager, for a car rental company in Anchorage, Alaska.',
+    de: 'Tiff Rent a Car Manager, für eine Autovermietung in Anchorage, Alaska.',
   },
 ];
 

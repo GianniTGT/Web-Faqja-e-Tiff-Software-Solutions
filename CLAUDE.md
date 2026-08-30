@@ -128,6 +128,39 @@ both files change.
 
 ---
 
+### Downtown is two companies, and both their sites are broken — 30 August 2026
+
+Gianni corrected an assumption this repo had written down twice, so it is recorded properly
+rather than left to be re-derived:
+
+| Domain | Company | Product |
+|---|---|---|
+| `downtownautosale.com` | **Downtown Auto Sales** — the dealer | Tiff Cardealer — the `/work/` case study |
+| `downtownautoak.com` | **the car rental company** | Tiff Rent a Car Manager — an `OTHER_WORK` line |
+
+**Two businesses with one owner, not one business with two products.** The apparent
+contradiction between Gianni's project list and the case study — *Rent a Car Manager* at one
+address, *Cardealer Manager* at the dealership — was never a contradiction. Anything that
+treats the two rows as duplicating each other is wrong, and deleting either loses a real
+customer.
+
+**Both sites are broken today, and neither is linked from here because of it:**
+
+- `downtownautoak.com` — **404** on every variant tried: http and https, apex and www. The
+  http ones redirect to https and 404 there, so it is not a redirect problem.
+- `downtownautosale.com` — serves a real page ("Downtownautosale LLC", ~98 KB) but **its
+  TLS certificate has expired**, so a browser shows a security warning before any of it.
+  Exactly the `test-tiff` failure mode the DAS project already recorded: a working site that
+  looks dead.
+
+**Check a link before publishing it, from somewhere that can actually reach it.** Three
+external links were added to `OTHER_WORK` in one commit and none had been fetched; two were
+broken. The sandbox proxy refuses these hosts, so `curl` from the netcup account through the
+Novamira connector is the way to check — the same read-only route as §5. `ride2balkan.com`
+was checked the same way and is genuinely fine (200, valid certificate), so its link stays.
+
+---
+
 ## 3. The brand is not chosen here
 
 `src/styles/tokens.css` carries the palette, and it comes from the brand package Gianni
@@ -366,8 +399,9 @@ Waiting on a person, none of it code:
 | ~~The postal address~~ | **Done 30 August 2026** — Kasparstrasse 15, 3027 Bern. The imprint's unfinished notice disappeared by itself, and the footer prints it too. | `SITE.address` |
 | ~~Four one-line descriptions~~ | **Done 30 August 2026**, in Gianni's own words. Not Hijama or Handwerk — he named Ride2Balkan, *Post ist da* (Frigemo AG), Adams Tuning and downtownautoak.com instead. | `OTHER_WORK` |
 | ~~Netcup: SSH or SFTP~~ | **Answered 30 August 2026 — see §5.** SSH, but no `rsync` in the jail. | the workflow, §5 |
-| ~~Tif's permission~~ | **Given, 30 August 2026.** Downtown Auto Sales is named. `OTHER_WORK`'s `downtownautoak.com` line is the *same customer's* second product, not a duplicate — do not delete either half. | `Work.astro`, `Home.astro` |
-| **Which product downtownautoak.com runs** | Gianni's list says *Rent a Car Manager* there and *Cardealer Manager* at Adams Tuning, while the case study is Cardealer for this same dealership. Written down as he gave it, unreconciled on purpose: if it is a slip it is his to correct, and a guess on a named customer's page is worse than the inconsistency. | `OTHER_WORK` |
+| ~~Tif's permission~~ | **Given, 30 August 2026.** Downtown Auto Sales is named in the case study. | `Work.astro`, `Home.astro` |
+| ~~Which product downtownautoak.com runs~~ | **Answered 30 August 2026 — see below.** Two companies, one owner. No inconsistency after all. | `OTHER_WORK` |
+| **Two dead links, both the owner's to fix** | `downtownautoak.com` answers 404 on every variant; `downtownautosale.com` serves but its TLS certificate has expired. Neither is linked from this site until they work. | tell Gianni |
 | **Screens** | never asked about. The case study is words only; a screenshot of Tif's inventory is a separate permission. | `Work.astro` |
 | **A response time** | for `/contact/`, if he wants to promise one | `contact.astro` |
 | **Swiss UID** | `CHE-…`, if the business is registered | `SITE.uid` — the imprint section appears by itself |
