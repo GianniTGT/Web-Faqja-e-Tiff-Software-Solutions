@@ -10,8 +10,13 @@ import { localise } from '../../i18n/ui.js';
  * shape worth showing: depth. Everything here happened; where a thing is not finished it
  * says so.
  *
- * **The dealership is described, not named.** Putting a customer's name on a public page is
- * their permission to give — one line here and in `Home.astro` the day Tif says yes.
+ * **The dealership is named, since 30 August 2026.** It was "a used-car dealership in
+ * Anchorage, Alaska" until Gianni confirmed he had Tif's permission. Putting a customer's
+ * name on a public page is theirs to give, and it was given.
+ *
+ * Named where the customer is *identified* — the lede, the glance card, the meta
+ * description — and not in the twenty sentences that go on to say "the dealership". Swapping
+ * every one for the proper noun would read like a press release; a name works once.
  */
 interface Props { lang: 'en' | 'de'; }
 const { lang } = Astro.props;
@@ -20,13 +25,14 @@ const COPY = {
   en: {
     meta: {
       title: `Work — ${SITE.name}`,
-      description: 'Tiff Cardealer: a Windows application and a website for a used-car ' +
-                   'dealership, and the decisions that shaped both.',
+      description: 'Tiff Cardealer: a Windows application and a website for Downtown Auto ' +
+                   'Sales in Anchorage, Alaska, and the decisions that shaped both.',
     },
     eyebrow: 'Case study',
     h1: 'Tiff Cardealer',
-    lede: 'A used-car dealership in Anchorage, Alaska buys damaged cars, repairs them and ' +
-          'sells them. This is the system it runs on — and the product it became.',
+    lede: 'Downtown Auto Sales, a used-car dealership in Anchorage, Alaska, buys damaged ' +
+          'cars, repairs them and sells them. This is the system it runs on — and the ' +
+          'product it became.',
     problemTitle: 'The problem',
     problem: [
       'The dealership had a website full of vehicles and a set of spreadsheets full of money, and no connection between them. Every car was typed twice: once into the office record with what it cost to buy and repair, and once into the website with what it was being sold for. A car that sold on Tuesday was still on the website on Friday.',
@@ -38,6 +44,7 @@ const COPY = {
            'seam between them is a one-way push of a fixed list of public fields.',
     glance: 'At a glance',
     glanceRows: [
+      ['Client', 'Downtown Auto Sales, Anchorage, Alaska'],
       ['Role', 'Everything — architecture, code, design, hosting'],
       ['Desktop', 'Electron, React, encrypted SQLite'],
       ['Web', 'WordPress theme written from scratch'],
@@ -95,14 +102,14 @@ const COPY = {
   de: {
     meta: {
       title: 'Referenzen — Tiff Software Solutions',
-      description: 'Tiff Cardealer: eine Windows-Anwendung und eine Website für einen ' +
-                   'Gebrauchtwagenhändler — und die Entscheidungen dahinter.',
+      description: 'Tiff Cardealer: eine Windows-Anwendung und eine Website für Downtown ' +
+                   'Auto Sales in Anchorage, Alaska — und die Entscheidungen dahinter.',
     },
     eyebrow: 'Fallstudie',
     h1: 'Tiff Cardealer',
-    lede: 'Ein Gebrauchtwagenhändler in Anchorage, Alaska kauft beschädigte Fahrzeuge, ' +
-          'repariert sie und verkauft sie. Das ist das System, mit dem er arbeitet — und ' +
-          'das Produkt, das daraus wurde.',
+    lede: 'Downtown Auto Sales, ein Gebrauchtwagenhändler in Anchorage, Alaska, kauft ' +
+          'beschädigte Fahrzeuge, repariert sie und verkauft sie. Das ist das System, mit ' +
+          'dem der Betrieb arbeitet — und das Produkt, das daraus wurde.',
     problemTitle: 'Das Problem',
     problem: [
       'Der Händler hatte eine Website voller Fahrzeuge und Tabellen voller Zahlen, und dazwischen keine Verbindung. Jedes Auto wurde zweimal erfasst: einmal im Büro mit Einkaufs- und Reparaturkosten, einmal auf der Website mit dem Verkaufspreis. Ein Auto, das am Dienstag verkauft wurde, stand am Freitag noch online.',
@@ -114,6 +121,7 @@ const COPY = {
            'Naht dazwischen ist eine Einbahnübertragung einer festen Liste öffentlicher Felder.',
     glance: 'Auf einen Blick',
     glanceRows: [
+      ['Kunde', 'Downtown Auto Sales, Anchorage, Alaska'],
       ['Rolle', 'Alles — Architektur, Code, Gestaltung, Hosting'],
       ['Desktop', 'Electron, React, verschlüsseltes SQLite'],
       ['Web', 'Von Grund auf geschriebenes WordPress-Theme'],

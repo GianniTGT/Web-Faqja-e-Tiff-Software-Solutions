@@ -16,8 +16,8 @@ import { localise } from '../../i18n/ui.js';
  * English and left alone in German until the two pages are saying different things.
  *
  * **Nothing here is invented.** No client logos, no testimonials, no numbers nobody
- * measured. The dealership is described rather than named, because putting a customer's
- * name on a public page is their permission to give.
+ * measured. The dealership is named as of 30 August 2026 — Gianni confirmed Tif's
+ * permission, which is whose it was to give.
  */
 interface Props { lang: 'en' | 'de'; }
 const { lang } = Astro.props;
@@ -60,9 +60,9 @@ const COPY = {
 
     workEyebrow: 'Selected work',
     workTitle: 'Tiff Cardealer',
-    workLede: 'A complete system for a used-car dealership: a Windows application that holds ' +
-              'every vehicle, cost and document, and a website that publishes only what a ' +
-              'customer should see.',
+    workLede: 'A complete system for Downtown Auto Sales, a used-car dealership in ' +
+              'Anchorage, Alaska: a Windows application that holds every vehicle, cost and ' +
+              'document, and a website that publishes only what a customer should see.',
     facts: [
       'An encrypted database on the dealership\u2019s own machine — purchase price, parts, labour and margin never leave it.',
       'A car marked Ready appears on the website by itself. Marked Sold, it comes down — keeping its page, its photos and its history.',
@@ -72,7 +72,7 @@ const COPY = {
     workCta: 'Read the full case study',
     glance: 'At a glance',
     glanceRows: [
-      ['Built for', 'A used-car dealership in Anchorage, Alaska'],
+      ['Built for', 'Downtown Auto Sales, Anchorage, Alaska'],
       ['Desktop', 'Electron, React, encrypted SQLite'],
       ['Web', 'A WordPress theme written from scratch'],
       ['Status', 'In daily use; sold as a product to other dealerships'],
@@ -140,9 +140,10 @@ const COPY = {
 
     workEyebrow: 'Ausgewählte Arbeit',
     workTitle: 'Tiff Cardealer',
-    workLede: 'Ein komplettes System für einen Gebrauchtwagenhändler: eine Windows-Anwendung, ' +
-              'die jedes Fahrzeug, jede Position und jedes Dokument hält, und eine Website, ' +
-              'die nur zeigt, was ein Kunde sehen soll.',
+    workLede: 'Ein komplettes System für Downtown Auto Sales, einen Gebrauchtwagenhändler ' +
+              'in Anchorage, Alaska: eine Windows-Anwendung, die jedes Fahrzeug, jede ' +
+              'Position und jedes Dokument hält, und eine Website, die nur zeigt, was ein ' +
+              'Kunde sehen soll.',
     facts: [
       'Eine verschlüsselte Datenbank auf dem Rechner des Händlers — Einkaufspreis, Teile, Arbeit und Marge verlassen ihn nie.',
       'Ein Fahrzeug auf \u201EBereit\u201C erscheint von selbst auf der Website. Auf \u201EVerkauft\u201C gesetzt, verschwindet es wieder — Seite, Fotos und Historie bleiben erhalten.',
@@ -152,7 +153,7 @@ const COPY = {
     workCta: 'Die ganze Fallstudie lesen',
     glance: 'Auf einen Blick',
     glanceRows: [
-      ['Gebaut für', 'Einen Gebrauchtwagenhändler in Anchorage, Alaska'],
+      ['Gebaut für', 'Downtown Auto Sales, Anchorage, Alaska'],
       ['Desktop', 'Electron, React, verschlüsseltes SQLite'],
       ['Web', 'Ein von Grund auf geschriebenes WordPress-Theme'],
       ['Stand', 'Täglich im Einsatz; als Produkt an weitere Händler verkauft'],

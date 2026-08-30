@@ -73,6 +73,18 @@ export const OTHER_WORK = [
     en: 'Running on Tiff Cardealer Manager.',
     de: 'Arbeitet mit Tiff Cardealer Manager.',
   },
+  /**
+   * **This is the same customer as the case study, and that is not a duplicate to tidy up.**
+   * `/work/` names Downtown Auto Sales and tells the Tiff Cardealer story; this line is the
+   * second product at the same address. Before 30 August the case study said only "a
+   * used-car dealership in Anchorage" and the pairing looked like an oversight — it is not,
+   * and deleting either half loses a real fact.
+   *
+   * **What is still unreconciled:** Gianni's list puts *Rent a Car Manager* here and
+   * *Cardealer Manager* at Adams Tuning, while the case study is Cardealer for this
+   * dealership. Written as he gave it rather than smoothed over — if that is a slip it is
+   * his to correct, and a guess would be worse than the inconsistency.
+   */
   {
     name: 'downtownautoak.com',
     href: 'https://downtownautoak.com',

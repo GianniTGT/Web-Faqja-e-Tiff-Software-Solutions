@@ -280,11 +280,11 @@ evidence. **The evidence already exists:**
   sync between them that publishes vehicles while every purchase price and margin stays on
   the office machine. A real constraint, honoured. **This is the lead case study, and one
   told properly beats five thin ones.**
-  **Ask Tif before publishing his business's name and screens.** It is his company on the page.
-  **Half-done as of 30 August 2026:** the case study still says "a used-car dealership in
-  Anchorage, Alaska", but `OTHER_WORK` now lists `downtownautoak.com` — Anchorage, Alaska —
-  a few sections below it. Anybody reading joins those up. Name it or drop the line; the
-  present arrangement gets the discretion's cost without its benefit. See §8.
+  **Named on 30 August 2026** — Gianni confirmed Tif's permission, which is whose it was to
+  give. It appears in the lede, the glance card and the meta description of `/work/`, and in
+  the "Built for" row on the home page. **Not in the twenty sentences that go on to say "the
+  dealership"**: swapping every one for the proper noun reads like a press release, and a
+  name works once. Screens are still a separate question and have not been asked about.
 - Ride2Balkan, the Frigemo *Post ist da* app, the Hijama app, Handwerk — named, one line
   each, no case study needed yet.
 
@@ -366,8 +366,9 @@ Waiting on a person, none of it code:
 | ~~The postal address~~ | **Done 30 August 2026** — Kasparstrasse 15, 3027 Bern. The imprint's unfinished notice disappeared by itself, and the footer prints it too. | `SITE.address` |
 | ~~Four one-line descriptions~~ | **Done 30 August 2026**, in Gianni's own words. Not Hijama or Handwerk — he named Ride2Balkan, *Post ist da* (Frigemo AG), Adams Tuning and downtownautoak.com instead. | `OTHER_WORK` |
 | ~~Netcup: SSH or SFTP~~ | **Answered 30 August 2026 — see §5.** SSH, but no `rsync` in the jail. | the workflow, §5 |
-| **Tif's permission** | to name Downtown Auto Sales *in the case study*. Note that `OTHER_WORK` now lists `downtownautoak.com` — Anchorage, Alaska — directly under a case study about "a used-car dealership in Anchorage, Alaska", so the page half-names it already. Either name it properly or take the line out; the current state is the one arrangement that makes no sense. | `Work.astro`, `Home.astro` |
-| **Which product downtownautoak.com runs** | Gianni's list says *Rent a Car Manager* there and *Cardealer Manager* at Adams Tuning, while the case study is Cardealer for an Anchorage dealership. Written down as he gave it, unreconciled on purpose. | `OTHER_WORK` |
+| ~~Tif's permission~~ | **Given, 30 August 2026.** Downtown Auto Sales is named. `OTHER_WORK`'s `downtownautoak.com` line is the *same customer's* second product, not a duplicate — do not delete either half. | `Work.astro`, `Home.astro` |
+| **Which product downtownautoak.com runs** | Gianni's list says *Rent a Car Manager* there and *Cardealer Manager* at Adams Tuning, while the case study is Cardealer for this same dealership. Written down as he gave it, unreconciled on purpose: if it is a slip it is his to correct, and a guess on a named customer's page is worse than the inconsistency. | `OTHER_WORK` |
+| **Screens** | never asked about. The case study is words only; a screenshot of Tif's inventory is a separate permission. | `Work.astro` |
 | **A response time** | for `/contact/`, if he wants to promise one | `contact.astro` |
 | **Swiss UID** | `CHE-…`, if the business is registered | `SITE.uid` — the imprint section appears by itself |
 
