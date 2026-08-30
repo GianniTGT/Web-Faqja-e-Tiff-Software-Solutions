@@ -466,13 +466,24 @@ the CSS, all twenty font files, `robots.txt`, `sitemap.xml`, `favicon.svg`.
 | `https://tiff-software-solutions.com/` | **200**, certificate valid |
 | `https://tiff-software-solutions.com/de/work/` | **200** — "Referenzen — Tiff Software Solutions" |
 | `https://tiff-software-solutions.com/robots.txt` | **200** |
-| `https://www.tiff-software-solutions.com/` | **fails** — see below |
+| `https://www.tiff-software-solutions.com/` | **200** since the certificate was reissued — see below |
 
-**`www` is not on the certificate.** `SSL: no alternative certificate subject name matches
-target hostname`. This is the panel's "www-Domain nicht geschützt" warning, and it is real:
-anybody who types `www.` meets a browser security warning on a site that otherwise works.
-Fixed by reissuing the Let's Encrypt certificate in the netcup panel **with the www alias
-ticked** — it is a panel checkbox, not a code change.
+**`www` was not on the certificate, and now is.** It failed with `SSL: no alternative
+certificate subject name matches target hostname` — the panel's "www-Domain nicht
+geschützt" warning, and real: anybody typing `www.` met a browser security warning on a
+site that otherwise worked. Gianni reissued the Let's Encrypt certificate in the netcup
+panel with the www alias ticked, which was all it needed.
+
+Verified from outside: `DNS:tiff-software-solutions.com, DNS:www.tiff-software-solutions.com`,
+issued by Let's Encrypt, valid to **28 November 2026**. Both hostnames answer 200 over
+http and https.
+
+**`www` serves the site rather than redirecting to the apex**, so both hostnames return
+identical pages. That is fine as it stands and needs no rewrite rule: every page carries
+`<link rel="canonical">` and all three `hreflang` links pointing at the **apex**, because
+they are built from `site:` in `astro.config.mjs`. Checked on the live `www` pages, not
+assumed. **If `site:` is ever wrong, this is one of the things that silently breaks** —
+which is the warning §7 already gives about that value.
 
 **Four strays were deleted the same day**, on Gianni's go: `site.zip` and
 `tiffsoftwarewebsite20260822.zip` (upload archives, both publicly downloadable once
