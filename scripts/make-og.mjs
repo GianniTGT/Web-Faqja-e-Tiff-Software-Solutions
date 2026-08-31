@@ -7,7 +7,13 @@
  * and this script exists to reproduce it — the same bargain as any generated file that is
  * cheaper to store than to rebuild.
  *
- *   node scripts/make-og.mjs
+ *   node scripts/make-og.mjs        # English, public/og.png
+ *   node scripts/make-og.mjs de     # German,  public/og-de.png
+ *
+ * **Two cards, because the site is two sites.** A German page sharing an English card is
+ * the same fault as a German page with an English title, and `/de/` is the half a Berner
+ * SME reads. The German headline is the one from `Home.astro`, not a translation of the
+ * English card — the same rule `src/i18n/ui.js` sets for every other string.
  *
  * Needs `playwright` and a Chromium. In the Claude Code sandbox one is already at
  * /opt/pw-browsers; set OG_CHROMIUM to point elsewhere.
@@ -22,7 +28,37 @@ import { readFileSync, writeFileSync, mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-const OUT = 'public/og.png';
+/**
+ * Both cards carry the page's own headline, copied from `Home.astro` rather than restated,
+ * so the card and the page it represents cannot drift apart.
+ *
+ * The German headline is nine characters longer, which at 74px overflowed the card's height
+ * — so it sets one step smaller. The English size is not reduced to match: making the wider
+ * language pay for the narrower one is how both end up looking cramped.
+ */
+const CARDS = {
+  en: {
+    out: 'public/og.png',
+    headline: 'Software small businesses can actually run.',
+    place: 'Bern, Switzerland',
+    size: 74,
+  },
+  de: {
+    out: 'public/og-de.png',
+    headline: 'Software, mit der kleine Betriebe wirklich arbeiten.',
+    place: 'Bern, Schweiz',
+    size: 62,
+  },
+};
+
+const lang = (process.argv[2] || 'en').toLowerCase();
+const card = CARDS[lang];
+if (!card) {
+  console.error(`og: no card for '${lang}'. Known: ${Object.keys(CARDS).join(', ')}`);
+  process.exit(1);
+}
+
+const OUT = card.out;
 const WIDTH = 1200;
 const HEIGHT = 630;
 
@@ -48,7 +84,7 @@ body{width:${WIDTH}px;height:${HEIGHT}px;background:${PAPER};
 .top{display:flex;align-items:center;gap:22px}
 .wm{font-family:P;font-size:26px;letter-spacing:.13em;text-transform:uppercase;font-weight:700}
 .wm b{color:${FOREST}}
-h1{font-family:P;font-weight:700;font-size:74px;line-height:1.08;letter-spacing:-.02em;max-width:15ch}
+h1{font-family:P;font-weight:700;font-size:${card.size}px;line-height:1.08;letter-spacing:-.02em;max-width:16ch}
 .foot{display:flex;align-items:center;justify-content:space-between;
   border-top:2px solid ${GOLD};padding-top:26px;font-size:25px;color:#55564F}
 .foot b{color:${FOREST};font-weight:400}
@@ -61,8 +97,8 @@ h1{font-family:P;font-weight:700;font-size:74px;line-height:1.08;letter-spacing:
   </svg>
   <span class="wm">Tiff <b>Software Solutions</b></span>
 </div>
-<h1>Software small businesses can actually run.</h1>
-<div class="foot"><span>Bern, Switzerland</span><b>tiff-software-solutions.com</b></div>
+<h1>${card.headline}</h1>
+<div class="foot"><span>${card.place}</span><b>tiff-software-solutions.com</b></div>
 </body></html>`;
 
 const dir = mkdtempSync(join(tmpdir(), 'tiff-og-'));
@@ -85,4 +121,4 @@ await page.waitForTimeout(300);
 await page.screenshot({ path: OUT });
 await browser.close();
 
-console.log(`og: wrote ${OUT} (${WIDTH}×${HEIGHT})`);
+console.log(`og: wrote ${OUT} (${WIDTH}×${HEIGHT}, ${lang})`);
