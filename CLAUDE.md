@@ -202,12 +202,45 @@ image CDN would be the third-party request `/privacy/` says does not exist.
 
 Worth stating plainly, because it is tempting to keep improving markup instead:
 
-1. **The site is not in Google Search Console, and the sitemap has not been submitted.**
-   Until that happens the rest of this section is theoretical — a page Google has not
-   crawled cannot rank however well its title is written. Needs Gianni's Google account.
+1. ~~**The site is not in Google Search Console.**~~ **Verified 31 August 2026**, as a
+   *domain* property via a DNS TXT record — which covers `www`, `http`, `https` and every
+   subdomain in one go, unlike a URL-prefix property. Sitemap submission and the first
+   indexing request follow from there.
 2. **There is no Google Business Profile.** For "Softwareentwickler Bern" the map pack sits
    above the ordinary results. It is free, and it needs the postal address — which exists
-   now. Also only Gianni can do it.
+   now. Only Gianni can do it.
+
+### What the TXT record cost, and why it is written down — 31 August 2026
+
+Verification took five attempts, and **four of them failed for reasons that had nothing to
+do with DNS being slow.** Worth recording, because the next person will hit the same traps:
+
+1. **The token was transcribed from a screenshot and was truncated.** Google's dialog field
+   is narrower than the value, so the tail sat out of view; 34 of the 43 characters were
+   read and the rest were never seen. Google then reported *"we could not find your token"*
+   while listing a token that looked identical — because the difference was off-screen at
+   both ends. **Never retype a verification token. Use the provider's copy button, and
+   paste it as text where it can be diffed.**
+2. **netcup rejects mixed TTLs** across records sharing a host+type. The new TXT went in at
+   86400 beside an SPF at 3600 and the save was refused. Match the existing TTL; never
+   "fix" it by raising the SPF's, which is a working mail record.
+3. **The row was edited on host `mail` rather than `@`.** The value was perfect and
+   invisible to Google, since verification only ever reads the apex.
+4. **A netcup field holds the value until the deploy button below the whole table is
+   pressed.** What the browser shows is not what the zone has. The only proof is the
+   message *"Die Bereitstellung der Zonenänderungen war erfolgreich."*
+
+**The thing that actually resolved it was querying the authoritative nameservers directly**
+— `netcup.firstns.cc` and `netcup.thirdns.de` — over raw UDP from the netcup account
+through the Novamira connector. Public resolvers cache, so they cannot distinguish *"not
+saved"* from *"saved, still propagating"*, and that distinction was the whole diagnosis
+three times over. A small DNS client is in this conversation's history; `dig` is not
+installed in the sandbox and DoH to a public resolver answers the wrong question.
+
+**Two `google-site-verification` records are in the zone**, the truncated one and the real
+one. Google matches if *any* TXT matches, so it verifies; the stale one should be deleted
+once convenient. **The real one must never be removed** — Google re-checks it periodically
+and removing it un-verifies the property.
 
 Neither is in this repo, so neither will show up as an undone task in the code. That is
 exactly why they are written here.
