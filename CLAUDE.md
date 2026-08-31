@@ -486,6 +486,17 @@ imprint, privacy, and a 404. Rendered in Chromium at 1280 light, 1280 dark and 4
 
 ## 7. How to work in this repo
 
+- **Say who, where and what — every time.** Gianni's standing instruction, 31 August 2026.
+  Every action gets three things named before it is described: **who** is doing it (this
+  session, or Gianni, or a scheduled job), **where** it lands (this sandbox, the GitHub
+  branch, the netcup docroot, a Google console), and **what** actually changes.
+
+  This is not politeness. This project has four surfaces that look alike in a chat window —
+  the repo, the sandbox's `dist/`, the live docroot, and two Google consoles — and the
+  session can only write to the first two. A sentence like "the sitemap is submitted" hides
+  which of the four it happened on, and an hour went into exactly that confusion when
+  Search Console reported a `robots.txt` that the server had not served since 30 August.
+
 - **Render it and look at it before shipping.** Not "the build passed" — open the page in a
   browser at phone width and at desktop. Three separate bugs on the DAS project got past
   passing tests because nobody opened the screen.
