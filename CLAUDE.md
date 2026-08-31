@@ -208,7 +208,26 @@ Worth stating plainly, because it is tempting to keep improving markup instead:
    indexing request follow from there.
 2. **There is no Google Business Profile.** For "Softwareentwickler Bern" the map pack sits
    above the ordinary results. It is free, and it needs the postal address — which exists
-   now. Only Gianni can do it.
+   now. Only Gianni can do it. **This is the last one left.**
+
+### Where Search Console actually stands — 31 August 2026
+
+Verified, sitemap submitted, and **"Sitemap wurde ohne Fehler verarbeitet" with all 14 URLs
+discovered** — seven pages in each language, the same 14 the build emits. Same day, not the
+several this was expected to take.
+
+**Two things read as broken while they were merely new**, and both cost a round of worry:
+
+- The URL inspection said *"Indexiert, obwohl durch robots.txt-Datei blockiert"*, quoting a
+  crawl from **25 August** — before the `Disallow` came out. That was Google's cached copy,
+  not the live file: fetching `/robots.txt` while claiming to be Googlebot returned
+  `Allow: /`. It cleared by itself, which the successful sitemap read proves.
+- Settings showed *"Keine robots.txt-Datei gefunden"* and *"Crawling-Statistiken: noch keine
+  Daten"*. Those reports are built from a property's own crawl history, and the property was
+  hours old. Empty meant new, not missing.
+
+**Check the live file before believing a Search Console report about it.** Both panels
+describe Google's record of the site, which lags the site itself by up to a day.
 
 ### What the TXT record cost, and why it is written down — 31 August 2026
 
