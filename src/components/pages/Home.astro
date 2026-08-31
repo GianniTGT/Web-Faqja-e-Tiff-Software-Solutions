@@ -1,5 +1,6 @@
 ---
 import Page from '../../layouts/Page.astro';
+import AnimatedMark from '../AnimatedMark.astro';
 import { SITE } from '../../data/site.js';
 import { localise } from '../../i18n/ui.js';
 
@@ -15,15 +16,15 @@ import { localise } from '../../i18n/ui.js';
  * English and left alone in German until the two pages are saying different things.
  *
  * **Nothing here is invented.** No client logos, no testimonials, no numbers nobody
- * measured. The dealership is described rather than named, because putting a customer's
- * name on a public page is their permission to give.
+ * measured. The dealership is named as of 30 August 2026 — Gianni confirmed Tif's
+ * permission, which is whose it was to give.
  */
 interface Props { lang: 'en' | 'de'; }
 const { lang } = Astro.props;
 
 const COPY = {
   en: {
-    meta: { title: `${SITE.name} — ${SITE.tagline}`, description: SITE.description },
+    meta: { title: `Software Development in ${SITE.city} — ${SITE.name}`, description: SITE.description },
     eyebrow: `${SITE.city}, ${SITE.country}`,
     h1: 'Software small businesses can\u00A0actually run.',
     lede: 'Desktop applications, websites, and the systems that join them. Built for one ' +
@@ -42,7 +43,7 @@ const COPY = {
     ],
     proofLink: 'How the two halves meet',
 
-    buildEyebrow: 'What I build',
+    buildEyebrow: 'What we build',
     buildTitle: 'Three things, and the seam between them.',
     services: [
       { title: 'Desktop software',
@@ -59,9 +60,9 @@ const COPY = {
 
     workEyebrow: 'Selected work',
     workTitle: 'Tiff Cardealer',
-    workLede: 'A complete system for a used-car dealership: a Windows application that holds ' +
-              'every vehicle, cost and document, and a website that publishes only what a ' +
-              'customer should see.',
+    workLede: 'A complete system for Downtown Auto Sales, a used-car dealership in ' +
+              'Anchorage, Alaska: a Windows application that holds every vehicle, cost and ' +
+              'document, and a website that publishes only what a customer should see.',
     facts: [
       'An encrypted database on the dealership\u2019s own machine — purchase price, parts, labour and margin never leave it.',
       'A car marked Ready appears on the website by itself. Marked Sold, it comes down — keeping its page, its photos and its history.',
@@ -71,33 +72,33 @@ const COPY = {
     workCta: 'Read the full case study',
     glance: 'At a glance',
     glanceRows: [
-      ['Built for', 'A used-car dealership in Anchorage, Alaska'],
+      ['Built for', 'Downtown Auto Sales, Anchorage, Alaska'],
       ['Desktop', 'Electron, React, encrypted SQLite'],
       ['Web', 'A WordPress theme written from scratch'],
       ['Status', 'In daily use; sold as a product to other dealerships'],
     ],
 
-    methodEyebrow: 'How I work',
-    methodTitle: 'Four things I will not trade away.',
+    methodEyebrow: 'How we work',
+    methodTitle: 'Four things we will not trade away.',
     method: [
       { n: '01', title: 'One business at a time',
-        body: 'I take on few projects and stay on them. You get the person who wrote it, not a ticket queue.' },
+        body: 'We take on few projects and stay on them. You get the people who wrote it, not a ticket queue.' },
       { n: '02', title: 'Your data stays yours',
         body: 'Where it belongs on your machine, it stays on your machine. What has to be public is chosen deliberately, field by field — never by default.' },
       { n: '03', title: 'Built to be run by staff',
-        body: 'The people using it are selling cars, not administering software. Anything that needs a manual is something I have not finished.' },
+        body: 'The people using it are selling cars, not administering software. Anything that needs a manual is something we have not finished.' },
       { n: '04', title: 'Nothing ships unverified',
-        body: 'A passing test is not somebody opening the screen. Both happen before I tell you it works.' },
+        body: 'A passing test is not somebody opening the screen. Both happen before we tell you it works.' },
     ],
 
-    closeTitle: 'Tell me what the business actually does.',
+    closeTitle: 'Tell us what the business actually does.',
     closeLede: 'Not the software you think you need — the job it has to get done. That ' +
                'conversation is free, and it is usually where the real answer is.',
   },
 
   de: {
     meta: {
-      title: 'Tiff Software Solutions — Software, mit der kleine Unternehmen wirklich arbeiten',
+      title: 'Softwareentwicklung Bern — Tiff Software Solutions',
       description: 'Desktop-Anwendungen, Websites und die Systeme dazwischen. Für ein ' +
                    'Unternehmen nach dem anderen, aus Bern.',
     },
@@ -121,7 +122,7 @@ const COPY = {
     ],
     proofLink: 'Wie die beiden Hälften zusammenkommen',
 
-    buildEyebrow: 'Was ich baue',
+    buildEyebrow: 'Was wir bauen',
     buildTitle: 'Drei Dinge — und die Naht dazwischen.',
     services: [
       { title: 'Desktop-Software',
@@ -139,9 +140,10 @@ const COPY = {
 
     workEyebrow: 'Ausgewählte Arbeit',
     workTitle: 'Tiff Cardealer',
-    workLede: 'Ein komplettes System für einen Gebrauchtwagenhändler: eine Windows-Anwendung, ' +
-              'die jedes Fahrzeug, jede Position und jedes Dokument hält, und eine Website, ' +
-              'die nur zeigt, was ein Kunde sehen soll.',
+    workLede: 'Ein komplettes System für Downtown Auto Sales, einen Gebrauchtwagenhändler ' +
+              'in Anchorage, Alaska: eine Windows-Anwendung, die jedes Fahrzeug, jede ' +
+              'Position und jedes Dokument hält, und eine Website, die nur zeigt, was ein ' +
+              'Kunde sehen soll.',
     facts: [
       'Eine verschlüsselte Datenbank auf dem Rechner des Händlers — Einkaufspreis, Teile, Arbeit und Marge verlassen ihn nie.',
       'Ein Fahrzeug auf \u201EBereit\u201C erscheint von selbst auf der Website. Auf \u201EVerkauft\u201C gesetzt, verschwindet es wieder — Seite, Fotos und Historie bleiben erhalten.',
@@ -151,26 +153,26 @@ const COPY = {
     workCta: 'Die ganze Fallstudie lesen',
     glance: 'Auf einen Blick',
     glanceRows: [
-      ['Gebaut für', 'Einen Gebrauchtwagenhändler in Anchorage, Alaska'],
+      ['Gebaut für', 'Downtown Auto Sales, Anchorage, Alaska'],
       ['Desktop', 'Electron, React, verschlüsseltes SQLite'],
       ['Web', 'Ein von Grund auf geschriebenes WordPress-Theme'],
       ['Stand', 'Täglich im Einsatz; als Produkt an weitere Händler verkauft'],
     ],
 
-    methodEyebrow: 'Wie ich arbeite',
+    methodEyebrow: 'Wie wir arbeiten',
     methodTitle: 'Vier Dinge, die nicht verhandelbar sind.',
     method: [
       { n: '01', title: 'Ein Unternehmen nach dem anderen',
-        body: 'Ich nehme wenige Projekte an und bleibe dabei. Sie bekommen die Person, die es geschrieben hat, keine Ticket-Warteschlange.' },
+        body: 'Wir nehmen wenige Projekte an und bleiben dabei. Sie bekommen die Leute, die es geschrieben haben, und keine Ticket-Warteschlange.' },
       { n: '02', title: 'Ihre Daten bleiben Ihre',
         body: 'Was auf Ihren Rechner gehört, bleibt dort. Was öffentlich sein muss, wird bewusst gewählt, Feld für Feld — nie einfach so.' },
       { n: '03', title: 'Vom Personal bedienbar',
-        body: 'Die Leute, die damit arbeiten, verkaufen Autos, sie verwalten keine Software. Was ein Handbuch braucht, habe ich nicht fertig gemacht.' },
+        body: 'Die Leute, die damit arbeiten, verkaufen Autos, sie verwalten keine Software. Was ein Handbuch braucht, haben wir nicht fertig gemacht.' },
       { n: '04', title: 'Nichts geht ungeprüft raus',
-        body: 'Ein bestandener Test ist nicht dasselbe wie jemand, der den Bildschirm öffnet. Beides passiert, bevor ich Ihnen sage, dass es läuft.' },
+        body: 'Ein bestandener Test ist nicht dasselbe wie jemand, der den Bildschirm öffnet. Beides passiert, bevor wir Ihnen sagen, dass es läuft.' },
     ],
 
-    closeTitle: 'Erzählen Sie mir, was Ihr Betrieb wirklich tut.',
+    closeTitle: 'Erzählen Sie uns, was Ihr Betrieb wirklich tut.',
     closeLede: 'Nicht die Software, die Sie zu brauchen glauben — die Aufgabe, die erledigt ' +
                'werden muss. Dieses Gespräch kostet nichts, und meistens liegt dort die ' +
                'eigentliche Antwort.',
@@ -184,6 +186,13 @@ const href = (p) => localise(p, lang);
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-copy">
+        {/*
+          The mark draws itself once, on the one page where a visitor arrives cold. It is
+          the firm's own logo rather than an ornament, so the thing being animated is the
+          thing being introduced — and it is CSS, so the page still runs no script and still
+          asks nothing of anybody else's server, which is what `/privacy/` promises.
+        */}
+        <div class="hero-mark"><AnimatedMark size={78} /></div>
         <p class="eyebrow">{c.eyebrow}</p>
         <h1 set:html={c.h1} />
         <p class="lede">{c.lede}</p>
@@ -302,6 +311,11 @@ const href = (p) => localise(p, lang);
        panel in the middle of its own white space instead of starting with the headline. */
     align-items: start;
   }
+  /* A wrapper, because a scoped style in this file cannot reach inside a child component —
+     `<AnimatedMark />` compiles to a component call, not to an element this file's scope
+     attribute lands on. The margin is the page's business anyway, not the mark's. */
+  .hero-mark { margin-bottom: 26px; }
+
   /* 16ch, not 15: the German headline is the longer of the two and 15 wrapped it to five
      lines. One character of slack fixes German and leaves English on four. */
   .hero h1 { max-width: 16ch; }

@@ -5,7 +5,7 @@ here, the next session will not know it** — that is the lesson the DAS-Manager
 the hard way, and it is why this file exists on day one rather than after the first thing
 is forgotten.
 
-**Last updated: 21 August 2026**
+**Last updated: 30 August 2026**
 
 ---
 
@@ -78,6 +78,193 @@ and the German headline wrapped to five lines. The cap is `16ch` and the headlin
 shortened — *Betriebe* is what a Swiss tradesman calls his own business and is four letters
 shorter than *Unternehmen*. Both languages now wrap to four lines. Longer words are a real
 layout input, not a translation detail.
+
+## 2b. What changed on 30 August 2026
+
+Four instructions from Gianni, and the one defect they turned up.
+
+**The site speaks as "we" now, not as "I".** It used to open the About page with *"One
+developer, in Bern."* and stay in the first person singular for seventy-odd sentences across
+both languages. His instruction was plain: *not a one man company, just a small company.*
+So: *"A small company, in Bern."* / *"Ein kleines Unternehmen, in Bern."*, and `wir`
+throughout the German with Sie-Form untouched for the reader.
+
+**This is a voice, not a fact about headcount, and the difference matters for edits.** The
+page never says how many people there are, because it does not have to and because a number
+would be a claim to keep true. What it no longer does is *volunteer* that there is one. Any
+new copy follows the same rule — plural voice, no count.
+
+Every replacement was a whole phrase checked to match exactly once, not a word swap: an
+`I` → `we` pass hits the `I` inside words, and German `ich` is not the German `wir` in
+every clause it appears in. Three survivors were caught only by grepping the **built** HTML
+afterwards — *"something I built"*, *"das ich gebaut habe"*, *"ohne mich anzurufen"*. Grep
+the output, not the source; the source is what you already believe is right.
+
+**The language switch is a globe.** It used to print "Auf Deutsch" / "In English". A globe
+carries less information, and that cost is paid back in the accessible name: `aria-label`
+and `title` both say *"Auf Deutsch wechseln"* rather than "Sprache wechseln", because with
+no visible word the label *is* the control. A flag was never an option — German is not
+Germany, and Switzerland has four national languages.
+
+**One layout defect, found by looking rather than by building.** Grouped with the nav in a
+`.right` wrapper, the globe wrapped onto a *third* row at 412px — one small circle alone on
+an empty line, which reads as a rendering fault. The nav and the switch are siblings of the
+brand now; at phone width the globe stays on the brand's row and only the nav wraps. **The
+build passed the whole time.** This is the third defect in this repo's history that only a
+rendered screen has caught.
+
+**The mark draws itself on the home page** — `AnimatedMark.astro`, gold tile in, green T,
+then the white road stroking along its path, then one sheen. **Its static state is the
+default and the keyframes only define what to start *from*** (`animation-fill-mode:
+backwards`), so a browser that never runs it shows the finished logo rather than an empty
+square. `prefers-reduced-motion` gets that same finished logo. It is CSS with no script, so
+`/privacy/` stays true — verified by counting third-party requests in Chromium across all
+30 render combinations: zero.
+
+**The geometry is copied from `Mark.astro`, not imported.** The road has to be a stroke
+with a `pathLength` before it can draw itself, and the tile and T have to move separately —
+none of which is reachable through the existing component. If the mark is ever redrawn,
+both files change.
+
+---
+
+### Downtown is two companies, and both their sites are broken — 30 August 2026
+
+Gianni corrected an assumption this repo had written down twice, so it is recorded properly
+rather than left to be re-derived:
+
+| Domain | Company | Product |
+|---|---|---|
+| `downtownautosale.com` | **Downtown Auto Sales** — the dealer | Tiff Cardealer — the `/work/` case study |
+| `downtownautoak.com` | **the car rental company** | Tiff Rent a Car Manager — an `OTHER_WORK` line |
+
+**Two businesses with one owner, not one business with two products.** The apparent
+contradiction between Gianni's project list and the case study — *Rent a Car Manager* at one
+address, *Cardealer Manager* at the dealership — was never a contradiction. Anything that
+treats the two rows as duplicating each other is wrong, and deleting either loses a real
+customer.
+
+**Both sites are broken today, and neither is linked from here because of it:**
+
+- `downtownautoak.com` — **404** on every variant tried: http and https, apex and www. The
+  http ones redirect to https and 404 there, so it is not a redirect problem.
+- `downtownautosale.com` — serves a real page ("Downtownautosale LLC", ~98 KB) but **its
+  TLS certificate has expired**, so a browser shows a security warning before any of it.
+  Exactly the `test-tiff` failure mode the DAS project already recorded: a working site that
+  looks dead.
+
+**Check a link before publishing it, from somewhere that can actually reach it.** Three
+external links were added to `OTHER_WORK` in one commit and none had been fetched; two were
+broken. The sandbox proxy refuses these hosts, so `curl` from the netcup account through the
+Novamira connector is the way to check — the same read-only route as §5. `ride2balkan.com`
+was checked the same way and is genuinely fine (200, valid certificate), so its link stays.
+
+---
+
+## 2c. SEO, 30 August 2026 — and what is still not done
+
+Gianni asked for SEO once the site was live. The technical base was already strong — static
+pages with no scripts and no third-party requests, unique title and description per page in
+both languages, canonical, `hreflang`, `sitemap.xml`. What was missing was of two kinds, and
+**only one kind is code.**
+
+**Titles now carry what people type, not what the page is called internally.** They read
+`Services — Tiff Software Solutions` and `Leistungen — Tiff Software Solutions`; nobody
+searches either. **The word "Bern" was in no title on the site**, only in descriptions,
+and the title is the heavier signal.
+
+| | English | German |
+|---|---|---|
+| Home | Software Development in Bern | Softwareentwicklung Bern |
+| Services | Software & Web Development | Software- und Webentwicklung Bern |
+| Work | Case Study: Dealership Software | Referenzen: Software für KMU |
+| About | A Small Software Company in Bern | Softwarefirma in Bern |
+| Contact | Contact a Developer in Bern | Kontakt: Softwareentwickler Bern |
+
+**The German half carries the heavier local keywords deliberately.** English is the wider
+net and reaches Anchorage; German is the half a Berner SME searches in, and that is where
+"Bern" earns its place in every title. All ten land between 49 and 61 characters, so none is
+truncated in a result. Imprint, privacy and 404 were left alone — legal pages do not compete
+for anything.
+
+**Structured data** — one `ProfessionalService` block per page, built in `Base.astro` from
+`site.js` so the address can never disagree with the imprint. **No `priceRange`**, which
+Google likes and §2 forbids: a band invented for a validator is a number Gianni then has to
+honour.
+
+**A sharing card at `/og.png`**, 1200×630, generated by `scripts/make-og.mjs` from the real
+mark and the real typefaces. Committed rather than built, because it changes when the
+wordmark does — roughly never — and wiring Chromium into `npm run build` to regenerate it
+each time would be a poor trade. It is served from this domain like the fonts; a card on an
+image CDN would be the third-party request `/privacy/` says does not exist.
+
+### The two that matter most are not code — 30 August 2026
+
+Worth stating plainly, because it is tempting to keep improving markup instead:
+
+1. ~~**The site is not in Google Search Console.**~~ **Verified 31 August 2026**, as a
+   *domain* property via a DNS TXT record — which covers `www`, `http`, `https` and every
+   subdomain in one go, unlike a URL-prefix property. Sitemap submission and the first
+   indexing request follow from there.
+2. **There is no Google Business Profile.** For "Softwareentwickler Bern" the map pack sits
+   above the ordinary results. It is free, and it needs the postal address — which exists
+   now. Only Gianni can do it. **This is the last one left.**
+
+### Where Search Console actually stands — 31 August 2026
+
+Verified, sitemap submitted, and **"Sitemap wurde ohne Fehler verarbeitet" with all 14 URLs
+discovered** — seven pages in each language, the same 14 the build emits. Same day, not the
+several this was expected to take.
+
+**Two things read as broken while they were merely new**, and both cost a round of worry:
+
+- The URL inspection said *"Indexiert, obwohl durch robots.txt-Datei blockiert"*, quoting a
+  crawl from **25 August** — before the `Disallow` came out. That was Google's cached copy,
+  not the live file: fetching `/robots.txt` while claiming to be Googlebot returned
+  `Allow: /`. It cleared by itself, which the successful sitemap read proves.
+- Settings showed *"Keine robots.txt-Datei gefunden"* and *"Crawling-Statistiken: noch keine
+  Daten"*. Those reports are built from a property's own crawl history, and the property was
+  hours old. Empty meant new, not missing.
+
+**Check the live file before believing a Search Console report about it.** Both panels
+describe Google's record of the site, which lags the site itself by up to a day.
+
+### What the TXT record cost, and why it is written down — 31 August 2026
+
+Verification took five attempts, and **four of them failed for reasons that had nothing to
+do with DNS being slow.** Worth recording, because the next person will hit the same traps:
+
+1. **The token was transcribed from a screenshot and was truncated.** Google's dialog field
+   is narrower than the value, so the tail sat out of view; 34 of the 43 characters were
+   read and the rest were never seen. Google then reported *"we could not find your token"*
+   while listing a token that looked identical — because the difference was off-screen at
+   both ends. **Never retype a verification token. Use the provider's copy button, and
+   paste it as text where it can be diffed.**
+2. **netcup rejects mixed TTLs** across records sharing a host+type. The new TXT went in at
+   86400 beside an SPF at 3600 and the save was refused. Match the existing TTL; never
+   "fix" it by raising the SPF's, which is a working mail record.
+3. **The row was edited on host `mail` rather than `@`.** The value was perfect and
+   invisible to Google, since verification only ever reads the apex.
+4. **A netcup field holds the value until the deploy button below the whole table is
+   pressed.** What the browser shows is not what the zone has. The only proof is the
+   message *"Die Bereitstellung der Zonenänderungen war erfolgreich."*
+
+**The thing that actually resolved it was querying the authoritative nameservers directly**
+— `netcup.firstns.cc` and `netcup.thirdns.de` — over raw UDP from the netcup account
+through the Novamira connector. Public resolvers cache, so they cannot distinguish *"not
+saved"* from *"saved, still propagating"*, and that distinction was the whole diagnosis
+three times over. A small DNS client is in this conversation's history; `dig` is not
+installed in the sandbox and DoH to a public resolver answers the wrong question.
+
+**Two `google-site-verification` records are in the zone**, the truncated one and the real
+one. Google matches if *any* TXT matches, so it verifies; the stale one should be deleted
+once convenient. **The real one must never be removed** — Google re-checks it periodically
+and removing it un-verifies the property.
+
+Neither is in this repo, so neither will show up as an undone task in the code. That is
+exactly why they are written here.
+
+---
 
 ## 3. The brand is not chosen here
 
@@ -165,8 +352,60 @@ domain points anywhere. Prove the path while there is nothing to lose.
 failing red or, worse, deploying somewhere wrong. That is deliberate: the repo is useful
 before the server exists.
 
-*To check on the netcup plan:* whether it gives SSH or only SFTP. With SSH the Action uses
-`rsync`; with SFTP only, it needs `lftp` instead. Four lines of the workflow, nothing else.
+### The plan gives SSH — and the Action still cannot use it — 30 August 2026
+
+The open question above was whether netcup gives SSH or only SFTP, on the assumption that
+SSH meant `rsync` and SFTP meant `lftp`. **It is SSH, and neither answer is right.**
+
+The account is a chroot: `/var/www/vhosts/hosting243104.af92d.netcup.net/` contains its own
+`bin`, `etc`, `lib` and `usr`, and `etc/passwd` inside it gives `hosting243104` a real
+`/bin/bash`. That `bin` is curated, and what it holds decides the workflow:
+
+| Present | `bash` `git` `curl` `wget` `scp` `sftp` `ssh` `tar` `zip` `unzip` `php` `mysql` `nano` `vim` |
+|---|---|
+| **Absent** | **`rsync`** — and **`lftp`** |
+
+`rsync` needs the binary at *both* ends, so `.github/workflows/deploy.yml` dies at its last
+step the moment the four secrets are set. Everything before that step is correct. **The
+transport is the only wrong part, and replacing it is a decision rather than a patch** —
+either ask netcup to add `rsync` to the jail, or `scp` a tarball and `tar -xf` it on the far
+side, which needs nothing that is not already there. The step is left intact with the
+finding written above it, so whoever chooses can see what it was meant to do.
+
+**Three of the four secrets are known now**, read off the account rather than guessed:
+
+| Secret | Value |
+|---|---|
+| `NETCUP_USER` | `hosting243104` |
+| `NETCUP_PATH` | `/var/www/vhosts/hosting243104.af92d.netcup.net/tiff-software-solutions.com/httpdocs` |
+| `NETCUP_HOST` | `hosting243104.af92d.netcup.net` |
+| `NETCUP_SSH_KEY` | **still missing.** `.ssh/` holds an `id_rsa` — *do not reuse it*, §5 wants a deploy-only key — and **no `authorized_keys` at all**, so inbound key auth is not set up yet. |
+
+That path is six segments deep, so it clears the depth guard, and `.tiff-deploy-target` is
+sitting in it, so it clears the marker guard too.
+
+### `--delete` would have broken the certificate — 30 August 2026
+
+The docroot contains `.well-known/acme-challenge/`, holding a Let's Encrypt challenge and a
+Plesk `.htaccess` that keeps the HTTP→HTTPS redirect from swallowing the validation.
+`dist/` has no such directory, so `rsync --delete` would have removed it — and the damage
+would not show up until a renewal failed up to ninety days later, which is the worst shape
+a bug can take. `--exclude '.well-known/'` is in the workflow now, beside the marker
+exclusion and for the same reason.
+
+### How the server was read without SSH credentials — 30 August 2026
+
+Worth writing down because it is not obvious and it will be useful again: **the Novamira MCP
+connector for `hoponeurope.com` reaches this account's filesystem.** That WordPress lives at
+`ride2balkan.com/httpdocs` on the *same* netcup account, and its `execute-php` ability runs
+with `open_basedir` set to the whole vhost root — so every sibling docroot, this site's
+included, is readable from it. `novamira/list-directory` is sandboxed to the WP install and
+refuses; `execute-php` with `scandir` is not.
+
+That is how the file inventory, the `bin` listing and the secret values above were obtained
+with no SSH key and no panel access. **Read-only, and it should stay that way** — it is a
+connector into a different customer-facing site, and using it to write into this one would
+put two unrelated projects one typo apart.
 
 ---
 
@@ -179,7 +418,11 @@ evidence. **The evidence already exists:**
   sync between them that publishes vehicles while every purchase price and margin stays on
   the office machine. A real constraint, honoured. **This is the lead case study, and one
   told properly beats five thin ones.**
-  **Ask Tif before publishing his business's name and screens.** It is his company on the page.
+  **Named on 30 August 2026** — Gianni confirmed Tif's permission, which is whose it was to
+  give. It appears in the lede, the glance card and the meta description of `/work/`, and in
+  the "Built for" row on the home page. **Not in the twenty sentences that go on to say "the
+  dealership"**: swapping every one for the proper noun reads like a press release, and a
+  name works once. Screens are still a separate question and have not been asked about.
 - Ride2Balkan, the Frigemo *Post ist da* app, the Hijama app, Handwerk — named, one line
   each, no case study needed yet.
 
@@ -215,8 +458,9 @@ imprint, privacy, and a 404. Rendered in Chromium at 1280 light, 1280 dark and 4
   browser at phone width and at desktop. Three separate bugs on the DAS project got past
   passing tests because nobody opened the screen.
 - **Never edit anything on the server.** If it is not in the repo, it does not exist.
-- **`robots.txt` currently disallows everything.** Remove those two lines at go-live.
-  Forgetting is how a finished site ends up asking Google to ignore it.
+- **`robots.txt` allows everything, since 30 August 2026.** It held `Disallow: /` while the
+  domain still pointed at netcup's parking page. The block is deleted rather than commented
+  out — a commented-out `Disallow` is one careless uncomment away from being live again.
 - **`site:` in `astro.config.mjs` is a placeholder** until the domain is registered. A wrong
   value there makes every canonical URL point at the wrong host and nothing complains.
 
@@ -257,17 +501,33 @@ Waiting on a person, none of it code:
 
 | | What is needed | Where it goes |
 |---|---|---|
-| **The postal address** | for the imprint — the page says it is unfinished until then | `SITE.address` in `src/data/site.js` |
-| **Four one-line descriptions** | Ride2Balkan, Frigemo *Post ist da*, Hijama, Handwerk. **I will not describe projects I have not seen** — a line written from a name is a guess on a public page. The Work page renders that section only when the list is non-empty. | `OTHER_WORK` in `src/data/site.js` |
-| **Tif's permission** | to name Downtown Auto Sales in the case study | `work.astro`, `index.astro` |
+| ~~The postal address~~ | **Done 30 August 2026** — Kasparstrasse 15, 3027 Bern. The imprint's unfinished notice disappeared by itself, and the footer prints it too. | `SITE.address` |
+| ~~Four one-line descriptions~~ | **Done 30 August 2026**, in Gianni's own words. Not Hijama or Handwerk — he named Ride2Balkan, *Post ist da* (Frigemo AG), Adams Tuning and downtownautoak.com instead. | `OTHER_WORK` |
+| ~~Netcup: SSH or SFTP~~ | **Answered 30 August 2026 — see §5.** SSH, but no `rsync` in the jail. | the workflow, §5 |
+| ~~Tif's permission~~ | **Given, 30 August 2026.** Downtown Auto Sales is named in the case study. | `Work.astro`, `Home.astro` |
+| ~~Which product downtownautoak.com runs~~ | **Answered 30 August 2026 — see below.** Two companies, one owner. No inconsistency after all. | `OTHER_WORK` |
+| **Two dead links, both the owner's to fix** | `downtownautoak.com` answers 404 on every variant; `downtownautosale.com` serves but its TLS certificate has expired. Neither is linked from this site until they work. | tell Gianni |
+| **Screens** | never asked about. The case study is words only; a screenshot of Tif's inventory is a separate permission. | `Work.astro` |
 | **A response time** | for `/contact/`, if he wants to promise one | `contact.astro` |
-| **Netcup** | SSH or SFTP, and the document root for the new vhost | the four Action secrets, §5 |
 | **Swiss UID** | `CHE-…`, if the business is registered | `SITE.uid` — the imprint section appears by itself |
 
 **The domain is bought: `tiff-software-solutions.com`, at Netcup, 22 August 2026.**
 `tiffsoftware.com` was taken, and the full name is the better answer anyway — it is what
 the footer, the invoices and the email address all say, so nothing has to be abbreviated
 to match it. `site:` in `astro.config.mjs` points at it.
+
+### The DNS has moved — resolved 30 August 2026
+
+`tiff-software-solutions.com` and `www.` both answer **46.38.249.45**, the hosting IP, not
+the `46.38.243.234` parking IP below. The zone was rewritten inside netcup's stated 48
+hours and no support ticket was needed. The section that follows is kept as the record of
+where it stood while it was still moving.
+
+**The site is live and current.** All 41 files of a fresh `dist/` match the server byte for
+byte — every page in both languages, the CSS, all twenty font files, the sitemap. Two
+strays are up there that should not be: `tiffsoftwarewebsite20260822.zip` (380 KB, publicly
+downloadable at its own URL) and `_astro/Page.dg68rrbr.css`, an orphan from an earlier
+build. Delete both; nothing references either.
 
 ### The domain is registered and the DNS has not moved — 23 August 2026
 
@@ -299,6 +559,65 @@ five returned SERVFAIL — including for `hoponeurope.com` and `ride2balkan.com`
 worked for months. That was rate limiting, and for a few minutes it looked like a broken
 zone. Query them once at most and treat SERVFAIL as *unknown, try later*.
 
+### The site is live, and verified against the repo — 30 August 2026
+
+Uploaded by hand through the panel's File Manager and checked from outside afterwards.
+**All 43 files of `dist/` match the server byte for byte** — every page in both languages,
+the CSS, all twenty font files, `robots.txt`, `sitemap.xml`, `favicon.svg`.
+
+| Request | Result |
+|---|---|
+| `http://tiff-software-solutions.com/` | 301 → https, then **200** |
+| `https://tiff-software-solutions.com/` | **200**, certificate valid |
+| `https://tiff-software-solutions.com/de/work/` | **200** — "Referenzen — Tiff Software Solutions" |
+| `https://tiff-software-solutions.com/robots.txt` | **200** |
+| `https://www.tiff-software-solutions.com/` | **200** since the certificate was reissued — see below |
+
+**`www` was not on the certificate, and now is.** It failed with `SSL: no alternative
+certificate subject name matches target hostname` — the panel's "www-Domain nicht
+geschützt" warning, and real: anybody typing `www.` met a browser security warning on a
+site that otherwise worked. Gianni reissued the Let's Encrypt certificate in the netcup
+panel with the www alias ticked, which was all it needed.
+
+Verified from outside: `DNS:tiff-software-solutions.com, DNS:www.tiff-software-solutions.com`,
+issued by Let's Encrypt, valid to **28 November 2026**. Both hostnames answer 200 over
+http and https.
+
+**`www` serves the site rather than redirecting to the apex**, so both hostnames return
+identical pages. That is fine as it stands and needs no rewrite rule: every page carries
+`<link rel="canonical">` and all three `hreflang` links pointing at the **apex**, because
+they are built from `site:` in `astro.config.mjs`. Checked on the live `www` pages, not
+assumed. **If `site:` is ever wrong, this is one of the things that silently breaks** —
+which is the warning §7 already gives about that value.
+
+**Four strays were deleted the same day**, on Gianni's go: `site.zip` and
+`tiffsoftwarewebsite20260822.zip` (upload archives, both publicly downloadable once
+`robots.txt` started allowing crawlers) and `_astro/Page.dg68rrbr.css` plus
+`_astro/Page.D_UyVdrX.css` (stylesheets orphaned by later builds). 801 KB in total, and
+`https://tiff-software-solutions.com/site.zip` answers 404 now.
+
+**Each was checked for references before it was removed, not merely eyeballed** — every
+served `.html`, `.xml`, `.txt`, `.css` and `.js` read and searched for the filename, with a
+stray citing itself not counting. All four came back at zero. The four paths were written
+out literally in the delete script; no glob, nothing that could widen on a typo, which is
+the same reasoning as §5's two rsync guards.
+
+**The docroot is now 45 files: the 43 of `dist/` plus the two in `.well-known/`**, which
+were deliberately left alone — that is Let's Encrypt's, and taking it is the renewal bug §5
+describes.
+
+Uploading a zip over a directory adds; it never removes. Cleaning up by hand worked once
+and does not scale, which is the whole argument for `rsync --delete` once §5's transport
+question is settled.
+
+### The upload failure was a stale panel session — 30 August 2026
+
+Worth one line so the next person does not go looking at the server. Plesk's File Manager
+answered **"No upload response — Einige Dateien wurden aufgrund eines Fehlers nicht
+hochgeladen"**. Nothing on the server was wrong: 3.6 TB free, `upload_max_filesize` 256M
+against a 392 KB file, docroot writable, and no partial file left behind. **The panel
+session had simply expired.** Logging in again and repeating the upload worked first time.
+
 ### The certificate has to come before the first visit
 
 The hosting has **"301 redirect HTTP to HTTPS" switched on with no certificate selected.**
@@ -329,6 +648,6 @@ A Claude Code web session cannot carry it there itself — the network policy re
 host, and relaying binary through a transcript does not survive (the same finding the DAS
 project recorded for the team photographs).
 
-**At go-live, in this order:** fill the postal address, remove the two `Disallow` lines
-from `public/robots.txt`, then point the domain at the Netcup document root. Forgetting
-the `robots.txt` line is how a finished site ends up asking Google to ignore it.
+**All three go-live steps are done** as of 30 August 2026: the postal address is in, the
+`Disallow` lines are gone, and the domain resolves to the hosting. What is left is not
+go-live work — it is the case-study naming question above, and the deploy transport in §5.

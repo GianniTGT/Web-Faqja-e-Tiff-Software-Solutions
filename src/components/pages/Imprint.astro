@@ -42,7 +42,7 @@ const COPY = {
     liabilityLinksH: 'Liability for links',
     liabilityLinks: 'This site links to a small number of external pages. Their content is ' +
       'the responsibility of their operators, and it was not unlawful at the time the link ' +
-      'was made. Links are removed if that changes and it is brought to my attention.',
+      'was made. Links are removed if that changes and it is brought to our attention.',
     copyrightH: 'Copyright',
     copyright: `The text, design and code of this site are the work of ${SITE.person}. Reuse ` +
       'beyond what copyright permits needs written agreement — which is usually given for the asking.',
@@ -75,7 +75,7 @@ const COPY = {
     liabilityLinksH: 'Haftung für Links',
     liabilityLinks: 'Diese Website verlinkt auf wenige externe Seiten. Für deren Inhalte sind ' +
       'die jeweiligen Betreiber verantwortlich; zum Zeitpunkt der Verlinkung waren sie nicht ' +
-      'rechtswidrig. Links werden entfernt, sobald sich das ändert und ich davon erfahre.',
+      'rechtswidrig. Links werden entfernt, sobald sich das ändert und wir davon erfahren.',
     copyrightH: 'Urheberrecht',
     copyright: 'Text, Gestaltung und Code dieser Website stammen von Kani Tifeki. Eine ' +
       'Nutzung über das urheberrechtlich Zulässige hinaus bedarf einer schriftlichen ' +
@@ -105,7 +105,10 @@ const c = COPY[lang];
       <p>
         {SITE.name}<br />
         {SITE.person}<br />
-        {a && <>{a.street}<br />{a.postcode} {a.town}<br />{a.country}</>}
+        {/* `site.js` stores the country in English because it is one value serving both
+            languages. Printing it raw put "Switzerland" on the German Impressum — the one
+            page a Swiss reader checks to decide whether the firm is really here. */}
+        {a && <>{a.street}<br />{a.postcode} {a.town}<br />{lang === 'de' ? 'Schweiz' : a.country}</>}
         {!a && <em class="todo">{c.addressTodo}</em>}
       </p>
 

@@ -68,8 +68,17 @@ export const UI = {
     home: 'home',
     site: 'Site',
     contact: 'Contact',
-    switchTo: 'Auf Deutsch',
-    switchLabel: 'Sprache wechseln',
+    /**
+     * The switch is a globe, so this string is the whole of its accessible name — it is not
+     * a caption beside a visible word, it *is* the control as far as a screen reader, a
+     * tooltip and a voice command are concerned. So it names the destination rather than
+     * the mechanism: "Auf Deutsch wechseln", not "Sprache wechseln", which would leave a
+     * blind visitor pressing a button with two possible outcomes and no way to tell which.
+     *
+     * Written in the language it goes TO, which is the same reasoning the old text switch
+     * used: the person who wants German reads German.
+     */
+    switchLabel: 'Auf Deutsch wechseln',
   },
   de: {
     htmlLang: 'de-CH',
@@ -80,8 +89,7 @@ export const UI = {
     home: 'Startseite',
     site: 'Seiten',
     contact: 'Kontakt',
-    switchTo: 'In English',
-    switchLabel: 'Switch language',
+    switchLabel: 'Switch to English',
   },
 };
 

@@ -30,30 +30,55 @@ const isHere = (href) => strip(path) === strip(localise(href, lang));
       <span class="abbr">Tiff</span>
     </a>
 
-    <div class="right">
-      <nav aria-label={t.mainNav}>
-        <ul>
-          {NAV.map((item) => (
-            <li>
-              <a
-                href={localise(item.href, lang)}
-                aria-current={isHere(item.href) ? 'page' : undefined}
-              >
-                {item[lang]}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+    {/*
+      The nav and the switch are siblings of the brand rather than a wrapped pair, because
+      of what happens at 412px. Grouped, they wrapped together: the nav filled row two and
+      pushed the globe onto a row three of its own, a single small circle floating on an
+      otherwise empty line — which reads as a rendering fault rather than as a control. As
+      siblings the globe stays up on the brand's row and only the nav wraps.
+    */}
+    <nav aria-label={t.mainNav}>
+      <ul>
+        {NAV.map((item) => (
+          <li>
+            <a
+              href={localise(item.href, lang)}
+              aria-current={isHere(item.href) ? 'page' : undefined}
+            >
+              {item[lang]}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
 
-      {/* The switch names the language it goes TO, in that language — "Auf Deutsch" on the
-          English page. A flag would be wrong twice over: German is not Germany, and
-          Switzerland has four national languages. */}
-      <a class="lang" href={otherLocaleHref(path, lang)} lang={lang === 'en' ? 'de' : 'en'}
-         aria-label={t.switchLabel}>
-        {t.switchTo}
-      </a>
-    </div>
+    {/*
+      A globe, not a word and not a flag.
+
+      **A flag would be wrong twice over:** German is not Germany, and Switzerland has four
+      national languages — so no flag can stand for either side of this switch.
+
+      The globe replaced the words "Auf Deutsch" / "In English" on Gianni's instruction. The
+      words were more explicit, and that cost is paid back in `aria-label`: the accessible
+      name is now the whole control, so it names the destination — "Auf Deutsch wechseln" —
+      rather than the mechanism. `title` puts the same sentence in the tooltip a mouse
+      finds, which is the sighted visitor's replacement for the word that used to be there.
+
+      `lang` on the anchor still marks which language the label is written in, so a screen
+      reader pronounces the German with a German voice rather than reading it as English.
+    */}
+    <a class="lang" href={otherLocaleHref(path, lang)} lang={lang === 'en' ? 'de' : 'en'}
+       aria-label={t.switchLabel} title={t.switchLabel}>
+      <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"
+           fill="none" stroke="currentColor" stroke-width="1.6"
+           stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9" />
+        {/* The meridian. An ellipse narrowed to a sliver is what reads as a turning
+            sphere; two straight verticals read as a beach ball. */}
+        <ellipse cx="12" cy="12" rx="4" ry="9" />
+        <path d="M3.3 9h17.4M3.3 15h17.4" />
+      </svg>
+    </a>
   </div>
 </header>
 
@@ -69,12 +94,13 @@ const isHere = (href) => strip(path) === strip(localise(href, lang));
   .bar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 18px;
+    gap: 22px;
     min-height: 66px;
     flex-wrap: wrap;
   }
-  .right { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+  /* One auto margin, on the nav, does what `space-between` did for two children and would
+     get wrong for three — it would push the nav into the middle of the bar. */
+  nav { margin-left: auto; }
 
   .brand {
     display: inline-flex;
@@ -112,27 +138,59 @@ const isHere = (href) => strip(path) === strip(localise(href, lang));
      rule underneath is the picture of it, so screen readers and eyes get the same answer. */
   nav a[aria-current='page'] { color: var(--ink); border-bottom-color: var(--gold); }
 
+  /* A round target for a round icon. 36px square is above the 24px minimum a pointer needs
+     and reads as a button without a label to give it width. */
   .lang {
-    font-family: var(--display);
-    font-size: 12.5px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex: none;
     color: var(--forest);
     border: 1px solid var(--line);
     border-radius: 999px;
-    padding: 5px 13px;
-    white-space: nowrap;
+    text-decoration: none;
+    transition: border-color 0.18s ease, background-color 0.18s ease;
   }
   .lang:hover { border-color: var(--forest); background: var(--surface); }
+
+  /* The meridian squashed flat and back is what a turning sphere looks like from outside
+     it. `transform-box: fill-box` is required or the origin is the SVG's viewport corner
+     and the ellipse swings out of the circle instead of spinning inside it. */
+  .lang ellipse {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .lang:hover ellipse,
+  .lang:focus-visible ellipse {
+    animation: meridian 2.6s ease-in-out infinite;
+  }
+  @keyframes meridian {
+    50% { transform: scaleX(0.08); }
+  }
 
   @media (max-width: 640px) {
     .full { display: none; }
     .abbr { display: inline; }
-    .bar { min-height: 58px; padding-block: 10px; }
-    .right { gap: 16px; }
+    .bar { min-height: 58px; padding-block: 10px; gap: 12px 16px; }
     nav ul { gap: 18px; }
     nav a { font-size: 15px; }
-    .lang { font-size: 12px; padding: 4px 11px; }
+    .lang { width: 34px; height: 34px; }
+
+    /* Two rows, deliberately: the brand and the globe share the first, the four links get
+       the second to themselves. The auto margin moves from the nav to the globe so the
+       globe still sits at the right edge — of the brand's row now, not of its own empty one. */
+    nav { order: 3; width: 100%; margin-left: 0; }
+    .lang { margin-left: auto; }
+  }
+
+  /* Somebody who has asked their system for less movement gets a globe that sits still.
+     The switch works identically either way — the animation was never the affordance. */
+  @media (prefers-reduced-motion: reduce) {
+    .lang, .lang:hover ellipse, .lang:focus-visible ellipse {
+      transition: none;
+      animation: none;
+    }
   }
 </style>

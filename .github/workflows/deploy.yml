@@ -102,11 +102,33 @@ jobs:
           USER: ${{ secrets.NETCUP_USER }}
           TARGET: ${{ secrets.NETCUP_PATH }}
         run: |
+          # ⚠ **This step cannot work as written, and the reason is on the far end.**
+          #
+          # Checked on 30 August 2026 by listing the account's own filesystem: netcup's SSH
+          # is a chroot with a curated /bin — bash, git, curl, scp, sftp, tar, zip, unzip
+          # are all there and **rsync is not**, nor is lftp. rsync needs the binary at both
+          # ends, so this dies the moment the four secrets are set. Nothing about the path
+          # or the marker is wrong; the transport is.
+          #
+          # The fix is a decision, not a patch: ask netcup to add rsync to the jail, or
+          # switch this to `scp` of a tarball plus `tar -xf` on the far side, which needs
+          # only what is already there. Left as-is deliberately rather than half-rewritten,
+          # so whoever makes that call sees the original intent.
+          #
           # --delete so a page removed from the repo goes from the server too; the marker
-          # check above is what makes that safe. The marker itself is excluded, or the
-          # first --delete would remove the very thing the next deploy checks for.
+          # check above is what makes that safe.
+          #
+          # Two exclusions, both load-bearing:
+          #  * `.tiff-deploy-target` — the first --delete would otherwise remove the very
+          #    thing the next deploy checks for.
+          #  * `.well-known/` — Let's Encrypt writes its challenge there and Plesk keeps an
+          #    `.htaccess` in it that stops the HTTP→HTTPS redirect swallowing the check.
+          #    `dist/` has no such directory, so --delete would take it, and the failure
+          #    surfaces up to ninety days later as a certificate that quietly stops
+          #    renewing. Excluded is enough: rsync protects an excluded path from deletion.
           rsync -az --delete \
             --exclude '.tiff-deploy-target' \
+            --exclude '.well-known/' \
             -e "ssh -i ~/.ssh/deploy -o BatchMode=yes" \
             dist/ "$USER@$HOST:$TARGET/"
 
