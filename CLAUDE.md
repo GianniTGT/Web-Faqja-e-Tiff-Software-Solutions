@@ -206,9 +206,41 @@ Worth stating plainly, because it is tempting to keep improving markup instead:
    *domain* property via a DNS TXT record — which covers `www`, `http`, `https` and every
    subdomain in one go, unlike a URL-prefix property. Sitemap submission and the first
    indexing request follow from there.
-2. **There is no Google Business Profile.** For "Softwareentwickler Bern" the map pack sits
-   above the ordinary results. It is free, and it needs the postal address — which exists
-   now. Only Gianni can do it. **This is the last one left.**
+2. ~~**There is no Google Business Profile.**~~ **Created and verified 31 August 2026** —
+   faster than the five days Google warned of. See below.
+
+### The Business Profile, and the one thing it still needs — 31 August 2026
+
+Live and managed, showing the Bern map, the phone number and the website. Set up as a
+**Dienstleistungsunternehmen** — a service-area business — rather than a shopfront, because
+Kasparstrasse 15 is a home address and **listing one you do not receive customers at is a
+guideline breach Google suspends profiles for.** The address is used for verification and
+stays private; the service area is Bern and Switzerland.
+
+Category **Softwareunternehmen**, which is the same one devedis, BEGASOFT and avega carry —
+the firms already holding the map pack for "Softwareentwicklung Bern". Not *Computerservice*,
+which is IT support and repair, and which is what itnetX runs.
+
+**SMS chat was deliberately switched off.** It sets an expectation of a fast reply, Google
+measures whether that reply comes, and `/contact/` says nothing about a response time for
+exactly the reason CLAUDE.md §6 records. Turn it on the day answering within hours is a
+promise worth making.
+
+**What is left is not a setting: four reviews.** The competitors above carry 10–19 each at
+4.8–5.0, and that — not markup, not keywords — is what decides the map pack. Tif, Frigemo,
+Adams Tuning and Ride2Balkan are real customers who can each write one. **Never offer
+anything in return**: Google removes incentivised reviews and can suspend the profile.
+
+A new profile with no reviews will show up for the company's own name and on Maps within
+days. The top three for a competitive local query is months away and is not guaranteed.
+The ordinary blue results below the map pack are a separate race, and that is the one the
+site's own SEO work runs in.
+
+**The logo and the sharing card are generated from the brand, not from a stock template** —
+`scripts/make-og.mjs` produces the wide card, and the square logo is the same traced mark at
+2048px. **Google rejects images under 10 KB**, and a 1024px PNG of three flat brand colours
+compresses to 8.6 KB, so it was refused for being "too small" while being the right size in
+pixels. Doubling the resolution to 2048 fixed it at 22.5 KB without touching the artwork.
 
 ### Where Search Console actually stands — 31 August 2026
 
