@@ -5,7 +5,7 @@ here, the next session will not know it** — that is the lesson the DAS-Manager
 the hard way, and it is why this file exists on day one rather than after the first thing
 is forgotten.
 
-**Last updated: 30 August 2026**
+**Last updated: 12 October 2026**
 
 ---
 
@@ -295,6 +295,36 @@ and removing it un-verifies the property.
 
 Neither is in this repo, so neither will show up as an undone task in the code. That is
 exactly why they are written here.
+
+---
+
+## 2d. The new design, all the work, and the team — 12 October 2026
+
+Gianni: *"ein besseres modernes TiffCore-Design, einmalig"*, *"alle Projekte, Webseiten oder
+sonst etwas für einen Kunden sollen erwähnt werden"*, and a team of three.
+
+- **The home hero is a night band with the Tiff mark in glowing points** — `public/punkte.js`,
+  the same canvas as tiffcore.ch, copied from `GianniTGT/tiffcore-website`. It is the first
+  script on this site. **It is served from this domain**, so `/privacy/` (no third-party
+  requests) stays true; without script the plain mark shows, with reduced motion it stands
+  still. The hero is dark in both themes on purpose — the points need a night sky.
+- **`PRODUCTS`, `CLIENTS` and `TEAM` live in `src/data/site.js`** and replace `OTHER_WORK`.
+  `ProductGrid`, `ClientGrid` and `Team` render them on the home page, `/work/` and `/about/`.
+  Every product carries a status tag (*Im Einsatz / In Entwicklung / Eigenes Werkzeug*) —
+  TiffCar and the Hijama app are named as in development, never dressed up as shipped.
+- **Clients named with permission:** Downtown Auto Sales (30 August), AINO Haustechnik GmbH
+  and BIT Automobile (Gianni, 12 October). Left out on purpose: the flight-delay idea (no
+  code) and the trading bot (empty repo).
+- **Team: Gianni Tifeki (owner & support), Sara (UI design), Stefan (backend).** Photos go in
+  `public/team/<id>.webp` (or `.jpg`) and appear on the next build; until then the card
+  shows initials. **This reverses §2b's "no count" rule** — a team section shows how many
+  people there are, and that was Gianni's call.
+- Buttons are pills, cards are 22px radius with a soft shadow, sections alternate with a
+  tinted band. All tokens in `tokens.css`; nothing per page.
+
+**Hosting:** Gianni said on 12 October that the site runs at **Hosttech**. §5 and §8 below
+describe netcup, and that was measured on 30 August. **Which is true now has not been
+checked** — confirm before the next upload.
 
 ---
 

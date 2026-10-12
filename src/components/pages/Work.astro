@@ -1,6 +1,8 @@
 ---
 import Page from '../../layouts/Page.astro';
-import { SITE, OTHER_WORK } from '../../data/site.js';
+import { SITE } from '../../data/site.js';
+import ProductGrid from '../ProductGrid.astro';
+import ClientGrid from '../ClientGrid.astro';
 import { localise } from '../../i18n/ui.js';
 
 /**
@@ -92,8 +94,10 @@ const COPY = {
       'Nothing about that dealership — no name, no address, no logo — exists anywhere in the ' +
       'code; it all lives in a profile the owner fills in on first run. That is what lets the ' +
       'same application run for the next dealership without a line being changed.',
-    otherEyebrow: 'Also built',
-    otherTitle: 'Other work, in one line each.',
+    otherEyebrow: 'All clients',
+    otherTitle: 'Everything we have built for somebody.',
+    prodEyebrow: 'Our products',
+    prodTitle: 'What came out of that work.',
     closeTitle: 'Something in your business works like this.',
     closeLede: 'Typed twice, or held in a spreadsheet nobody else can open. Tell us what it is.',
     closeCta: 'Get in touch',
@@ -170,8 +174,10 @@ const COPY = {
       'irgendwo im Code; alles liegt in einem Profil, das der Inhaber beim ersten Start ' +
       'ausfüllt. Genau das lässt dieselbe Anwendung beim nächsten Händler laufen, ohne dass ' +
       'eine Zeile geändert wird.',
-    otherEyebrow: 'Ausserdem gebaut',
-    otherTitle: 'Weitere Arbeiten, je eine Zeile.',
+    otherEyebrow: 'Alle Kunden',
+    otherTitle: 'Alles, was wir für jemanden gebaut haben.',
+    prodEyebrow: 'Unsere Produkte',
+    prodTitle: 'Was aus dieser Arbeit entstanden ist.',
     closeTitle: 'Irgendetwas in Ihrem Betrieb läuft genauso.',
     closeLede: 'Zweimal getippt, oder in einer Tabelle, die sonst niemand öffnen kann. ' +
                'Erzählen Sie uns, was es ist.',
@@ -248,22 +254,21 @@ const href = (p) => localise(p, lang);
     </div>
   </section>
 
-  {OTHER_WORK.length > 0 && (
-    <section class="section">
-      <div class="wrap">
-        <p class="eyebrow">{c.otherEyebrow}</p>
-        <h2>{c.otherTitle}</h2>
-        <ul class="others">
-          {OTHER_WORK.map((o) => (
-            <li>
-              <strong>{o.href ? <a href={o.href}>{o.name}</a> : o.name}</strong>
-              <span>{o[lang]}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  )}
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">{c.otherEyebrow}</p>
+      <h2 class="grid-title">{c.otherTitle}</h2>
+      <ClientGrid lang={lang} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">{c.prodEyebrow}</p>
+      <h2 class="grid-title">{c.prodTitle}</h2>
+      <ProductGrid lang={lang} />
+    </div>
+  </section>
 
   <section class="section-tight">
     <div class="wrap">
@@ -342,27 +347,8 @@ const href = (p) => localise(p, lang);
     background: var(--gold);
   }
 
-  .others {
-    list-style: none;
-    margin: 30px 0 0;
-    padding: 0;
-    display: grid;
-    gap: 2px;
-  }
-  .others li {
-    display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
-    gap: 26px;
-    padding: 18px 0;
-    border-top: 1px solid var(--line);
-    align-items: baseline;
-  }
-  .others li:last-child { border-bottom: 1px solid var(--line); }
-  .others strong { font-family: var(--display); font-weight: 600; font-size: 17px; }
-  .others span { color: var(--muted); font-size: 16px; text-wrap: pretty; }
-  @media (max-width: 760px) {
-    .others li { grid-template-columns: 1fr; gap: 6px; }
-  }
+  .grid-title { margin-bottom: 28px; }
+
 
   .band {
     background: var(--surface-2);

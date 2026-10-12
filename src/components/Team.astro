@@ -1,0 +1,72 @@
+---
+import fs from 'node:fs';
+import { TEAM } from '../data/site.js';
+
+/**
+ * The people. A photo is used when `public/team/<id>.webp` or `.jpg` exists; otherwise the
+ * card shows initials. Checked at build time, so a photo dropped into the folder appears on
+ * the next build with no code change.
+ */
+interface Props { lang: 'en' | 'de'; }
+const { lang } = Astro.props;
+const photo = (id) => ['webp', 'jpg', 'jpeg', 'png']
+  .map((ext) => `team/${id}.${ext}`)
+  .find((f) => fs.existsSync(`public/${f}`));
+const initials = (n) => n.split(' ').map((w) => w[0]).join('').slice(0, 2);
+---
+<ul class="team">
+  {TEAM.map((m) => {
+    const src = photo(m.id);
+    return (
+      <li class="member">
+        <div class="m-photo">
+          {src
+            ? <img src={`/${src}`} alt={m.name} width="320" height="320" loading="lazy" />
+            : <span aria-hidden="true">{initials(m.name)}</span>}
+        </div>
+        <h3>{m.name}</h3>
+        <p>{m[lang]}</p>
+      </li>
+    );
+  })}
+</ul>
+
+<style>
+  .team {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 260px));
+    gap: 20px;
+  }
+  .member {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 18px 18px 22px;
+    text-align: center;
+  }
+  .m-photo {
+    aspect-ratio: 1;
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(80% 80% at 30% 20%, color-mix(in srgb, var(--gold) 45%, transparent), transparent 70%),
+      linear-gradient(135deg, var(--forest), var(--forest-deep));
+  }
+  .m-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .m-photo span {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(40px, 6vw, 64px);
+    color: #fff;
+    letter-spacing: .02em;
+  }
+  .member h3 { margin: 0 0 4px; font-size: 19px; }
+  .member p { margin: 0; color: var(--muted); font-size: 15px; }
+  @media (max-width: 560px) { .team { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } .member { padding: 12px 12px 16px; } }
+</style>

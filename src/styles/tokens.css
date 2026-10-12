@@ -27,8 +27,16 @@
   --body:    'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
   --mono:    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --wrap: 1100px;
-  --r:    12px;
+  --wrap: 1160px;
+  --r:    16px;
+  --r-lg: 22px;
+  --gold-text: #8A6620;
+  --shadow: 0 1px 2px rgba(15, 75, 44, .06), 0 4px 16px rgba(15, 75, 44, .06);
+  --shadow-lg: 0 2px 4px rgba(15, 75, 44, .06), 0 18px 40px rgba(15, 75, 44, .12);
+
+  /* The night ground of the home hero — fixed, not themed: it is dark in both modes. */
+  --night:   #06140D;
+  --night-2: #0B2417;
 }
 
 /* The viewer's own preference. Three states, not two: an explicit choice stamps the root,
@@ -46,6 +54,7 @@
     --surface-2:   #1E2722;
     --line:        #2A342E;
     --muted:       #9AAAA1;
+    --gold-text:   #E2C68C;
   }
 }
 :root[data-theme="dark"] {
@@ -59,6 +68,7 @@
   --surface-2:   #1E2722;
   --line:        #2A342E;
   --muted:       #9AAAA1;
+  --gold-text:   #E2C68C;
 }
 
 *, *::before, *::after { box-sizing: border-box; }

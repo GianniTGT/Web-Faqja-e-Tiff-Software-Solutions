@@ -43,63 +43,108 @@ export const SITE = {
 };
 
 /**
- * Other work, one line each — no case study.
+ * Our own products. Status is one of `live`, `building`, `internal`, and the page prints it
+ * as a small tag — a product still being built is named as such, never dressed up as shipped.
  *
- * **Every line here is Gianni's own wording, not a description written from a name.** The
- * list sat empty until 30 August 2026 for exactly that reason: a sentence invented around a
- * project title is a guess printed on a public page over his own firm. What he supplied is
- * short, so these stay short — a line that says only what is known beats one padded out to
- * match the width of the column.
- *
- * **Both languages, because the Work page is bilingual.** A single `line` would print
- * English on `/de/work/`, which is the one place a Berner SME is reading.
- *
- * Shape: { name, en, de, href? }
+ * Shape: { id, name, status, href?, en: { kind, line }, de: { kind, line } }
  */
-export const OTHER_WORK = [
+export const PRODUCTS = [
   {
-    name: 'Ride2Balkan',
-    href: 'https://ride2balkan.com',
-    en: 'Website, SEO, and the Android app.',
-    de: 'Website, SEO und die Android-App.',
+    id: 'tiffcore', name: 'TiffCore', status: 'live', href: 'https://tiffcore.ch',
+    en: { kind: 'Software for building-services firms',
+          line: 'Job reports on the phone, quotes, Swiss QR invoices and payment matching in one system — from the site visit to the paid invoice.' },
+    de: { kind: 'Software für Haustechnik-Betriebe',
+          line: 'Rapport am Handy, Offerte, QR-Rechnung und Zahlungsabgleich in einem System — vom Einsatz vor Ort bis zur bezahlten Rechnung.' },
   },
   {
-    name: 'Post ist da',
-    en: 'An Android application. Client: Frigemo AG.',
-    de: 'Eine Android-Anwendung. Kunde: Frigemo AG.',
+    id: 'tiffcar', name: 'TiffCar', status: 'building',
+    en: { kind: 'Software for Swiss car dealers',
+          line: 'Vehicles by VIN or type approval, AutoScout24, quote to QR invoice, a workshop board and a dealer website with live stock.' },
+    de: { kind: 'Software für Autohändler in der Schweiz',
+          line: 'Fahrzeuge per VIN oder Typengenehmigung, AutoScout24, Offerte bis QR-Rechnung, Werkstatt und eine eigene Händler-Website mit Live-Bestand.' },
   },
   {
-    name: 'Adams Tuning',
-    en: 'Running on Tiff Cardealer Manager.',
-    de: 'Arbeitet mit Tiff Cardealer Manager.',
+    id: 'cardealer', name: 'Tiff Cardealer Manager', status: 'live',
+    en: { kind: 'Desktop software for car dealers',
+          line: 'A Windows application for vehicles, costs, documents and payments. Encrypted on the dealer\u2019s own machine, publishing to the website by itself.' },
+    de: { kind: 'Desktop-Software für Autohändler',
+          line: 'Eine Windows-Anwendung für Fahrzeuge, Kosten, Dokumente und Zahlungen. Verschlüsselt auf dem eigenen Rechner, mit automatischer Veröffentlichung auf der Website.' },
   },
-  /**
-   * **A different company from the case study's, sharing an owner.** Corrected 30 August
-   * 2026, after this file briefly claimed they were one customer with two products:
-   *
-   * | | | |
-   * |---|---|---|
-   * | `downtownautosale.com` | Downtown Auto Sales — the dealer | Tiff Cardealer, `/work/` |
-   * | `downtownautoak.com` | the car rental company | Tiff Rent a Car Manager, this line |
-   *
-   * Two businesses, one owner, two products. So the pairing on the page is not a
-   * duplicate — and it is not one customer either. **Neither half is safe to delete on the
-   * assumption that it repeats the other.**
-   *
-   * **No `href`, deliberately.** On 30 August every variant of this domain — http and
-   * https, apex and www — answered **404**; the http ones redirect to https and 404 there.
-   * A portfolio linking to a dead page is worse than one that does not link at all, and the
-   * name alone still says who the work was for. Restore the link the day the site answers.
-   *
-   * (`downtownautosale.com` does serve — "Downtownautosale LLC" — but its TLS certificate
-   * has expired, so a browser meets a security warning first. That is why the case study
-   * names the dealership and links nothing. Both are worth telling the owner about.)
-   */
   {
-    name: 'downtownautoak.com',
-    en: 'Tiff Rent a Car Manager, for a car rental company in Anchorage, Alaska.',
-    de: 'Tiff Rent a Car Manager, für eine Autovermietung in Anchorage, Alaska.',
+    id: 'theme', name: 'Tiff Cardealer Theme', status: 'live',
+    en: { kind: 'Website for car dealers',
+          line: 'A WordPress theme written from scratch: inventory, search, financing enquiries and reviews, fed straight from the office.' },
+    de: { kind: 'Website für Autohändler',
+          line: 'Ein von Grund auf geschriebenes WordPress-Theme: Bestand, Suche, Finanzierungsanfragen und Bewertungen, direkt aus dem Büro gespeist.' },
   },
+  {
+    id: 'rentacar', name: 'Tiff Rent a Car Manager', status: 'live',
+    en: { kind: 'Software for car rental',
+          line: 'Fleet, availability per vehicle and request-based booking that cannot double-book.' },
+    de: { kind: 'Software für Autovermietungen',
+          line: 'Flotte, Verfügbarkeit pro Fahrzeug und Buchung auf Anfrage, die nicht doppelt vergeben kann.' },
+  },
+  {
+    id: 'nfc', name: 'Tiff NFC Reader', status: 'internal',
+    en: { kind: 'Android app',
+          line: 'Reads and writes NFC cards and tags, names them — staff, equipment — and exports the list as CSV.' },
+    de: { kind: 'Android-App',
+          line: 'Liest und beschreibt NFC-Karten und Tags, benennt sie — Mitarbeiter, Equipment — und exportiert die Liste als CSV.' },
+  },
+  {
+    id: 'hijama', name: 'Hijama Guide', status: 'building',
+    en: { kind: 'Mobile app',
+          line: 'A companion app with a Hijri calendar, guide and diary, in German, English, Albanian and Arabic.' },
+    de: { kind: 'Mobile App',
+          line: 'Eine Begleit-App mit Hijri-Kalender, Ratgeber und Tagebuch, in Deutsch, Englisch, Albanisch und Arabisch.' },
+  },
+];
+
+/**
+ * Work for clients — every project that has been done for somebody, on Gianni's instruction
+ * of 12 October 2026: "alle Projekte, Webseiten oder sonst etwas für einen Kunden".
+ *
+ * **Named with permission.** Downtown Auto Sales since 30 August 2026; AINO Haustechnik and
+ * BIT Automobile confirmed by Gianni on 12 October 2026.
+ *
+ * **Links only where the address has been checked.** `downtownautoak.com` answered 404 on
+ * 30 August and has no `href` for that reason (see CLAUDE.md §2b).
+ *
+ * Shape: { name, place, href?, en: [what…], de: [what…] }
+ */
+export const CLIENTS = [
+  { name: 'Downtown Auto Sales', place: 'Anchorage, Alaska',
+    en: ['Tiff Cardealer Manager', 'Website and WordPress theme'],
+    de: ['Tiff Cardealer Manager', 'Website und WordPress-Theme'] },
+  { name: 'Downtown Auto AK', place: 'Anchorage, Alaska',
+    en: ['Tiff Rent a Car Manager', 'Website with online booking', 'Logo and brand'],
+    de: ['Tiff Rent a Car Manager', 'Website mit Online-Buchung', 'Logo und Marke'] },
+  { name: 'Adams Tuning', place: '',
+    en: ['Tiff Cardealer Manager'],
+    de: ['Tiff Cardealer Manager'] },
+  { name: 'Frigemo AG', place: 'Cressier',
+    en: ['\u00abPost ist da\u00bb — a reception terminal that tells staff, in their own language, that a delivery has arrived'],
+    de: ['\u00abPost ist da\u00bb — ein Empfangsterminal, das Mitarbeitende in ihrer Sprache über eine Lieferung informiert'] },
+  { name: 'Ride2Balkan', place: '', href: 'https://ride2balkan.com',
+    en: ['Website', 'SEO', 'Android app'],
+    de: ['Website', 'SEO', 'Android-App'] },
+  { name: 'AINO Haustechnik GmbH', place: 'Bern',
+    en: ['Website'],
+    de: ['Website'] },
+  { name: 'BIT Automobile', place: 'Oberwangen bei Bern',
+    en: ['Website', 'TiffCar'],
+    de: ['Website', 'TiffCar'] },
+];
+
+/**
+ * The people. Photos go in `public/team/<id>.webp` (or .jpg); until one is there the card
+ * shows initials rather than a stock face — a borrowed face over a real name is the one
+ * thing worse than no photo.
+ */
+export const TEAM = [
+  { id: 'gianni', name: 'Gianni Tifeki', en: 'Owner & support', de: 'Inhaber & Support' },
+  { id: 'sara', name: 'Sara', en: 'UI design', de: 'UI-Design' },
+  { id: 'stefan', name: 'Stefan', en: 'Backend', de: 'Backend' },
 ];
 
 /*
