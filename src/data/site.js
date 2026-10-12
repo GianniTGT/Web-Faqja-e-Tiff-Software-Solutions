@@ -121,6 +121,8 @@ export const CLIENTS = [
   { name: 'Post ist da', place: '' },
   { name: 'Ride2Balkan', place: '', href: 'https://ride2balkan.com' },
   { name: 'AINO Haustechnik GmbH', place: 'Bern' },
+  { name: 'Wasserdichter GmbH', place: '' },
+  { name: 'Derguti Haustechnik AG', place: '' },
 ];
 
 /**
