@@ -1,0 +1,51 @@
+---
+import { CLIENTS } from '../data/site.js';
+
+/** Every client, by name only (Gianni, 12 October 2026). Used on the home page and on /work/. */
+---
+<ul class="clients">
+  {CLIENTS.map((c) => (
+    <li class="client">
+      <div class="c-head">
+        <span class="c-initial" aria-hidden="true">{c.name.charAt(0)}</span>
+        <div>
+          <h3>{c.href ? <a href={c.href}>{c.name}</a> : c.name}</h3>
+          {c.place && <span class="c-place">{c.place}</span>}
+        </div>
+      </div>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .clients {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .client {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 20px 22px;
+  }
+  .c-head { display: flex; align-items: center; gap: 14px; }
+  .c-initial {
+    flex: none;
+    width: 44px; height: 44px;
+    display: grid; place-items: center;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--forest), var(--forest-deep));
+    color: #fff;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 19px;
+  }
+  .client h3 { margin: 0; font-size: 17px; }
+  .client h3 a { color: inherit; text-decoration: none; }
+  .client h3 a:hover { color: var(--forest); text-decoration: underline; }
+  .c-place { font-size: 13.5px; color: var(--muted); }
+</style>

@@ -1,0 +1,3 @@
+# Shipped with the site so a Plesk Git deployment cannot lose it. Only the 404 page;
+# the HTTP-to-HTTPS redirect is the hosting panel's setting, not this file's.
+ErrorDocument 404 /404.html

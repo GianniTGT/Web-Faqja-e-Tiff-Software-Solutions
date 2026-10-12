@@ -5,7 +5,7 @@ here, the next session will not know it** — that is the lesson the DAS-Manager
 the hard way, and it is why this file exists on day one rather than after the first thing
 is forgotten.
 
-**Last updated: 30 August 2026**
+**Last updated: 12 October 2026**
 
 ---
 
@@ -298,6 +298,38 @@ exactly why they are written here.
 
 ---
 
+## 2d. The new design, all the work, and the team — 12 October 2026
+
+Gianni: *"ein besseres modernes TiffCore-Design, einmalig"*, *"alle Projekte, Webseiten oder
+sonst etwas für einen Kunden sollen erwähnt werden"*, and a team of three.
+
+- **The home hero is a night band with the Tiff mark in glowing points** — `public/punkte.js`,
+  the same canvas as tiffcore.ch, copied from `GianniTGT/tiffcore-website`. It is the first
+  script on this site. **It is served from this domain**, so `/privacy/` (no third-party
+  requests) stays true; without script the plain mark shows, with reduced motion it stands
+  still. The hero is dark in both themes on purpose — the points need a night sky.
+- **`PRODUCTS`, `CLIENTS` and `TEAM` live in `src/data/site.js`** and replace `OTHER_WORK`.
+  `ProductGrid`, `ClientGrid` and `Team` render them on the home page, `/work/` and `/about/`.
+  Every product carries a status tag (*Im Einsatz / In Entwicklung / Eigenes Werkzeug*) —
+  TiffCar and the Hijama app are named as in development, never dressed up as shipped.
+- **Clients named with permission:** Downtown Auto Sales (30 August), AINO Haustechnik GmbH
+  (Gianni, 12 October). **BIT Automobile is not listed** — website only a draft, TiffCar
+  not bought; Gianni said no the same day. Left out on purpose: the flight-delay idea (no
+  code) and the trading bot (empty repo). **«Post ist da» is shown by name only, without
+  Frigemo AG** — Gianni, 12 October 2026.
+- **Team: K. Tifeki — shown so, not as Gianni, on his instruction — (owner & support), Sara (UI design), Stefan (backend).** Photos go in
+  `public/team/<id>.webp` (or `.jpg`) and appear on the next build; until then the card
+  shows initials. All three photos are in since 12 October, cropped square from what Gianni sent. **This reverses §2b's "no count" rule** — a team section shows how many
+  people there are, and that was Gianni's call.
+- Buttons are pills, cards are 22px radius with a soft shadow, sections alternate with a
+  tinted band. All tokens in `tokens.css`; nothing per page.
+
+**Hosting:** Gianni said on 12 October that the site runs at **Hosttech**. §5 and §8 below
+describe netcup, and that was measured on 30 August. **Which is true now has not been
+checked** — confirm before the next upload.
+
+---
+
 ## 3. The brand is not chosen here
 
 `src/styles/tokens.css` carries the palette, and it comes from the brand package Gianni
@@ -344,6 +376,23 @@ website. Two guards stand between a typo and that:
    three segments deep.
 2. **The remote directory must already contain `.tiff-deploy-target`.** If the marker is
    not there, the path is wrong and the deploy stops before rsync runs.
+
+### 5a. Plesk pulls a built branch — 12 October 2026
+
+Gianni's hosting panel is Plesk with the **Git extension**, which pulls a repository into
+`/httpdocs`. It copies the repo as it is, and this repo is Astro *source* — so Plesk is
+pointed at the branch **`live`**, which holds only the contents of `dist/`.
+
+- `.github/workflows/live-branch.yml` builds on every push to `main` (and on demand) and
+  force-pushes `dist/` as a single commit to `live`. `live` is a build output, not history.
+- In Plesk: Remote-Repository, URL `https://github.com/GianniTGT/Web-Faqja-e-Tiff-Software-Solutions.git`
+  (public, no key), branch `live`, mode Automatisch, path `/httpdocs`. Plesk's webhook URL
+  goes into GitHub → Settings → Webhooks so a push deploys without pressing *Pull*.
+- **`public/.htaccess` ships with the site** (only `ErrorDocument 404`) so a deploy cannot
+  lose it. **Not verified: whether Plesk deletes files in `/httpdocs` that are not in
+  `live`**, such as `.well-known/`. Prove it on a test subdomain first.
+- The older netcup SSH workflow (`deploy.yml`, below) still exists and still stops with a
+  notice while its secrets are missing.
 
 ### The Node version lives in `.nvmrc` — 22 August 2026
 

@@ -1,7 +1,9 @@
 ---
 import Page from '../../layouts/Page.astro';
-import AnimatedMark from '../AnimatedMark.astro';
-import { SITE } from '../../data/site.js';
+import ProductGrid from '../ProductGrid.astro';
+import ClientGrid from '../ClientGrid.astro';
+import Team from '../Team.astro';
+import { SITE, PRODUCTS, CLIENTS } from '../../data/site.js';
 import { localise } from '../../i18n/ui.js';
 
 /**
@@ -27,10 +29,25 @@ const COPY = {
     meta: { title: `Software Development in ${SITE.city} — ${SITE.name}`, description: SITE.description },
     eyebrow: `${SITE.city}, ${SITE.country}`,
     h1: 'Software small businesses can\u00A0actually run.',
-    lede: 'Desktop applications, websites, and the systems that join them. Built for one ' +
-          'business at a time — and built to keep working on a bad day, not only a good one.',
+    lede: 'Software and websites for small businesses. Built in Bern, looked after by the people who wrote it.',
     ctaPrimary: 'Start a project',
     ctaGhost: 'See the work',
+        markLabel: 'The Tiff logo, drawn in glowing points that turn slowly in space',
+    productsEyebrow: 'Our products',
+    productsTitle: 'Software we build, own and look after.',
+    productsLede: 'Built with real businesses, still in our hands.',
+    clientsEyebrow: 'Clients',
+    clientsTitle: 'Who we have built for.',
+    clientsLede: 'Websites, apps and the software behind them — from Bern to Anchorage.',
+    zahlen: ['products in use', 'clients', 'office in Bern'],
+    supportEyebrow: 'Support',
+    supportTitle: 'You talk to us. Not a hotline.',
+    supportLede: 'The people who build your software answer your questions. In person, from Bern.',
+    supportItems: [['Start together', 'We set it up with you.'], ['Help in the app', 'A support button on every screen.'], ['A direct line', 'Email the developers, not a call centre.']],
+    supportCta: 'Contact support',
+    teamEyebrow: 'Team',
+    teamTitle: 'The people you will talk to.',
+    teamLede: 'No ticket queue. The people who build it answer.',
     proofLabel: 'Shipped work',
     proofHead: 'Shipped and in use',
     proof: [
@@ -43,20 +60,6 @@ const COPY = {
     ],
     proofLink: 'How the two halves meet',
 
-    buildEyebrow: 'What we build',
-    buildTitle: 'Three things, and the seam between them.',
-    services: [
-      { title: 'Desktop software',
-        body: 'Windows applications that hold a business\u2019s real records — encrypted, on its ' +
-              'own machine, working whether or not the internet is.' },
-      { title: 'Websites',
-        body: 'Fast, hand-built sites and WordPress themes. No page builder, no plugin stack, ' +
-              'nothing that stops working when a subscription lapses.' },
-      { title: 'The join between them',
-        body: 'The part most projects skip: getting the office system and the public website to ' +
-              'agree, automatically, without anybody typing the same car twice.' },
-    ],
-    servicesMore: 'How each of those actually works',
 
     workEyebrow: 'Selected work',
     workTitle: 'Tiff Cardealer',
@@ -78,22 +81,9 @@ const COPY = {
       ['Status', 'In daily use; sold as a product to other dealerships'],
     ],
 
-    methodEyebrow: 'How we work',
-    methodTitle: 'Four things we will not trade away.',
-    method: [
-      { n: '01', title: 'One business at a time',
-        body: 'We take on few projects and stay on them. You get the people who wrote it, not a ticket queue.' },
-      { n: '02', title: 'Your data stays yours',
-        body: 'Where it belongs on your machine, it stays on your machine. What has to be public is chosen deliberately, field by field — never by default.' },
-      { n: '03', title: 'Built to be run by staff',
-        body: 'The people using it are selling cars, not administering software. Anything that needs a manual is something we have not finished.' },
-      { n: '04', title: 'Nothing ships unverified',
-        body: 'A passing test is not somebody opening the screen. Both happen before we tell you it works.' },
-    ],
 
     closeTitle: 'Tell us what the business actually does.',
-    closeLede: 'Not the software you think you need — the job it has to get done. That ' +
-               'conversation is free, and it is usually where the real answer is.',
+    closeLede: 'Tell us the job that needs doing. The first conversation is free.',
   },
 
   de: {
@@ -104,11 +94,25 @@ const COPY = {
     },
     eyebrow: 'Bern, Schweiz',
     h1: 'Software, mit der kleine Betriebe wirklich\u00A0arbeiten.',
-    lede: 'Desktop-Anwendungen, Websites und die Systeme dazwischen. Für ein Unternehmen ' +
-          'nach dem anderen — und so gebaut, dass sie auch an einem schlechten Tag laufen, ' +
-          'nicht nur an einem guten.',
+    lede: 'Software und Websites für kleine Betriebe. Gebaut in Bern, betreut von den Leuten, die sie geschrieben haben.',
     ctaPrimary: 'Projekt starten',
     ctaGhost: 'Arbeiten ansehen',
+    markLabel: 'Das Tiff-Logo aus leuchtenden Punkten, die sich langsam im Raum drehen',
+    productsEyebrow: 'Unsere Produkte',
+    productsTitle: 'Software, die wir bauen, besitzen und betreuen.',
+    productsLede: 'Mit echten Betrieben gebaut, von uns betreut.',
+    clientsEyebrow: 'Kunden',
+    clientsTitle: 'Für wen wir gebaut haben.',
+    clientsLede: 'Websites, Apps und die Software dahinter — von Bern bis Anchorage.',
+    zahlen: ['Produkte im Einsatz', 'Kunden', 'Büro in Bern'],
+    supportEyebrow: 'Support',
+    supportTitle: 'Sie sprechen mit uns. Nicht mit einer Hotline.',
+    supportLede: 'Wer Ihre Software baut, beantwortet Ihre Fragen. Persönlich, aus Bern.',
+    supportItems: [['Gemeinsam starten', 'Wir richten alles mit Ihnen ein.'], ['Hilfe in der App', 'Ein Support-Knopf auf jeder Seite.'], ['Direkter Draht', 'E-Mail an die Entwickler, nicht an ein Callcenter.']],
+    supportCta: 'Support kontaktieren',
+    teamEyebrow: 'Team',
+    teamTitle: 'Die Menschen, mit denen Sie sprechen.',
+    teamLede: 'Keine Warteschlange. Wer es baut, antwortet.',
     proofLabel: 'Im Einsatz',
     proofHead: 'Ausgeliefert und im Einsatz',
     proof: [
@@ -122,21 +126,6 @@ const COPY = {
     ],
     proofLink: 'Wie die beiden Hälften zusammenkommen',
 
-    buildEyebrow: 'Was wir bauen',
-    buildTitle: 'Drei Dinge — und die Naht dazwischen.',
-    services: [
-      { title: 'Desktop-Software',
-        body: 'Windows-Anwendungen, die die echten Daten eines Betriebs halten — verschlüsselt, ' +
-              'auf dem eigenen Rechner, und sie laufen, ob das Internet läuft oder nicht.' },
-      { title: 'Websites',
-        body: 'Schnelle, von Hand gebaute Websites und WordPress-Themes. Kein Baukasten, kein ' +
-              'Plugin-Stapel, nichts, das aufhört zu funktionieren, wenn ein Abo ausläuft.' },
-      { title: 'Die Naht dazwischen',
-        body: 'Der Teil, den die meisten Projekte auslassen: Bürosystem und öffentliche Website ' +
-              'automatisch in Übereinstimmung bringen, ohne dass jemand dasselbe Fahrzeug ' +
-              'zweimal tippt.' },
-    ],
-    servicesMore: 'Wie das jeweils funktioniert',
 
     workEyebrow: 'Ausgewählte Arbeit',
     workTitle: 'Tiff Cardealer',
@@ -159,23 +148,9 @@ const COPY = {
       ['Stand', 'Täglich im Einsatz; als Produkt an weitere Händler verkauft'],
     ],
 
-    methodEyebrow: 'Wie wir arbeiten',
-    methodTitle: 'Vier Dinge, die nicht verhandelbar sind.',
-    method: [
-      { n: '01', title: 'Ein Unternehmen nach dem anderen',
-        body: 'Wir nehmen wenige Projekte an und bleiben dabei. Sie bekommen die Leute, die es geschrieben haben, und keine Ticket-Warteschlange.' },
-      { n: '02', title: 'Ihre Daten bleiben Ihre',
-        body: 'Was auf Ihren Rechner gehört, bleibt dort. Was öffentlich sein muss, wird bewusst gewählt, Feld für Feld — nie einfach so.' },
-      { n: '03', title: 'Vom Personal bedienbar',
-        body: 'Die Leute, die damit arbeiten, verkaufen Autos, sie verwalten keine Software. Was ein Handbuch braucht, haben wir nicht fertig gemacht.' },
-      { n: '04', title: 'Nichts geht ungeprüft raus',
-        body: 'Ein bestandener Test ist nicht dasselbe wie jemand, der den Bildschirm öffnet. Beides passiert, bevor wir Ihnen sagen, dass es läuft.' },
-    ],
 
     closeTitle: 'Erzählen Sie uns, was Ihr Betrieb wirklich tut.',
-    closeLede: 'Nicht die Software, die Sie zu brauchen glauben — die Aufgabe, die erledigt ' +
-               'werden muss. Dieses Gespräch kostet nichts, und meistens liegt dort die ' +
-               'eigentliche Antwort.',
+    closeLede: 'Erzählen Sie uns, was erledigt werden muss. Das erste Gespräch kostet nichts.',
   },
 };
 
@@ -186,98 +161,85 @@ const href = (p) => localise(p, lang);
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        {/*
-          The mark draws itself once, on the one page where a visitor arrives cold. It is
-          the firm's own logo rather than an ornament, so the thing being animated is the
-          thing being introduced — and it is CSS, so the page still runs no script and still
-          asks nothing of anybody else's server, which is what `/privacy/` promises.
-        */}
-        <div class="hero-mark"><AnimatedMark size={78} /></div>
         <p class="eyebrow">{c.eyebrow}</p>
         <h1 set:html={c.h1} />
         <p class="lede">{c.lede}</p>
         <div class="btn-row hero-cta">
-          <a class="btn btn-primary" href={href('/contact/')}>{c.ctaPrimary}</a>
-          <a class="btn btn-ghost" href={href('/work/')}>{c.ctaGhost}</a>
+          <a class="btn btn-gold" href={href('/contact/')}>{c.ctaPrimary}</a>
+          <a class="btn btn-glass" href={href('/work/')}>{c.ctaGhost}</a>
         </div>
       </div>
 
       {/*
-        The right half used to be empty, and a dead band beside a headline reads as an
-        unfinished page — the same thing that had to be fixed on the dealership's own
-        homepage. What fills it is deliberately not decoration: it is the shipped work,
-        which is the question a visitor has next.
+        The Tiff mark in glowing points — the same canvas as tiffcore.ch, served from this
+        domain (`/punkte.js`), so `/privacy/` stays true: no third-party request. Without
+        script the plain mark shows instead; with reduced motion it stands still.
       */}
-      <aside class="hero-proof" aria-label={c.proofLabel}>
-        <p class="proof-head">{c.proofHead}</p>
-        <ul>
-          {c.proof.map((item) => (
-            <li>
-              <strong>{item.name}</strong>
-              <span>{item.line}</span>
-            </li>
-          ))}
-        </ul>
-        <a class="proof-link" href={href('/work/')}>{c.proofLink} &rarr;</a>
-      </aside>
+      <div class="mark-field" role="img" aria-label={c.markLabel}>
+        <canvas id="punkte"></canvas>
+        <noscript><img src="/favicon.svg" alt="" width="220" height="220" /></noscript>
+      </div>
+    </div>
+  </section>
+
+  {/* Echte Zahlen, die beim Scrollen hochzählen (/bewegung.js). Nur gezählt, nie erfunden. */}
+  <section class="zahlen-band">
+    <div class="wrap zahlen">
+      <div><b data-zahl={PRODUCTS.length}>{PRODUCTS.length}</b><span>{c.zahlen[0]}</span></div>
+      <div><b data-zahl={CLIENTS.length}>{CLIENTS.length}</b><span>{c.zahlen[1]}</span></div>
+      <div><b data-zahl="1">1</b><span>{c.zahlen[2]}</span></div>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
-      <p class="eyebrow">{c.buildEyebrow}</p>
-      <h2>{c.buildTitle}</h2>
-      <div class="cols svc">
-        {c.services.map((s) => (
-          <article class="card">
-            <h3>{s.title}</h3>
-            <p>{s.body}</p>
-          </article>
-        ))}
+      <div class="sec-head">
+        <p class="eyebrow">{c.productsEyebrow}</p>
+        <h2>{c.productsTitle}</h2>
+        <p class="lede">{c.productsLede}</p>
       </div>
-      <p class="after">
-        <a href={href('/services/')}>{c.servicesMore} &rarr;</a>
-      </p>
+      <ProductGrid lang={lang} />
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap feature">
-      <div class="feature-copy">
-        <p class="eyebrow">{c.workEyebrow}</p>
-        <h2>{c.workTitle}</h2>
-        <p class="lede">{c.workLede}</p>
-        <ul class="facts">
-          {c.facts.map((f) => <li>{f}</li>)}
-        </ul>
-        <div class="btn-row">
-          <a class="btn btn-ghost" href={href('/work/')}>{c.workCta}</a>
-        </div>
-      </div>
-
-      <aside class="feature-side" aria-label={c.glance}>
-        <dl>
-          {c.glanceRows.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
-        </dl>
-      </aside>
-    </div>
-  </section>
-
-  <section class="section">
+  <section class="section soft">
     <div class="wrap">
-      <p class="eyebrow">{c.methodEyebrow}</p>
-      <h2>{c.methodTitle}</h2>
-      <div class="cols method">
-        {c.method.map((m) => (
-          <article class="card">
-            <span class="num">{m.n}</span>
-            <h3>{m.title}</h3>
-            <p>{m.body}</p>
-          </article>
-        ))}
+      <div class="sec-head">
+        <p class="eyebrow">{c.clientsEyebrow}</p>
+        <h2>{c.clientsTitle}</h2>
+        <p class="lede">{c.clientsLede}</p>
+      </div>
+      <ClientGrid lang={lang} />
+      <p class="after"><a href={href('/work/')}>{c.workCta} &rarr;</a></p>
+    </div>
+  </section>
+
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="stuetze">
+        <p class="eyebrow">{c.supportEyebrow}</p>
+        <h2>{c.supportTitle}</h2>
+        <p class="lede">{c.supportLede}</p>
+        <ul class="support-liste">
+          {c.supportItems.map(([t, d]) => <li><b>{t}</b><span>{d}</span></li>)}
+        </ul>
+        <a class="btn btn-gold" href={`mailto:${SITE.email}?subject=Support`}>{c.supportCta}</a>
       </div>
     </div>
   </section>
+
+  <section class="section soft">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">{c.teamEyebrow}</p>
+        <h2>{c.teamTitle}</h2>
+        <p class="lede">{c.teamLede}</p>
+      </div>
+      <Team lang={lang} />
+    </div>
+  </section>
+
 
   <section class="section-tight">
     <div class="wrap">
@@ -287,168 +249,79 @@ const href = (p) => localise(p, lang);
           <p class="lede">{c.closeLede}</p>
         </div>
         <div class="btn-row">
-          <a class="btn btn-primary" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+          <a class="btn btn-gold" href={`mailto:${SITE.email}`}>{SITE.email}</a>
         </div>
       </div>
     </div>
   </section>
+
+  <script is:inline src="/punkte.js" defer></script>
 </Page>
 
 <style>
+  /* The night hero: the only dark band on the site, and dark in both themes, because the
+     glowing mark needs a night sky to read. Text colours are literals for the same reason. */
   .hero {
-    padding-block: clamp(56px, 10vw, 118px) clamp(40px, 6vw, 72px);
-    /* One quiet wash rather than a flourish. The page's job is to be read. */
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(56px, 9vw, 110px) clamp(48px, 7vw, 90px);
     background:
-      radial-gradient(112% 84% at 10% -10%,
-        color-mix(in srgb, var(--forest) 10%, transparent), transparent 62%),
-      var(--paper);
+      radial-gradient(70% 90% at 78% 40%, rgba(47, 191, 116, .16), transparent 60%),
+      radial-gradient(60% 70% at 10% 0%, rgba(201, 160, 83, .14), transparent 60%),
+      linear-gradient(180deg, rgba(6, 20, 13, .97) 0%, rgba(6, 20, 13, .88) 55%, rgba(11, 36, 23, .72) 100%),
+      url('/gotthard.webp') center bottom / cover no-repeat,
+      var(--night);
+    color: #E9F2EC;
   }
   .hero-grid {
     display: grid;
-    grid-template-columns: 1.08fr 0.92fr;
-    gap: 52px;
-    /* Top-aligned, not centred: the copy column is taller, and centring would float the
-       panel in the middle of its own white space instead of starting with the headline. */
-    align-items: start;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 40px;
+    align-items: center;
   }
-  /* A wrapper, because a scoped style in this file cannot reach inside a child component —
-     `<AnimatedMark />` compiles to a component call, not to an element this file's scope
-     attribute lands on. The margin is the page's business anyway, not the mark's. */
-  .hero-mark { margin-bottom: 26px; }
-
-  /* 16ch, not 15: the German headline is the longer of the two and 15 wrapped it to five
-     lines. One character of slack fixes German and leaves English on four. */
-  .hero h1 { max-width: 16ch; }
+  .hero .eyebrow { color: #D9B876; }
+  .hero h1 { color: #fff; max-width: 16ch; }
+  .hero .lede { color: rgba(233, 242, 236, .78); }
   .hero-cta { margin-top: 34px; }
 
-  .hero-proof {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 26px 28px;
-    margin-top: 8px;
-  }
-  .proof-head {
-    font-family: var(--display);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin: 0 0 18px;
-  }
-  .hero-proof ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
-  .hero-proof li {
-    display: grid;
-    gap: 5px;
-    padding-left: 15px;
-    border-left: 3px solid var(--gold);
-  }
-  .hero-proof strong {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: 16px;
-    color: var(--ink);
-  }
-  .hero-proof span { font-size: 15px; color: var(--muted); text-wrap: pretty; }
-  .proof-link {
-    display: inline-block;
-    margin-top: 22px;
-    font-size: 15px;
-    font-weight: 500;
-    text-decoration: none;
-  }
-  .proof-link:hover { text-decoration: underline; }
+  .mark-field { position: relative; aspect-ratio: 1; max-width: 520px; width: 100%; justify-self: center; }
+  .mark-field canvas { width: 100%; height: 100%; display: block; }
+  .mark-field noscript img { width: 60%; margin: 20%; border-radius: 24px; }
 
-  .svc, .method { margin-top: 34px; }
+  .zahlen-band { padding-block: 40px 0; }
+  .zahlen { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: center; }
+  .zahlen b { display: block; font-family: var(--display); font-size: clamp(44px, 6vw, 68px); font-weight: 700; color: var(--forest); line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .zahlen span { color: var(--muted); font-size: 15px; }
+  .soft { background: var(--surface-2); }
+  .section + .section.soft, .section.soft + .section { padding-top: clamp(56px, 8vw, 96px); }
+  .sec-head { margin-bottom: 34px; max-width: 760px; }
+  .sec-head h2 { margin-bottom: 12px; }
 
-  /* Four cards, and `auto-fit` put three on one row and left the fourth alone — the same
-     broken-block look `auto-fit` produced for the dealership's two-item feature group.
-     Explicit tracks instead: four, then two, then one. Never three. */
-  .method { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  @media (max-width: 1040px) { .method { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (max-width: 560px)  { .method { grid-template-columns: 1fr; } }
-  .after { margin: 22px 0 0; font-size: 16px; }
-  .after a { font-weight: 500; text-decoration: none; }
+  .after { margin: 24px 0 0; font-size: 16px; }
+  .after a { font-weight: 600; text-decoration: none; color: var(--forest); }
   .after a:hover { text-decoration: underline; }
 
-  .num {
-    display: block;
-    font-family: var(--mono);
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--gold);
-    margin-bottom: 12px;
-  }
-
-  .feature {
-    display: grid;
-    grid-template-columns: 1.35fr 0.65fr;
-    gap: 44px;
-    align-items: start;
-  }
-  .feature h2 { margin-bottom: 14px; }
-  .facts {
-    list-style: none;
-    margin: 26px 0 30px;
-    padding: 0;
-    display: grid;
-    gap: 13px;
-    max-width: 58ch;
-  }
-  .facts li {
-    position: relative;
-    padding-left: 26px;
-    color: var(--ink);
-    font-size: 16.5px;
-    text-wrap: pretty;
-  }
-  .facts li::before {
-    content: '';
-    position: absolute;
-    left: 4px;
-    top: 11px;
-    width: 8px;
-    height: 8px;
-    border-radius: 2px;
-    background: var(--gold);
-  }
-  .facts em { font-style: normal; font-weight: 600; }
-
-  .feature-side {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--r);
-    padding: 24px 26px;
-  }
-  .feature-side dl { margin: 0; display: grid; gap: 18px; }
-  .feature-side dt {
-    font-family: var(--display);
-    font-size: 12px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 5px;
-  }
-  .feature-side dd { margin: 0; font-size: 16px; color: var(--ink); }
 
   .band {
-    background: var(--surface-2);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: clamp(28px, 4vw, 44px);
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(60% 120% at 100% 0%, rgba(201, 160, 83, .25), transparent 60%),
+      linear-gradient(135deg, var(--forest-deep), #0A3A22);
+    border-radius: var(--r-lg);
+    padding: clamp(30px, 4.5vw, 52px);
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 30px;
     flex-wrap: wrap;
+    color: #fff;
   }
-  .band h2 { margin-bottom: 10px; }
+  .band h2 { margin-bottom: 10px; color: #fff; }
+  .band .lede { color: rgba(255, 255, 255, .8); }
 
-  @media (max-width: 980px) {
-    .hero-grid { grid-template-columns: 1fr; gap: 36px; }
-  }
   @media (max-width: 900px) {
-    .feature { grid-template-columns: 1fr; gap: 30px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 20px; }
+    .mark-field { max-width: 360px; }
   }
 </style>
