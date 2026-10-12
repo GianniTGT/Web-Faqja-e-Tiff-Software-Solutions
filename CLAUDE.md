@@ -313,12 +313,14 @@ sonst etwas für einen Kunden sollen erwähnt werden"*, and a team of three.
   Every product carries a status tag (*Im Einsatz / In Entwicklung / Eigenes Werkzeug*) —
   TiffCar and the Hijama app are named as in development, never dressed up as shipped.
 - **Clients named with permission:** Downtown Auto Sales (30 August), AINO Haustechnik GmbH
-  and BIT Automobile (Gianni, 12 October). Left out on purpose: the flight-delay idea (no
+  (Gianni, 12 October). **BIT Automobile is not listed** — website only a draft, TiffCar
+  not bought; Gianni said no the same day. Left out on purpose: the flight-delay idea (no
   code) and the trading bot (empty repo). **«Post ist da» is shown by name only, without
   Frigemo AG** — Gianni, 12 October 2026.
 - **Team: Gianni Tifeki (owner & support), Sara (UI design), Stefan (backend).** Photos go in
   `public/team/<id>.webp` (or `.jpg`) and appear on the next build; until then the card
-  shows initials. **This reverses §2b's "no count" rule** — a team section shows how many
+  shows initials. Gianni's and Stefan's photos are in since 12 October, cropped square from
+  what Gianni sent; Sara's is still to come. **This reverses §2b's "no count" rule** — a team section shows how many
   people there are, and that was Gianni's call.
 - Buttons are pills, cards are 22px radius with a soft shadow, sections alternate with a
   tinted band. All tokens in `tokens.css`; nothing per page.

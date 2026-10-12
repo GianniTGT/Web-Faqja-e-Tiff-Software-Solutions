@@ -104,8 +104,9 @@ export const PRODUCTS = [
  * Work for clients — every project that has been done for somebody, on Gianni's instruction
  * of 12 October 2026: "alle Projekte, Webseiten oder sonst etwas für einen Kunden".
  *
- * **Named with permission.** Downtown Auto Sales since 30 August 2026; AINO Haustechnik and
- * BIT Automobile confirmed by Gianni on 12 October 2026.
+ * **Named with permission.** Downtown Auto Sales since 30 August 2026; AINO Haustechnik
+ * confirmed by Gianni on 12 October 2026. BIT Automobile was taken out again the same day:
+ * the website is only a draft and TiffCar is not bought — add it back when it is.
  *
  * **Links only where the address has been checked.** `downtownautoak.com` answered 404 on
  * 30 August and has no `href` for that reason (see CLAUDE.md §2b).
@@ -132,9 +133,6 @@ export const CLIENTS = [
   { name: 'AINO Haustechnik GmbH', place: 'Bern',
     en: ['Website'],
     de: ['Website'] },
-  { name: 'BIT Automobile', place: 'Oberwangen bei Bern',
-    en: ['Website', 'TiffCar'],
-    de: ['Website', 'TiffCar'] },
 ];
 
 /**
