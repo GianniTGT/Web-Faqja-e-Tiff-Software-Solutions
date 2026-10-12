@@ -3,7 +3,7 @@ import Page from '../../layouts/Page.astro';
 import ProductGrid from '../ProductGrid.astro';
 import ClientGrid from '../ClientGrid.astro';
 import Team from '../Team.astro';
-import { SITE } from '../../data/site.js';
+import { SITE, PRODUCTS, CLIENTS } from '../../data/site.js';
 import { localise } from '../../i18n/ui.js';
 
 /**
@@ -39,6 +39,7 @@ const COPY = {
     clientsEyebrow: 'Clients',
     clientsTitle: 'Who we have built for.',
     clientsLede: 'Websites, apps and the software behind them — from Bern to Anchorage.',
+    zahlen: ['products in use', 'clients', 'office in Bern'],
     supportEyebrow: 'Support',
     supportTitle: 'You talk to us. Not a hotline.',
     supportLede: 'The people who build your software answer your questions. In person, from Bern.',
@@ -103,6 +104,7 @@ const COPY = {
     clientsEyebrow: 'Kunden',
     clientsTitle: 'Für wen wir gebaut haben.',
     clientsLede: 'Websites, Apps und die Software dahinter — von Bern bis Anchorage.',
+    zahlen: ['Produkte im Einsatz', 'Kunden', 'Büro in Bern'],
     supportEyebrow: 'Support',
     supportTitle: 'Sie sprechen mit uns. Nicht mit einer Hotline.',
     supportLede: 'Wer Ihre Software baut, beantwortet Ihre Fragen. Persönlich, aus Bern.',
@@ -179,6 +181,15 @@ const href = (p) => localise(p, lang);
       </div>
     </div>
     <img class="berge" src="/berge.svg" alt="" width="1440" height="160" />
+  </section>
+
+  {/* Echte Zahlen, die beim Scrollen hochzählen (/bewegung.js). Nur gezählt, nie erfunden. */}
+  <section class="zahlen-band">
+    <div class="wrap zahlen">
+      <div><b data-zahl={PRODUCTS.length}>{PRODUCTS.length}</b><span>{c.zahlen[0]}</span></div>
+      <div><b data-zahl={CLIENTS.length}>{CLIENTS.length}</b><span>{c.zahlen[1]}</span></div>
+      <div><b data-zahl="1">1</b><span>{c.zahlen[2]}</span></div>
+    </div>
   </section>
 
   <section class="section">
@@ -276,6 +287,10 @@ const href = (p) => localise(p, lang);
   .mark-field canvas { width: 100%; height: 100%; display: block; }
   .mark-field noscript img { width: 60%; margin: 20%; border-radius: 24px; }
 
+  .zahlen-band { padding-block: 40px 0; }
+  .zahlen { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: center; }
+  .zahlen b { display: block; font-family: var(--display); font-size: clamp(44px, 6vw, 68px); font-weight: 700; color: var(--forest); line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .zahlen span { color: var(--muted); font-size: 15px; }
   .soft { background: var(--surface-2); }
   .section + .section.soft, .section.soft + .section { padding-top: clamp(56px, 8vw, 96px); }
   .sec-head { margin-bottom: 34px; max-width: 760px; }

@@ -44,7 +44,7 @@ export const SITE = {
 
 /**
  * Our own products. Status is one of `live`, `building`, `internal`, and the page prints it
- * as a small tag — a product still being built is named as such, never dressed up as shipped.
+ * as a small tag. Since 12 October 2026 every product that was «in development» is shown as «Im Einsatz» (Gianni's decision).
  *
  * Shape: { id, name, status, href?, en: { kind, line }, de: { kind, line } }
  */
@@ -52,51 +52,51 @@ export const PRODUCTS = [
   {
     id: 'tiffcore', name: 'TiffCore', status: 'live', href: 'https://tiffcore.ch',
     en: { kind: 'Software for building-services firms',
-          line: 'Job reports on the phone, quotes, Swiss QR invoices and payment matching in one system — from the site visit to the paid invoice.' },
+          line: 'Building services · Job report · QR invoice · Accounting' },
     de: { kind: 'Software für Haustechnik-Betriebe',
-          line: 'Rapport am Handy, Offerte, QR-Rechnung und Zahlungsabgleich in einem System — vom Einsatz vor Ort bis zur bezahlten Rechnung.' },
+          line: 'Haustechnik · Rapport · QR-Rechnung · Buchhaltung' },
   },
   {
-    id: 'tiffcar', name: 'TiffCar', status: 'building', href: 'https://tiffcar.ch',
+    id: 'tiffcar', name: 'TiffCar', status: 'live', href: 'https://tiffcar.ch',
     en: { kind: 'Software for Swiss car dealers',
-          line: 'Vehicles by VIN or type approval, AutoScout24, quote to QR invoice, a workshop board and a dealer website with live stock.' },
+          line: 'Car dealers · AutoScout24 · Workshop · Website' },
     de: { kind: 'Software für Autohändler in der Schweiz',
-          line: 'Fahrzeuge per VIN oder Typengenehmigung, AutoScout24, Offerte bis QR-Rechnung, Werkstatt und eine eigene Händler-Website mit Live-Bestand.' },
+          line: 'Autohandel · AutoScout24 · Werkstatt · Website' },
   },
   {
     id: 'cardealer', name: 'Tiff Cardealer Manager', status: 'live',
     en: { kind: 'Desktop software for car dealers',
-          line: 'A Windows application for vehicles, costs, documents and payments. Encrypted on the dealer\u2019s own machine, publishing to the website by itself.' },
+          line: 'Windows · Vehicles · Costs · Documents' },
     de: { kind: 'Desktop-Software für Autohändler',
-          line: 'Eine Windows-Anwendung für Fahrzeuge, Kosten, Dokumente und Zahlungen. Verschlüsselt auf dem eigenen Rechner, mit automatischer Veröffentlichung auf der Website.' },
+          line: 'Windows · Fahrzeuge · Kosten · Dokumente' },
   },
   {
     id: 'theme', name: 'Tiff Cardealer Theme', status: 'live',
     en: { kind: 'Website for car dealers',
-          line: 'A WordPress theme written from scratch: inventory, search, financing enquiries and reviews, fed straight from the office.' },
+          line: 'WordPress · Inventory · Financing · Reviews' },
     de: { kind: 'Website für Autohändler',
-          line: 'Ein von Grund auf geschriebenes WordPress-Theme: Bestand, Suche, Finanzierungsanfragen und Bewertungen, direkt aus dem Büro gespeist.' },
+          line: 'WordPress · Bestand · Finanzierung · Bewertungen' },
   },
   {
     id: 'rentacar', name: 'Tiff Rent a Car Manager', status: 'live',
     en: { kind: 'Software for car rental',
-          line: 'Fleet, availability per vehicle and request-based booking that cannot double-book.' },
+          line: 'Fleet · Availability · Booking' },
     de: { kind: 'Software für Autovermietungen',
-          line: 'Flotte, Verfügbarkeit pro Fahrzeug und Buchung auf Anfrage, die nicht doppelt vergeben kann.' },
+          line: 'Flotte · Verfügbarkeit · Buchung' },
   },
   {
     id: 'nfc', name: 'Tiff NFC Reader', status: 'internal',
     en: { kind: 'Android app',
-          line: 'Reads and writes NFC cards and tags, names them — staff, equipment — and exports the list as CSV.' },
+          line: 'NFC · Cards and tags · CSV export' },
     de: { kind: 'Android-App',
-          line: 'Liest und beschreibt NFC-Karten und Tags, benennt sie — Mitarbeiter, Equipment — und exportiert die Liste als CSV.' },
+          line: 'NFC · Karten und Tags · CSV-Export' },
   },
   {
-    id: 'hijama', name: 'Hijama Guide', status: 'building',
+    id: 'hijama', name: 'Hijama Guide', status: 'live',
     en: { kind: 'Mobile app',
-          line: 'A companion app with a Hijri calendar, guide and diary, in German, English, Albanian and Arabic.' },
+          line: 'Hijri calendar · Guide · Diary · 4 languages' },
     de: { kind: 'Mobile App',
-          line: 'Eine Begleit-App mit Hijri-Kalender, Ratgeber und Tagebuch, in Deutsch, Englisch, Albanisch und Arabisch.' },
+          line: 'Hijri-Kalender · Ratgeber · Tagebuch · 4 Sprachen' },
   },
 ];
 
@@ -111,28 +111,16 @@ export const PRODUCTS = [
  * **Links only where the address has been checked.** `downtownautoak.com` answered 404 on
  * 30 August and has no `href` for that reason (see CLAUDE.md §2b).
  *
- * Shape: { name, place, href?, en: [what…], de: [what…] }
+ * Shape: { name, place, href? } — names only, no list of what we delivered.
  */
 export const CLIENTS = [
-  { name: 'Downtown Auto Sales', place: 'Anchorage, Alaska',
-    en: ['Tiff Cardealer Manager', 'Website and WordPress theme'],
-    de: ['Tiff Cardealer Manager', 'Website und WordPress-Theme'] },
-  { name: 'Downtown Auto AK', place: 'Anchorage, Alaska',
-    en: ['Tiff Rent a Car Manager', 'Website with online booking', 'Logo and brand'],
-    de: ['Tiff Rent a Car Manager', 'Website mit Online-Buchung', 'Logo und Marke'] },
-  { name: 'Adams Tuning', place: '',
-    en: ['Tiff Cardealer Manager'],
-    de: ['Tiff Cardealer Manager'] },
+  { name: 'Downtown Auto Sales', place: 'Anchorage, Alaska' },
+  { name: 'Downtown Auto AK', place: 'Anchorage, Alaska' },
+  { name: 'Adams Tuning', place: '' },
   /* Gianni, 12 October 2026: the app by name only, without naming the company. */
-  { name: 'Post ist da', place: '',
-    en: ['Reception terminal and app', 'Tells staff in their own language that a delivery has arrived'],
-    de: ['Empfangsterminal und App', 'Informiert Mitarbeitende in ihrer Sprache über eine Lieferung'] },
-  { name: 'Ride2Balkan', place: '', href: 'https://ride2balkan.com',
-    en: ['Website', 'SEO', 'Android app'],
-    de: ['Website', 'SEO', 'Android-App'] },
-  { name: 'AINO Haustechnik GmbH', place: 'Bern',
-    en: ['Website'],
-    de: ['Website'] },
+  { name: 'Post ist da', place: '' },
+  { name: 'Ride2Balkan', place: '', href: 'https://ride2balkan.com' },
+  { name: 'AINO Haustechnik GmbH', place: 'Bern' },
 ];
 
 /**
@@ -152,3 +140,11 @@ export const TEAM = [
  * prefix from `localise()`. One list, two languages — a page added there appears in
  * both or in neither.
  */
+/**
+ * Prices on the services page. Change a number here (GitHub, pencil icon) and the site
+ * rebuilds itself. Gianni, 12 October 2026.
+ */
+export const PREISE = {
+  betreuung: 19,   // Website-Betreuung und Hosting, ab CHF … pro Monat
+  schulung: 199,   // Schulung 2 Stunden, einmalig
+};
