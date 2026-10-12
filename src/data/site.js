@@ -92,11 +92,11 @@ export const PRODUCTS = [
           line: 'NFC · Karten und Tags · CSV-Export' },
   },
   {
-    id: 'hijama', name: 'Hijama Guide', status: 'live',
-    en: { kind: 'Mobile app',
-          line: 'Hijri calendar · Guide · Diary · 4 languages' },
-    de: { kind: 'Mobile App',
-          line: 'Hijri-Kalender · Ratgeber · Tagebuch · 4 Sprachen' },
+    id: 'apps', name: 'Diverse Android-Apps', status: 'live',
+    en: { kind: 'Android apps',
+          line: 'My TRT · Post ist da · Ride2Balkan' },
+    de: { kind: 'Android-Apps',
+          line: 'My TRT · Post ist da · Ride2Balkan' },
   },
 ];
 
