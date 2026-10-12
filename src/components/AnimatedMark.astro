@@ -49,11 +49,11 @@ const uid = `am-${Math.random().toString(36).slice(2, 9)}`;
     </linearGradient>
     {/* The sheen is clipped to the tile, or it sweeps across the page beside the logo. */}
     <clipPath id={`${uid}-tile`}>
-      <rect width="512" height="512" />
+      <rect width="512" height="512" rx="115" />
     </clipPath>
   </defs>
 
-  <rect class="tile" width="512" height="512" fill="#C9A053" />
+  <rect class="tile" width="512" height="512" rx="115" fill="#C9A053" />
   <path class="tee" d="M80 72h352v109H80z M201 72h110v368H201z" fill="#16653C" />
 
   {/*

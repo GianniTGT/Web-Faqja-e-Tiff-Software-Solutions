@@ -91,7 +91,7 @@ h1{font-family:P;font-weight:700;font-size:${card.size}px;line-height:1.08;lette
 </style></head><body>
 <div class="top">
   <svg width="78" height="78" viewBox="0 0 512 512">
-    <rect width="512" height="512" fill="${GOLD}"/>
+    <rect width="512" height="512" rx="115" fill="${GOLD}"/>
     <path d="M80 72h352v109H80z M201 72h110v368H201z" fill="${FOREST}"/>
     <path d="M119 125.5H190a65 65 0 0 1 65 65V400" fill="none" stroke="#FFF" stroke-width="38"/>
   </svg>
