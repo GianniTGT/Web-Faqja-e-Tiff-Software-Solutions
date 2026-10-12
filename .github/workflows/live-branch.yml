@@ -49,3 +49,20 @@ jobs:
           git add -A
           git commit -q -m "Build of ${GITHUB_SHA::7}"
           git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" live
+
+      # The GitHub webhook did not reliably make Plesk pull (12 October 2026: a manual «Pull»
+      # was needed). So the workflow knocks on Plesk itself, after `live` is pushed. The URL
+      # is the one Plesk shows under Git → «Webhook-URL», stored as a secret because it
+      # carries Plesk's token. Without the secret this step does nothing.
+      - name: Tell Plesk to pull
+        env:
+          PLESK_WEBHOOK_URL: ${{ secrets.PLESK_WEBHOOK_URL }}
+        run: |
+          if [ -z "$PLESK_WEBHOOK_URL" ]; then
+            echo "::notice::PLESK_WEBHOOK_URL not set — Plesk must be pulled by hand."
+            exit 0
+          fi
+          curl -fsS -X POST -H 'Content-Type: application/json' \
+            -H 'X-GitHub-Event: push' \
+            -d '{"ref":"refs/heads/live"}' "$PLESK_WEBHOOK_URL" >/dev/null
+          echo "Plesk notified."
