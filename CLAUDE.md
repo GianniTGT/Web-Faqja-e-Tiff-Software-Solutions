@@ -319,8 +319,7 @@ sonst etwas für einen Kunden sollen erwähnt werden"*, and a team of three.
   Frigemo AG** — Gianni, 12 October 2026.
 - **Team: Gianni Tifeki (owner & support), Sara (UI design), Stefan (backend).** Photos go in
   `public/team/<id>.webp` (or `.jpg`) and appear on the next build; until then the card
-  shows initials. Gianni's and Stefan's photos are in since 12 October, cropped square from
-  what Gianni sent; Sara's is still to come. **This reverses §2b's "no count" rule** — a team section shows how many
+  shows initials. All three photos are in since 12 October, cropped square from what Gianni sent. **This reverses §2b's "no count" rule** — a team section shows how many
   people there are, and that was Gianni's call.
 - Buttons are pills, cards are 22px radius with a soft shadow, sections alternate with a
   tinted band. All tokens in `tokens.css`; nothing per page.
