@@ -141,7 +141,7 @@ export const CLIENTS = [
  * thing worse than no photo.
  */
 export const TEAM = [
-  { id: 'gianni', name: 'Gianni Tifeki', en: 'Owner & support', de: 'Inhaber & Support' },
+  { id: 'gianni', name: 'K. Tifeki', en: 'Owner & support', de: 'Inhaber & Support' },
   { id: 'sara', name: 'Sara', en: 'UI design', de: 'UI-Design' },
   { id: 'stefan', name: 'Stefan', en: 'Backend', de: 'Backend' },
 ];

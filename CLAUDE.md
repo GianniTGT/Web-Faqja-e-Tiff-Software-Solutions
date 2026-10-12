@@ -317,7 +317,7 @@ sonst etwas für einen Kunden sollen erwähnt werden"*, and a team of three.
   not bought; Gianni said no the same day. Left out on purpose: the flight-delay idea (no
   code) and the trading bot (empty repo). **«Post ist da» is shown by name only, without
   Frigemo AG** — Gianni, 12 October 2026.
-- **Team: Gianni Tifeki (owner & support), Sara (UI design), Stefan (backend).** Photos go in
+- **Team: K. Tifeki — shown so, not as Gianni, on his instruction — (owner & support), Sara (UI design), Stefan (backend).** Photos go in
   `public/team/<id>.webp` (or `.jpg`) and appear on the next build; until then the card
   shows initials. All three photos are in since 12 October, cropped square from what Gianni sent. **This reverses §2b's "no count" rule** — a team section shows how many
   people there are, and that was Gianni's call.
