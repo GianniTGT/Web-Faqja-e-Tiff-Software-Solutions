@@ -12,7 +12,10 @@ import { NAV, UI, localise, localeFromPath, otherLocaleHref } from '../i18n/ui.j
  * measured against hides five links behind a button on a 1500px desktop screen; a menu
  * button on a four-page site is a control that hides four words.
  *
- * Sticky is CSS only. Nothing here runs a script.
+ * Sticky is CSS only. The magnifier opens the site search (`/suche.js`); without script it does nothing.
+ *
+ * Dark glass in both themes, since 12 October 2026: the same bar as tiffcore.ch and tiffcar.ch,
+ * so the three sites read as one family.
  */
 const path = Astro.url.pathname;
 const lang = localeFromPath(path);
@@ -67,6 +70,10 @@ const isHere = (href) => strip(path) === strip(localise(href, lang));
       `lang` on the anchor still marks which language the label is written in, so a screen
       reader pronounces the German with a German voice rather than reading it as English.
     */}
+    <button class="suche-knopf" type="button" aria-label={lang === 'de' ? 'Suchen' : 'Search'} title={lang === 'de' ? 'Suchen (Taste /)' : 'Search (key /)'}>
+      <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3" /></svg>
+    </button>
+
     <a class="lang" href={otherLocaleHref(path, lang)} lang={lang === 'en' ? 'de' : 'en'}
        aria-label={t.switchLabel} title={t.switchLabel}>
       <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"
@@ -87,9 +94,10 @@ const isHere = (href) => strip(path) === strip(localise(href, lang));
     position: sticky;
     top: 0;
     z-index: 20;
-    background: color-mix(in srgb, var(--paper) 88%, transparent);
-    backdrop-filter: saturate(180%) blur(12px);
-    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(8, 26, 17, .9), rgba(4, 18, 11, .8));
+    backdrop-filter: saturate(170%) blur(20px);
+    -webkit-backdrop-filter: saturate(170%) blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
   }
   .bar {
     display: flex;
@@ -107,14 +115,14 @@ const isHere = (href) => strip(path) === strip(localise(href, lang));
     align-items: center;
     gap: 11px;
     text-decoration: none;
-    color: var(--ink);
+    color: #fff;
     font-family: var(--display);
     font-size: 14px;
     letter-spacing: 0.13em;
     text-transform: uppercase;
     font-weight: 600;
   }
-  .brand b { font-weight: 700; color: var(--forest); }
+  .brand b { font-weight: 700; color: #F0C871; }
   .abbr { display: none; }
 
   nav ul {
@@ -127,16 +135,16 @@ const isHere = (href) => strip(path) === strip(localise(href, lang));
   }
   nav a {
     text-decoration: none;
-    color: var(--muted);
+    color: rgba(230, 242, 234, .8);
     font-size: 15.5px;
     font-weight: 500;
     padding: 6px 0;
     border-bottom: 2px solid transparent;
   }
-  nav a:hover { color: var(--ink); }
+  nav a:hover { color: #fff; }
   /* The current page is marked, not merely coloured — `aria-current` is the fact and the
      rule underneath is the picture of it, so screen readers and eyes get the same answer. */
-  nav a[aria-current='page'] { color: var(--ink); border-bottom-color: var(--gold); }
+  nav a[aria-current='page'] { color: #fff; border-bottom-color: #C9A053; }
 
   /* A round target for a round icon. 36px square is above the 24px minimum a pointer needs
      and reads as a button without a label to give it width. */
@@ -147,13 +155,13 @@ const isHere = (href) => strip(path) === strip(localise(href, lang));
     width: 36px;
     height: 36px;
     flex: none;
-    color: var(--forest);
-    border: 1px solid var(--line);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, .25);
     border-radius: 999px;
     text-decoration: none;
     transition: border-color 0.18s ease, background-color 0.18s ease;
   }
-  .lang:hover { border-color: var(--forest); background: var(--surface); }
+  .lang:hover { border-color: #fff; background: rgba(255, 255, 255, .1); }
 
   /* The meridian squashed flat and back is what a turning sphere looks like from outside
      it. `transform-box: fill-box` is required or the origin is the SVG's viewport corner

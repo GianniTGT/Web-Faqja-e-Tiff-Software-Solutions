@@ -57,7 +57,7 @@ export const PRODUCTS = [
           line: 'Rapport am Handy, Offerte, QR-Rechnung und Zahlungsabgleich in einem System — vom Einsatz vor Ort bis zur bezahlten Rechnung.' },
   },
   {
-    id: 'tiffcar', name: 'TiffCar', status: 'building',
+    id: 'tiffcar', name: 'TiffCar', status: 'building', href: 'https://tiffcar.ch',
     en: { kind: 'Software for Swiss car dealers',
           line: 'Vehicles by VIN or type approval, AutoScout24, quote to QR invoice, a workshop board and a dealer website with live stock.' },
     de: { kind: 'Software für Autohändler in der Schweiz',
