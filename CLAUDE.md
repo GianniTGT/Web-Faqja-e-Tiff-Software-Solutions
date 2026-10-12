@@ -377,6 +377,23 @@ website. Two guards stand between a typo and that:
 2. **The remote directory must already contain `.tiff-deploy-target`.** If the marker is
    not there, the path is wrong and the deploy stops before rsync runs.
 
+### 5a. Plesk pulls a built branch — 12 October 2026
+
+Gianni's hosting panel is Plesk with the **Git extension**, which pulls a repository into
+`/httpdocs`. It copies the repo as it is, and this repo is Astro *source* — so Plesk is
+pointed at the branch **`live`**, which holds only the contents of `dist/`.
+
+- `.github/workflows/live-branch.yml` builds on every push to `main` (and on demand) and
+  force-pushes `dist/` as a single commit to `live`. `live` is a build output, not history.
+- In Plesk: Remote-Repository, URL `https://github.com/GianniTGT/Web-Faqja-e-Tiff-Software-Solutions.git`
+  (public, no key), branch `live`, mode Automatisch, path `/httpdocs`. Plesk's webhook URL
+  goes into GitHub → Settings → Webhooks so a push deploys without pressing *Pull*.
+- **`public/.htaccess` ships with the site** (only `ErrorDocument 404`) so a deploy cannot
+  lose it. **Not verified: whether Plesk deletes files in `/httpdocs` that are not in
+  `live`**, such as `.well-known/`. Prove it on a test subdomain first.
+- The older netcup SSH workflow (`deploy.yml`, below) still exists and still stops with a
+  notice while its secrets are missing.
+
 ### The Node version lives in `.nvmrc` — 22 August 2026
 
 **The very first run of this workflow failed**, and on nothing to do with Netcup: the
