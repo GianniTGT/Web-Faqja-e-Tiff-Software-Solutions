@@ -122,9 +122,10 @@ export const CLIENTS = [
   { name: 'Adams Tuning', place: '',
     en: ['Tiff Cardealer Manager'],
     de: ['Tiff Cardealer Manager'] },
-  { name: 'Frigemo AG', place: 'Cressier',
-    en: ['\u00abPost ist da\u00bb — a reception terminal that tells staff, in their own language, that a delivery has arrived'],
-    de: ['\u00abPost ist da\u00bb — ein Empfangsterminal, das Mitarbeitende in ihrer Sprache über eine Lieferung informiert'] },
+  /* Gianni, 12 October 2026: the app by name only, without naming the company. */
+  { name: 'Post ist da', place: '',
+    en: ['Reception terminal and app', 'Tells staff in their own language that a delivery has arrived'],
+    de: ['Empfangsterminal und App', 'Informiert Mitarbeitende in ihrer Sprache über eine Lieferung'] },
   { name: 'Ride2Balkan', place: '', href: 'https://ride2balkan.com',
     en: ['Website', 'SEO', 'Android app'],
     de: ['Website', 'SEO', 'Android-App'] },
