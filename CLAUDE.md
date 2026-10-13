@@ -5,7 +5,7 @@ here, the next session will not know it** — that is the lesson the DAS-Manager
 the hard way, and it is why this file exists on day one rather than after the first thing
 is forgotten.
 
-**Last updated: 12 October 2026**
+**Last updated: 13 October 2026**
 
 ---
 
@@ -330,6 +330,18 @@ checked** — confirm before the next upload.
 
 ---
 
+## 2e. 13 October 2026
+
+- **Logo and favicons have round corners** (`rx="115"` on the 512 tile), the same as
+  tiffcore.ch and tiffcar.ch. `favicon.ico` (round, transparent corners) and
+  `apple-touch-icon.png` (square on purpose: iOS rounds it itself, transparent corners turn
+  black) sit beside `favicon.svg`. The icon links carry `?v=2` because Chrome kept the old
+  square favicon; bump it when the icon changes again.
+- **The header matches tiffcore.ch and tiffcar.ch:** same dark glass on `#04120b`, 72px high,
+  40px logo, pill menu, 40px search and globe. The wordmark stays «Tiff Software Solutions».
+- **The glowing logo border has 30 % more lights** (`punkte.js`, `?v=2`), same as tiffcore.ch.
+- **Clients added:** Wasserdichter GmbH and Derguti Haustechnik AG (Gianni, 12 October 2026).
+
 ## 3. The brand is not chosen here
 
 `src/styles/tokens.css` carries the palette, and it comes from the brand package Gianni
@@ -391,6 +403,10 @@ pointed at the branch **`live`**, which holds only the contents of `dist/`.
 - **`public/.htaccess` ships with the site** (only `ErrorDocument 404`) so a deploy cannot
   lose it. **Not verified: whether Plesk deletes files in `/httpdocs` that are not in
   `live`**, such as `.well-known/`. Prove it on a test subdomain first.
+- **Plesk pulls by itself since 13 October 2026.** The GitHub webhook alone did not make
+  Plesk pull. `live-branch.yml` now calls the Plesk webhook URL itself after pushing `live`
+  (secret `PLESK_WEBHOOK_URL`, set by Gianni). Verified: run 9 logged «Plesk notified» and the
+  live site carried the new build a minute later. Without the secret the step only prints a notice.
 - The older netcup SSH workflow (`deploy.yml`, below) still exists and still stops with a
   notice while its secrets are missing.
 
