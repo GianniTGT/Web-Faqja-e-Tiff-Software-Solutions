@@ -360,6 +360,14 @@ so `public/team/stefan.webp` keeps working). **Ensar** joined as remote support 
 2026. Link checked through the Novamira route: 200, valid certificate. **A German how-to above
 `CLIENTS` in `site.js`** lets Gianni add the next client himself with the GitHub pencil icon.
 
+**TiffCore and TiffCar one click away, same day.** `/services/` opens with «Unsere Software»
+(`ProductShowcase.astro`): a dashboard screenshot, the line from `PRODUCTS` and a link, for
+every product that has both `shot` and `href`. The footer of every page lists the products
+with an `href`. Screenshots copied from `GianniTGT/tiffcore-website` and
+`GianniTGT/TIFFCAR.CH-Web-Faqe` into `public/produkte/` — **sample data only** (Muster
+Haustechnik AG, Garage Aarefeld), never a real customer's screen. Served from this domain,
+so `/privacy/` stays true. Both links checked: 200.
+
 ## 3. The brand is not chosen here
 
 `src/styles/tokens.css` carries the palette, and it comes from the brand package Gianni

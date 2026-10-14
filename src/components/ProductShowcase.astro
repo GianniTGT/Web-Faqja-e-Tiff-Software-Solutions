@@ -1,0 +1,53 @@
+---
+import { PRODUCTS } from '../data/site.js';
+
+/**
+ * Our own software with a screenshot and a link — at the top of /services/, Gianni
+ * 14 October 2026: TiffCore and TiffCar should be quick to reach. Every product in
+ * `PRODUCTS` that has a `shot` and an `href` appears here; the screenshots are served from
+ * this domain (public/produkte/), so /privacy/ stays true.
+ */
+interface Props { lang: 'en' | 'de'; }
+const { lang } = Astro.props;
+const T = {
+  en: { alt: (n) => `${n} dashboard, with sample data`, open: 'Visit' },
+  de: { alt: (n) => `${n} Dashboard, mit Musterdaten`, open: 'Zur Website' },
+}[lang];
+const items = PRODUCTS.filter((p) => p.shot && p.href);
+---
+<div class="show">
+  {items.map((p) => (
+    <a class="item" href={p.href}>
+      <div class="shot">
+        <img src={p.shot.src} width={p.shot.w} height={p.shot.h} alt={T.alt(p.name)} loading="lazy" decoding="async" />
+      </div>
+      <div class="text">
+        <span class="kind">{p[lang].kind}</span>
+        <h3>{p.name}</h3>
+        <p>{p[lang].line}</p>
+        <span class="go">{T.open}: {p.href.replace('https://', '')} &rarr;</span>
+      </div>
+    </a>
+  ))}
+</div>
+
+<style>
+  .show { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .item {
+    display: flex; flex-direction: column;
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg);
+    overflow: hidden; text-decoration: none; color: inherit;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .item:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: transparent; }
+  .shot { aspect-ratio: 16 / 10; overflow: hidden; background: var(--surface-2); border-bottom: 1px solid var(--line); }
+  .shot img { width: 100%; height: 100%; object-fit: cover; object-position: left top; display: block; }
+  .text { display: flex; flex-direction: column; gap: 6px; padding: 20px 24px 22px; }
+  .kind { font-size: 13px; color: var(--muted); font-weight: 500; }
+  h3 { margin: 0; font-size: 22px; }
+  p { margin: 0; color: var(--muted); font-size: 15.5px; }
+  .go { margin-top: 6px; font-size: 14.5px; font-weight: 600; color: var(--forest); }
+  .item:hover .go { text-decoration: underline; }
+  @media (max-width: 760px) { .show { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { .item, .item:hover { transition: none; transform: none; } }
+</style>

@@ -1,6 +1,6 @@
 ---
 import Mark from './Mark.astro';
-import { SITE } from '../data/site.js';
+import { SITE, PRODUCTS } from '../data/site.js';
 import { NAV, LEGAL, UI, TAGLINE, localise, localeFromPath } from '../i18n/ui.js';
 
 /* The year is stamped at build time, not read in the browser. A static site rebuilt once a
@@ -24,6 +24,14 @@ const t = UI[lang];
       <h2>{t.site}</h2>
       <ul>
         {NAV.map((item) => <li><a href={localise(item.href, lang)}>{item[lang]}</a></li>)}
+      </ul>
+    </nav>
+
+    {/* Our own software, one click from every page — Gianni, 14 October 2026. */}
+    <nav class="col" aria-label="Software">
+      <h2>{lang === 'de' ? 'Unsere Software' : 'Our software'}</h2>
+      <ul>
+        {PRODUCTS.filter((p) => p.href).map((p) => <li><a href={p.href}>{p.name} &nearr;</a></li>)}
       </ul>
     </nav>
 
@@ -65,7 +73,7 @@ const t = UI[lang];
   }
   .grid {
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr;
+    grid-template-columns: 1.4fr .8fr 1fr 1.4fr;
     gap: 40px;
     padding-bottom: 44px;
   }
@@ -112,6 +120,9 @@ const t = UI[lang];
   .legal a { font-size: 14px; color: var(--muted); text-decoration: none; }
   .legal a:hover { color: var(--forest); text-decoration: underline; }
 
+  @media (max-width: 1000px) {
+    .grid { grid-template-columns: 1fr 1fr; }
+  }
   @media (max-width: 760px) {
     .grid { grid-template-columns: 1fr; gap: 34px; }
     .site-foot { margin-top: 72px; }
