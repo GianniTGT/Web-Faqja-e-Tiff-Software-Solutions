@@ -51,6 +51,8 @@ export const SITE = {
 export const PRODUCTS = [
   {
     id: 'tiffcore', name: 'TiffCore', status: 'live', href: 'https://tiffcore.ch',
+    /* Screenshot from GianniTGT/tiffcore-website, sample data only (Muster Haustechnik AG). */
+    shot: { src: '/produkte/tiffcore.webp', w: 1440, h: 860 },
     en: { kind: 'Software for building-services firms',
           line: 'Building services · Job report · QR invoice · Accounting' },
     de: { kind: 'Software für Haustechnik-Betriebe',
@@ -58,6 +60,8 @@ export const PRODUCTS = [
   },
   {
     id: 'tiffcar', name: 'TiffCar', status: 'live', href: 'https://tiffcar.ch',
+    /* Screenshot from GianniTGT/TIFFCAR.CH-Web-Faqe, sample data only (Garage Aarefeld). */
+    shot: { src: '/produkte/tiffcar.webp', w: 2000, h: 570 },
     en: { kind: 'Software for Swiss car dealers',
           line: 'Car dealers · AutoScout24 · Workshop · Website' },
     de: { kind: 'Software für Autohändler in der Schweiz',

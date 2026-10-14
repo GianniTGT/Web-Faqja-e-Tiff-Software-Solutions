@@ -2,6 +2,7 @@
 import Page from '../../layouts/Page.astro';
 import { SITE, PREISE } from '../../data/site.js';
 import { localise } from '../../i18n/ui.js';
+import ProductShowcase from '../ProductShowcase.astro';
 
 /**
  * Services, in both languages. Short on purpose (Sara, 12 October 2026: too much text):
@@ -21,6 +22,7 @@ const COPY = {
     eyebrow: 'Services',
     h1: 'Everything from one place.',
     lede: 'Software, websites and everything around them. From Bern.',
+    softTitle: 'Our software',
     hostTitle: 'Website care and hosting',
     hostFrom: 'from CHF',
     hostPer: 'a month',
@@ -65,6 +67,7 @@ const COPY = {
     eyebrow: 'Leistungen',
     h1: 'Alles aus einer Hand.',
     lede: 'Software, Websites und alles drumherum. Aus Bern.',
+    softTitle: 'Unsere Software',
     hostTitle: 'Website-Betreuung und Hosting',
     hostFrom: 'ab CHF',
     hostPer: 'pro Monat',
@@ -112,6 +115,13 @@ const href = (p) => localise(p, lang);
       <p class="eyebrow">{c.eyebrow}</p>
       <h1>{c.h1}</h1>
       <p class="lede">{c.lede}</p>
+    </div>
+  </section>
+
+  <section class="section-tight" id="software">
+    <div class="wrap">
+      <h2 class="gruppe">{c.softTitle}</h2>
+      <ProductShowcase lang={lang} />
     </div>
   </section>
 
