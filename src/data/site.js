@@ -112,6 +112,16 @@ export const PRODUCTS = [
  * 30 August and has no `href` for that reason (see CLAUDE.md §2b).
  *
  * Shape: { name, place, href? } — names only, no list of what we delivered.
+ *
+ * SO TRAGEN SIE EINEN NEUEN KUNDEN SELBER EIN (ca. 2 Minuten, nur im Browser):
+ *   1. Diese Datei auf GitHub öffnen: src/data/site.js → Stift-Symbol (Edit) oben rechts.
+ *   2. Unten in der Liste eine Zeile kopieren und anpassen, z.B.
+ *        { name: 'Firma GmbH', place: 'Ort', href: 'https://firma.ch' },
+ *      place darf leer sein: ''. href weglassen, wenn die Website nicht sicher läuft.
+ *      Komma am Zeilenende nicht vergessen. Kein ß, nur ss.
+ *   3. «Commit changes…» → «Commit directly to the main branch» → bestätigen.
+ *   4. Nach ca. 2 Minuten ist der Kunde live (Startseite und /work/, beide Sprachen).
+ *   Nur Kunden eintragen, die einverstanden sind, genannt zu werden.
  */
 export const CLIENTS = [
   { name: 'Downtown Auto Sales', place: 'Anchorage, Alaska' },
@@ -123,6 +133,8 @@ export const CLIENTS = [
   { name: 'AINO Haustechnik GmbH', place: 'Bern' },
   { name: 'Wasserdichter GmbH', place: '' },
   { name: 'Derguti Haustechnik AG', place: '' },
+  /* Uses TiffCore. Link checked 14 October 2026: 200, valid certificate. */
+  { name: 'Aarburg Kampfsport Akademie', place: 'Aarburg', href: 'https://aarburg-aka.ch' },
 ];
 
 /**

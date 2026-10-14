@@ -356,6 +356,10 @@ so `public/team/stefan.webp` keeps working). **Ensar** joined as remote support 
 «IT-Entwicklung & Remote-Support» / «IT development & remote support». No photo yet: put it at
 `public/team/ensar.webp` and it appears on the next build; until then the card shows initials.
 
+**Client added:** Aarburg Kampfsport Akademie (`aarburg-aka.ch`, uses TiffCore), Gianni 14 October
+2026. Link checked through the Novamira route: 200, valid certificate. **A German how-to above
+`CLIENTS` in `site.js`** lets Gianni add the next client himself with the GitHub pencil icon.
+
 ## 3. The brand is not chosen here
 
 `src/styles/tokens.css` carries the palette, and it comes from the brand package Gianni
