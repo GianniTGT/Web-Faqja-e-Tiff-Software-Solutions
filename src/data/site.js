@@ -36,7 +36,7 @@ export const SITE = {
   /** Swiss commercial register number (CHE-…), if the business is registered. Optional. */
   uid: null,
 
-  tagline: 'Software small businesses can actually run.',
+  tagline: 'Software your business can actually run.',
   description:
     'Desktop applications, websites and the systems that join them — built for one ' +
     'business at a time, from Bern, Switzerland.',
