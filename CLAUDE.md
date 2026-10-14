@@ -351,6 +351,11 @@ Industrie» / «for SMEs and industry»** instead of «kleine Betriebe». Both s
 (`og.png`, `og-de.png`) were regenerated with the new headline. «Small team» / «kleines
 Unternehmen» stays — that describes the firm, not the customer.
 
+**Team, same day:** Stefan is shown as **Os** (Gianni's instruction; the `id` stays `stefan`
+so `public/team/stefan.webp` keeps working). **Ensar** joined as remote support — card
+«IT-Entwicklung & Remote-Support» / «IT development & remote support». No photo yet: put it at
+`public/team/ensar.webp` and it appears on the next build; until then the card shows initials.
+
 ## 3. The brand is not chosen here
 
 `src/styles/tokens.css` carries the palette, and it comes from the brand package Gianni

@@ -133,7 +133,8 @@ export const CLIENTS = [
 export const TEAM = [
   { id: 'gianni', name: 'K. Tifeki', en: 'Owner & support', de: 'Inhaber & Support' },
   { id: 'sara', name: 'Sara', en: 'UI design', de: 'UI-Design' },
-  { id: 'stefan', name: 'Stefan', en: 'Backend', de: 'Backend' },
+  { id: 'stefan', name: 'Os', en: 'Backend', de: 'Backend' },
+  { id: 'ensar', name: 'Ensar', en: 'IT development & remote support', de: 'IT-Entwicklung & Remote-Support' },
 ];
 
 /*
