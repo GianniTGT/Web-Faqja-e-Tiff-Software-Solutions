@@ -5,7 +5,7 @@ here, the next session will not know it** — that is the lesson the DAS-Manager
 the hard way, and it is why this file exists on day one rather than after the first thing
 is forgotten.
 
-**Last updated: 13 October 2026**
+**Last updated: 14 October 2026**
 
 ---
 
@@ -341,6 +341,24 @@ checked** — confirm before the next upload.
   40px logo, pill menu, 40px search and globe. The wordmark stays «Tiff Software Solutions».
 - **The glowing logo border has 30 % more lights** (`punkte.js`, `?v=2`), same as tiffcore.ch.
 - **Clients added:** Wasserdichter GmbH and Derguti Haustechnik AG (Gianni, 12 October 2026).
+
+## 2f. 14 October 2026 — not only small businesses
+
+Gianni: the headline *«Software, mit der kleine Betriebe wirklich arbeiten»* limited the firm
+to small businesses. **It now reads «Software, mit der Ihr Betrieb wirklich arbeitet.» /
+«Software your business can actually run.»**, and the lede and `/about/` say **«für KMU und
+Industrie» / «for SMEs and industry»** instead of «kleine Betriebe». Both share cards
+(`og.png`, `og-de.png`) were regenerated with the new headline. «Small team» / «kleines
+Unternehmen» stays — that describes the firm, not the customer.
+
+**Team, same day:** Stefan is shown as **Os** (Gianni's instruction; the `id` stays `stefan`
+so `public/team/stefan.webp` keeps working). **Ensar** joined as remote support — card
+«IT-Entwicklung & Remote-Support» / «IT development & remote support». No photo yet: put it at
+`public/team/ensar.webp` and it appears on the next build; until then the card shows initials.
+
+**Client added:** Aarburg Kampfsport Akademie (`aarburg-aka.ch`, uses TiffCore), Gianni 14 October
+2026. Link checked through the Novamira route: 200, valid certificate. **A German how-to above
+`CLIENTS` in `site.js`** lets Gianni add the next client himself with the GitHub pencil icon.
 
 ## 3. The brand is not chosen here
 

@@ -39,13 +39,13 @@ import { join } from 'node:path';
 const CARDS = {
   en: {
     out: 'public/og.png',
-    headline: 'Software small businesses can actually run.',
+    headline: 'Software your business can actually run.',
     place: 'Bern, Switzerland',
     size: 74,
   },
   de: {
     out: 'public/og-de.png',
-    headline: 'Software, mit der kleine Betriebe wirklich arbeiten.',
+    headline: 'Software, mit der Ihr Betrieb wirklich arbeitet.',
     place: 'Bern, Schweiz',
     size: 62,
   },
