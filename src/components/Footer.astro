@@ -57,7 +57,15 @@ const t = UI[lang];
   </div>
 
   <div class="wrap rule">
-    <p>&copy; {year} {SITE.name} &middot; {SITE.person}</p>
+    <p>
+      {/* True, so it may be said: the site and both products run at hosttech in Switzerland — Gianni, 17 October 2026.
+          No ISO or association logos: only what can be shown to be so. */}
+      <span class="swiss">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z"/></svg>
+        {lang === "de" ? "Server in der Schweiz · Swiss Made" : "Hosted in Switzerland · Swiss made"}
+      </span>
+      &copy; {year} {SITE.name} &middot; {SITE.person}
+    </p>
     <nav class="legal" aria-label={t.legalNav}>
       {LEGAL.map((item) => <a href={localise(item.href, lang)}>{item[lang]}</a>)}
     </nav>
@@ -116,6 +124,8 @@ const t = UI[lang];
     padding-block: 20px 26px;
   }
   .rule p { margin: 0; font-size: 14px; color: var(--muted); }
+  .swiss { display: inline-flex; align-items: center; gap: 6px; margin-right: 14px; color: var(--ink); }
+  .swiss svg { flex: none; color: var(--forest); }
   .legal { display: flex; gap: 20px; }
   .legal a { font-size: 14px; color: var(--muted); text-decoration: none; }
   .legal a:hover { color: var(--forest); text-decoration: underline; }
