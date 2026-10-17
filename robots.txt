@@ -1,0 +1,10 @@
+# The site is live and open to search engines as of 30 August 2026.
+#
+# This file used to hold `Disallow: /` while the domain still pointed at Netcup's parking
+# page. That block is what a finished site is left asking Google for if nobody remembers to
+# lift it, so it is gone rather than commented out — a commented-out Disallow is one careless
+# uncomment away from being live again.
+User-agent: *
+Allow: /
+
+Sitemap: https://tiff-software-solutions.com/sitemap.xml
